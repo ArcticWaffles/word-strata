@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordGame
 {
-    class GridSquare
+    public class GridSquare
     {
         private Coordinates coords;
         public Coordinates Coords

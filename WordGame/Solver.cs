@@ -9,18 +9,24 @@ namespace WordGame
     public class Solver
     {
         string[] dictionary;
-        char[,] board;
+        Board board;
         StringBuilder theWord;
 
-        public Solver(string[] dictionary, char[,] board)
+        public Solver(string[] dictionary, Board board)
         {
+            if (dictionary == null)
+            {
+                throw new ArgumentNullException("Dictionary cannot be null");
+            }
+
             if (dictionary.Length == 0)
             {
-                throw new ArgumentException("Dictionary is empty");
+                throw new ArgumentException("Dictionary cannot be empty");
             }
-            if (board.GetLength(0) == 0 || board.GetLength(1) == 0)
+
+            if (board == null)
             {
-                throw new ArgumentException("Invalid board dimensions: " + board.GetLength(0) + ", " + board.GetLength(1));
+                throw new ArgumentNullException("Board cannot be null");
             }
 
             this.dictionary = dictionary;

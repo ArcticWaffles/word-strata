@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordGame
 {
-    class Board
+    public class Board
     {
         private char[,] letterGrid;
 
@@ -32,9 +32,18 @@ namespace WordGame
         }
 
 
-        public Board(char[,] letterGridIn)
+        public Board(char[,] letterGrid)
         {
-            letterGrid = letterGridIn;
+            if (letterGrid == null)
+            {
+                throw new ArgumentNullException("letterGrid cannot be null");
+            }
+            if (letterGrid.GetLength(0) == 0 || letterGrid.GetLength(1) == 0)
+            {
+                throw new ArgumentException("letterGrid dimensions cannot be zero");
+            }
+            this.letterGrid = letterGrid;
+            
         }
 
 

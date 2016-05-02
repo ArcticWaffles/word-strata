@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordGame
 {
-    class Tile : GridSquare
+    public class Tile : GridSquare
     {
         bool hasMark;
         public bool HasMark
