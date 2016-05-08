@@ -33,6 +33,24 @@ namespace WordGame
             this.board = board;
         }
 
+        public void MarkAndAppend(Tile tile, StringBuilder theWord)
+        {
+            if (tile == null)
+            {
+                throw new ArgumentNullException("Tile cannot be null");
+            }
+            if (theWord == null)
+            {
+                throw new ArgumentNullException("theWord cannot be null");
+            }
+            if (tile.HasMark == true)
+            {
+                throw new ArgumentException("Tile should not already be marked");
+            }
+                
+            tile.Mark();
+            theWord.Append(tile.Letter);
+        }
 
 
         //public bool WordExists()
