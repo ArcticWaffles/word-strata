@@ -16,6 +16,7 @@ namespace UnitTests
         StringBuilder wordWithSomeLetters;
 
         Board board3x3;
+        Board board2x2;
 
         string[] emptyDictionary;
         string[] smallDictionary;
@@ -30,6 +31,12 @@ namespace UnitTests
             newWord = new StringBuilder();
             wordWithSomeLetters = new StringBuilder("cat");
 
+            board2x2 = new Board(new char[,]
+            {
+                { 'a', 'b'},
+                { 'c', 'd'}
+            });
+
             board3x3 = new Board(new char[,]
             {
             { 'a', 'b', 'd' },
@@ -40,10 +47,13 @@ namespace UnitTests
             emptyDictionary = new string[] { };
             smallDictionary = new string[]
             {
-            "bar"
+            "bar",
+            "cab"
             };
 
         }
+
+        //NewSolver tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
@@ -65,6 +75,11 @@ namespace UnitTests
         {
             var solver = new Solver(smallDictionary, null);
         }
+
+
+
+
+        //MarkAndAppend tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -111,8 +126,77 @@ namespace UnitTests
         public void MarkAndAppend_theWordIsNull_ThrowsExeption()
         {
             var solver = new Solver(smallDictionary, board3x3);
-            solver.MarkAndAppend(validMarkedTileB, null);
+            solver.MarkAndAppend(validUnmarkedTileA, null);
         }
+
+
+
+
+        //UnmarkAndRemove tests
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UnmarkAndRemove_TileIsNull_ThrowsException()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            solver.UnmarkAndRemove(null, newWord);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UnmarkAndRemove_theWordIsNull_ThrowsExeption()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            solver.UnmarkAndRemove(validMarkedTileB, null);
+        }
+
+        [TestMethod]
+        public void UnmarkAndRemove_TileIsValid_RemovesLetter()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            solver.UnmarkAndRemove(validMarkedTileB, wordWithSomeLetters);
+            Assert.AreEqual(wordWithSomeLetters.ToString(), "ca");
+        }
+
+        [TestMethod]
+        public void UnmarkAndRemove_TileIsValid_ChangesMarkedToUnmarked()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            solver.UnmarkAndRemove(validMarkedTileB, wordWithSomeLetters);
+            Assert.IsTrue(validMarkedTileB.HasMark == false);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UnmarkAndRemove_TileIsAlreadyUnmarked_ThrowsExeption()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            solver.UnmarkAndRemove(validUnmarkedTileA, wordWithSomeLetters);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UnmarkAndRemove_theWordIsAlreadyEmpty_ThrowsExeption()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            solver.UnmarkAndRemove(validMarkedTileB, newWord);
+        }
+
+
+        //unmark and remove tests - last letter in string is equal to tile letter? (do m/a and then u/r?)
+        //test words of more lengths?
+
+        //do other smaller methods: 
+        //dictionary.contains - sort and binary search?
+        //GetNeighbor()
+     
+
+
+        //Walk: don't backtrack yourself before you're done searching
+        //Null tests : tile, currentDepth, maxDepth
+        //maxDepth not greater than longest word in dictionary or size of board
+        //test on specific boards
+
 
         //[TestMethod]
         //public void WordExists_WordDoesExist_ReturnsTrue()
