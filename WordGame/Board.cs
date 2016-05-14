@@ -24,7 +24,6 @@ namespace WordGame
                         {
                             tileList.Add(new Tile(new Coordinates(x,y), currentLetter, false));
                         }
-
                     }
                 }
                 return tileList;
@@ -38,12 +37,43 @@ namespace WordGame
             {
                 throw new ArgumentNullException("letterGrid cannot be null");
             }
+
             if (letterGrid.GetLength(0) == 0 || letterGrid.GetLength(1) == 0)
             {
                 throw new ArgumentException("letterGrid dimensions cannot be zero");
             }
             this.letterGrid = letterGrid;
             
+        }
+
+        public Tile GetNeighbor(Tile originTile, char direction)
+        {
+            if (originTile == null)
+            {
+                throw new ArgumentNullException("originTile cannot be null");
+            }
+
+            int x = originTile.Coords.X;
+            int y = originTile.Coords.Y;
+
+            switch (direction)
+            {
+                case 'n':
+                    x--;
+                    break;
+                case 'e':
+                    y++;
+                    break;
+                case 's':
+                    x++;
+                    break;
+                case 'w':
+                    y--;
+                    break;
+            }
+
+            var neighbor = Tiles.Find(Tile => (Tile.Coords.X == x && Tile.Coords.Y == y));
+            return neighbor;
         }
 
 

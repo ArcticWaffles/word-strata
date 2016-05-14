@@ -9,20 +9,49 @@ namespace UnitTests
     [TestClass]
     public class BoardTests
     {
-        char[,] board3x3 = new char[,] {
-            { 'a', 'b', 'd' },
-            { 'r', 'x', 'x' },
-            { 'x', 'x', 'x' }
-        };
-        char[,] arrayEmpty = new char[0, 0];
-        char[,] array1x0 = new char[1, 0];
-        char[,] array0x1 = new char[0, 1];
+        char[,] array3x3;
+        char[,] arrayEmpty;
+        char[,] array1x0;
+        char[,] array0x1;
+        char[,] array2x2;
 
+        Tile tileA;
+        Tile tileB;
+        Tile tileD;
+        Tile tileE;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            array3x3 = new char[,] 
+            {
+                { 'a', 'b', 'c' },
+                { 'd', 'e', 'f' },
+                { 'g', 'h', 'i' }
+            };
+            array2x2 = new char[,]
+            {
+                { 'a', 'b'},
+                { 'd', 'e'}
+            };
+            arrayEmpty = new char[0, 0];
+            array1x0 = new char[1, 0];
+            array0x1 = new char[0, 1];
+
+            tileA = new Tile(new Coordinates(0, 0), 'a', false);
+            tileB = new Tile(new Coordinates(0, 1), 'b', false);
+            tileD = new Tile(new Coordinates(1, 0), 'd', false);
+            tileE = new Tile(new Coordinates(1, 1), 'e', false);
+            
+        }
+
+
+        //Tiles tests
 
         [TestMethod]
         public void Tiles_board3x3_CountIs9()
         {
-            var board = new Board(board3x3);
+            var board = new Board(array3x3);
             var tiles = board.Tiles;
             Assert.AreEqual(9, tiles.Count);
         }
@@ -30,7 +59,7 @@ namespace UnitTests
         [TestMethod]
         public void Tiles_board3x3_TileContentIsCorrect()
         {
-            var board = new Board(board3x3);
+            var board = new Board(array3x3);
             var tiles = board.Tiles;
             var previousCoords = new List<Coordinates>();
             foreach (var tile in tiles)
@@ -42,9 +71,11 @@ namespace UnitTests
                 }
                 previousCoords.Add(tile.Coords);
                 Assert.IsFalse(tile.HasMark);
-                Assert.AreEqual(tile.Letter, board3x3[tile.Coords.X, tile.Coords.Y]);
+                Assert.AreEqual(tile.Letter, array3x3[tile.Coords.X, tile.Coords.Y]);
             }
         }
+
+        //NewBoard tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
@@ -74,5 +105,54 @@ namespace UnitTests
             var board = new Board(null);
         }
 
+
+        //GetNeighbor tests
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GetNeighbor_TileIsNull_ThrowsException()
+        {
+            var board = new Board(array2x2);
+            board.GetNeighbor(null, 'n');
+        }
+
+        [TestMethod]
+        public void GetNeighbor_board2x2_NewCoordsAreCorrect_North()
+        {
+            var board = new Board(array2x2);
+            var neighbor = board.GetNeighbor(tileD, 'n');
+            Assert.AreEqual(neighbor.Letter, tileA.Letter);
+        }
+
+        [TestMethod]
+        public void GetNeighbor_board2x2_NewCoordsAreCorrect_East()
+        {
+            var board = new Board(array2x2);
+            var neighbor = board.GetNeighbor(tileD, 'e');
+            Assert.AreEqual(neighbor.Letter, tileE.Letter);
+        }
+
+        [TestMethod]
+        public void GetNeighbor_board2x2_NewCoordsAreCorrect_South()
+        {
+            var board = new Board(array2x2);
+            var neighbor = board.GetNeighbor(tileB, 's');
+            Assert.AreEqual(neighbor.Letter, tileE.Letter);
+        }
+
+        [TestMethod]
+        public void GetNeighbor_board2x2_NewCoordsAreCorrect_West()
+        {
+            var board = new Board(array2x2);
+            var neighbor = board.GetNeighbor(tileB, 'w');
+            Assert.AreEqual(neighbor.Letter, tileA.Letter);
+        }
+
+
+        //GetNeighbor tests
+        //direction corresponds correctly with array x4
+        //retrieves a gridsquare - can be hole or tile
+        //what happens when it goes off edge?
+        //what happens in switch case if invalid direction and no default specified?
     }
 }

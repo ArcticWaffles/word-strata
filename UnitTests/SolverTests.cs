@@ -188,7 +188,8 @@ namespace UnitTests
 
         //do other smaller methods: 
         //dictionary.contains - sort and binary search?
-        //GetNeighbor()
+        
+
      
 
 
@@ -196,6 +197,7 @@ namespace UnitTests
         //Null tests : tile, currentDepth, maxDepth
         //maxDepth not greater than longest word in dictionary or size of board
         //test on specific boards
+        //currentdepth is correct
 
 
         //[TestMethod]
