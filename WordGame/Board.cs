@@ -8,25 +8,23 @@ namespace WordGame
 {
     public class Board
     {
-        private char[,] letterGrid;
+        private GridSquare[,] gridSquares;
+        public enum Direction {North, South, East, West};
 
         public List<Tile> Tiles
         {
             get
             {
-                var tileList = new List<Tile>();
-                for (int x = 0; x < letterGrid.GetLength(0); x++)
+                List<Tile> tiles = new List<Tile>();
+                for (int x = 0; x < gridSquares.GetLength(0); x++)
                 {
-                    for (int y = 0; y < letterGrid.GetLength(1); y++)
+                    for (int y = 0; y < gridSquares.GetLength(1); y++)
                     {
-                        var currentLetter = letterGrid[x, y];
-                        if (currentLetter != ' ')
-                        {
-                            tileList.Add(new Tile(new Coordinates(x,y), currentLetter, false));
-                        }
+                        if (gridSquares[x, y] is Tile)
+                            tiles.Add(gridSquares[x, y] as Tile);
                     }
                 }
-                return tileList;
+                return tiles;
             }
         }
 
@@ -42,11 +40,25 @@ namespace WordGame
             {
                 throw new ArgumentException("letterGrid dimensions cannot be zero");
             }
-            this.letterGrid = letterGrid;
-            
+            gridSquares = new GridSquare[letterGrid.GetLength(0), letterGrid.GetLength(1)];
+            for (int x = 0; x < letterGrid.GetLength(0); x++)
+            {
+                for (int y = 0; y < letterGrid.GetLength(1); y++)
+                {
+                    var currentLetter = letterGrid[x, y];
+                    if (currentLetter == ' ')
+                    {
+                        gridSquares[x, y] = new Hole(new Coordinates(x, y));
+                    }
+                    else
+                    {
+                        gridSquares[x, y] = new Tile(new Coordinates(x, y), currentLetter, false);
+                    }
+                }
+            }
         }
 
-        public Tile GetNeighbor(Tile originTile, char direction)
+        public GridSquare GetNeighbor(Tile originTile, Direction direction)
         {
             if (originTile == null)
             {
@@ -58,22 +70,25 @@ namespace WordGame
 
             switch (direction)
             {
-                case 'n':
+                case Direction.North:
                     x--;
                     break;
-                case 'e':
+                case Direction.East:
                     y++;
                     break;
-                case 's':
+                case Direction.South:
                     x++;
                     break;
-                case 'w':
+                case Direction.West:
                     y--;
                     break;
             }
 
-            var neighbor = Tiles.Find(Tile => (Tile.Coords.X == x && Tile.Coords.Y == y));
-            return neighbor;
+            if (x < 0 || x > gridSquares.GetLength(0)-1 || y < 0 || y > gridSquares.GetLength(1)-1)
+            {
+                return new Hole(new Coordinates(x, y));
+            }
+            return gridSquares[x,y];
         }
 
 

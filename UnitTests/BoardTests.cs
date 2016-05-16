@@ -113,22 +113,23 @@ namespace UnitTests
         public void GetNeighbor_TileIsNull_ThrowsException()
         {
             var board = new Board(array2x2);
-            board.GetNeighbor(null, 'n');
+            board.GetNeighbor(null, Board.Direction.North);
         }
 
         [TestMethod]
         public void GetNeighbor_board2x2_NewCoordsAreCorrect_North()
         {
             var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileD, 'n');
+            var neighbor = board.GetNeighbor(tileD, Board.Direction.North) as Tile;
             Assert.AreEqual(neighbor.Letter, tileA.Letter);
+
         }
 
         [TestMethod]
         public void GetNeighbor_board2x2_NewCoordsAreCorrect_East()
         {
             var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileD, 'e');
+            var neighbor = board.GetNeighbor(tileD, Board.Direction.East) as Tile;
             Assert.AreEqual(neighbor.Letter, tileE.Letter);
         }
 
@@ -136,7 +137,7 @@ namespace UnitTests
         public void GetNeighbor_board2x2_NewCoordsAreCorrect_South()
         {
             var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileB, 's');
+            var neighbor = board.GetNeighbor(tileB, Board.Direction.South) as Tile;
             Assert.AreEqual(neighbor.Letter, tileE.Letter);
         }
 
@@ -144,15 +145,43 @@ namespace UnitTests
         public void GetNeighbor_board2x2_NewCoordsAreCorrect_West()
         {
             var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileB, 'w');
+            var neighbor = board.GetNeighbor(tileB, Board.Direction.West) as Tile;
             Assert.AreEqual(neighbor.Letter, tileA.Letter);
         }
 
+        [TestMethod]
+        public void GetNeighbor_goesBeyondGrid_North_returnsHole()
+        {
+            var board = new Board(array2x2);
+            var neighbor = board.GetNeighbor(tileA, Board.Direction.North);
+            Assert.IsInstanceOfType(neighbor, typeof(Hole));
+        }
 
-        //GetNeighbor tests
-        //direction corresponds correctly with array x4
-        //retrieves a gridsquare - can be hole or tile
-        //what happens when it goes off edge?
-        //what happens in switch case if invalid direction and no default specified?
+        [TestMethod]
+        public void GetNeighbor_goesBeyondGrid_East_returnsHole()
+        {
+            var board = new Board(array2x2);
+            var neighbor = board.GetNeighbor(tileB, Board.Direction.East);
+            Assert.IsInstanceOfType(neighbor, typeof(Hole));
+        }
+
+        [TestMethod]
+        public void GetNeighbor_goesBeyondGrid_South_returnsHole()
+        {
+            var board = new Board(array2x2);
+            var neighbor = board.GetNeighbor(tileE, Board.Direction.South);
+            Assert.IsInstanceOfType(neighbor, typeof(Hole));
+        }
+
+        [TestMethod]
+        public void GetNeighbor_goesBeyondGrid_West_returnsHole()
+        {
+            var board = new Board(array2x2);
+            var neighbor = board.GetNeighbor(tileD, Board.Direction.West);
+            Assert.IsInstanceOfType(neighbor, typeof(Hole));
+        }
+
+
+        //TODO: add coords and mark asserts to directional tests
     }
 }

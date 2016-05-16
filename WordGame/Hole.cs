@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordGame
 {
-    class Hole : GridSquare
+    public class Hole : GridSquare
     {
         public Hole(Coordinates coordsIn) : base(coordsIn)
         {}
