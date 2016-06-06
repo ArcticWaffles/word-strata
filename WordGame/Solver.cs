@@ -8,18 +8,18 @@ namespace WordGame
 {
     public class Solver
     {
-        string[] dictionary;
+        List<string> dictionary;
         Board board;
-        StringBuilder theWord;
+        StringBuilder theWord = new StringBuilder("");
 
-        public Solver(string[] dictionary, Board board)
+        public Solver(List<string> dictionary, Board board)
         {
             if (dictionary == null)
             {
                 throw new ArgumentNullException("Dictionary cannot be null");
             }
 
-            if (dictionary.Length == 0)
+            if (dictionary.Count == 0)
             {
                 throw new ArgumentException("Dictionary cannot be empty");
             }
@@ -77,8 +77,50 @@ namespace WordGame
 
 
 
-        //public bool WordExists()
-        //{
-        //}
+        public bool Walk(Tile tile, int currentDepth, int maxDepth)
+        {
+            if (tile == null)
+            {
+                throw new ArgumentNullException("Tile cannot be null");
+            }
+
+            if(tile.HasMark == true)
+            {
+                return false;
+            }
+
+            MarkAndAppend(tile, theWord);
+
+            if (currentDepth == maxDepth)
+            {
+                if (dictionary.Contains(theWord.ToString()))
+                {
+                    return true;
+                }
+                else
+                {
+                    UnmarkAndRemove(tile, theWord);
+                    return false;
+                }
+
+            }
+
+            foreach (Board.Direction direction in Enum.GetValues(typeof(Board.Direction)))
+            {
+                var neighbor = board.GetNeighbor(tile, direction);
+                if (neighbor is Tile)
+                {
+                   if (Walk(neighbor as Tile, currentDepth + 1, maxDepth))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            UnmarkAndRemove(tile, theWord);
+
+            return false;
+        }
+
     }
 }

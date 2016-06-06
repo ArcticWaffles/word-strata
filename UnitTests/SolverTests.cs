@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using WordGame;
 using System.Text;
 
@@ -11,6 +12,8 @@ namespace UnitTests
 
         Tile validUnmarkedTileA;
         Tile validMarkedTileB;
+        Tile startOfWordTile2x2;
+        Tile startOfWordTile3x3;
 
         StringBuilder newWord;
         StringBuilder wordWithSomeLetters;
@@ -18,8 +21,9 @@ namespace UnitTests
         Board board3x3;
         Board board2x2;
 
-        string[] emptyDictionary;
-        string[] smallDictionary;
+        List<string> emptyDictionary;
+        List<string> smallDictionary;
+        List<string> unfoundWordDictionary;
 
         [TestInitialize]
         public void TestInitialize()
@@ -27,6 +31,8 @@ namespace UnitTests
 
             validUnmarkedTileA = new Tile(new Coordinates(1, 1), 'a', false);
             validMarkedTileB = new Tile(new Coordinates(2, 2), 'b', true);
+            startOfWordTile2x2 = new Tile(new Coordinates(1, 0), 'c', false);
+            startOfWordTile3x3 = new Tile(new Coordinates(0, 1), 'b', false);
 
             newWord = new StringBuilder();
             wordWithSomeLetters = new StringBuilder("cat");
@@ -40,15 +46,20 @@ namespace UnitTests
             board3x3 = new Board(new char[,]
             {
             { 'a', 'b', 'd' },
-            { 'r', 'x', 'x' },
+            { 'r', 'k', 'x' },
             { 'x', 'x', 'x' }
             });
 
-            emptyDictionary = new string[] { };
-            smallDictionary = new string[]
+            emptyDictionary = new List<string> { };
+            smallDictionary = new List<string>
             {
-            "bar",
+            "bark",
             "cab"
+            };
+
+            unfoundWordDictionary = new List<string>
+            {
+                "daisy"
             };
 
         }
@@ -183,20 +194,70 @@ namespace UnitTests
         }
 
 
+
+        //Walk tests
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Walk_TileIsNull_ThrowsException()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            solver.Walk(null, 0, 0); 
+        }
+
+        [TestMethod]
+        public void Walk_TileIsMarked_ReturnsFalse()
+        {
+            var solver = new Solver(smallDictionary, board2x2);
+            bool result = solver.Walk(validMarkedTileB, 0, 0);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Walk_WordIsFound3Letters_ReturnsTrue()
+        {
+            var solver = new Solver(smallDictionary, board2x2);
+            Assert.IsTrue(solver.Walk(startOfWordTile2x2, 0, 2));
+        }
+
+        [TestMethod]
+        public void Walk_WordIsFound4Letters_ReturnsTrue()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            Assert.IsTrue(solver.Walk(startOfWordTile3x3, 0, 3));
+        }
+
+        [TestMethod]
+        public void Walk_WordExistsButMaxDepthTooSmall_ReturnsFalse()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            Assert.IsFalse(solver.Walk(startOfWordTile3x3, 0, 2));
+        }
+
+        [TestMethod]
+        public void Walk_WordIsNotFound_ReturnsFalse()
+        {
+            var solver = new Solver(unfoundWordDictionary, board2x2);
+            Assert.IsFalse(solver.Walk(startOfWordTile2x2, 0, 2));
+        }
+
+
+
+    //TODO: Use debugger to watch Walk method in action
+    //TODO: Use different starting letter (word won't be found from that tile)
+
         //unmark and remove tests - last letter in string is equal to tile letter? (do m/a and then u/r?)
         //test words of more lengths?
 
         //do other smaller methods: 
-        //dictionary.contains - sort and binary search?
-        
+        //dictionary - would sort and binary search be helpful?
 
-     
+
+
 
 
         //Walk: don't backtrack yourself before you're done searching
-        //Null tests : tile, currentDepth, maxDepth
         //maxDepth not greater than longest word in dictionary or size of board
-        //test on specific boards
         //currentdepth is correct
 
 

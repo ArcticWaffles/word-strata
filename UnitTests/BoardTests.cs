@@ -182,6 +182,6 @@ namespace UnitTests
         }
 
 
-        //TODO: add coords and mark asserts to directional tests
+        //TODO: add coords and mark asserts to getNeighbor directional tests
     }
 }
