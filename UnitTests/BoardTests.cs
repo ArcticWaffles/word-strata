@@ -117,36 +117,48 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void GetNeighbor_board2x2_NewCoordsAreCorrect_North()
+        public void GetNeighbor_board2x2_NeighborIsCorrect_North()
         {
             var board = new Board(array2x2);
             var neighbor = board.GetNeighbor(tileD, Board.Direction.North) as Tile;
             Assert.AreEqual(neighbor.Letter, tileA.Letter);
+            Assert.AreEqual(neighbor.Coords.X, tileA.Coords.X);
+            Assert.AreEqual(neighbor.Coords.Y, tileA.Coords.Y);
+            Assert.AreEqual(neighbor.HasMark, tileA.HasMark);
 
         }
 
         [TestMethod]
-        public void GetNeighbor_board2x2_NewCoordsAreCorrect_East()
+        public void GetNeighbor_board2x2_NeighborIsCorrect_East()
         {
             var board = new Board(array2x2);
             var neighbor = board.GetNeighbor(tileD, Board.Direction.East) as Tile;
             Assert.AreEqual(neighbor.Letter, tileE.Letter);
+            Assert.AreEqual(neighbor.Coords.X, tileE.Coords.X);
+            Assert.AreEqual(neighbor.Coords.Y, tileE.Coords.Y);
+            Assert.AreEqual(neighbor.HasMark, tileE.HasMark);
         }
 
         [TestMethod]
-        public void GetNeighbor_board2x2_NewCoordsAreCorrect_South()
+        public void GetNeighbor_board2x2_NeigborIsCorrect_South()
         {
             var board = new Board(array2x2);
             var neighbor = board.GetNeighbor(tileB, Board.Direction.South) as Tile;
             Assert.AreEqual(neighbor.Letter, tileE.Letter);
+            Assert.AreEqual(neighbor.Coords.X, tileE.Coords.X);
+            Assert.AreEqual(neighbor.Coords.Y, tileE.Coords.Y);
+            Assert.AreEqual(neighbor.HasMark, tileE.HasMark);
         }
 
         [TestMethod]
-        public void GetNeighbor_board2x2_NewCoordsAreCorrect_West()
+        public void GetNeighbor_board2x2_NeighborIsCorrect_West()
         {
             var board = new Board(array2x2);
             var neighbor = board.GetNeighbor(tileB, Board.Direction.West) as Tile;
             Assert.AreEqual(neighbor.Letter, tileA.Letter);
+            Assert.AreEqual(neighbor.Coords.X, tileA.Coords.X);
+            Assert.AreEqual(neighbor.Coords.Y, tileA.Coords.Y);
+            Assert.AreEqual(neighbor.HasMark, tileA.HasMark);
         }
 
         [TestMethod]
@@ -182,6 +194,5 @@ namespace UnitTests
         }
 
 
-        //TODO: add coords and mark asserts to getNeighbor directional tests
     }
 }

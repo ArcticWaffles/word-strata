@@ -118,7 +118,26 @@ namespace WordGame
             }
 
             UnmarkAndRemove(tile, theWord);
+            return false;
+        }
 
+
+
+        public bool WordExists()
+        {
+            //TODO: Decide how to determine "maxlength" of a word - find longest word in dictionary, or number of tiles on the board?
+            for (int i = 0; i <= board.Tiles.Count(); i++)
+            {
+                foreach(Tile tile in board.Tiles)
+                {
+                    theWord.Clear();
+                    if(Walk(tile, 0, i))
+                    {
+                        return true;
+                    }
+                    
+                }
+            }
             return false;
         }
 

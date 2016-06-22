@@ -20,10 +20,11 @@ namespace UnitTests
 
         Board board3x3;
         Board board2x2;
+        Board boardWithNoWords;
 
         List<string> emptyDictionary;
         List<string> smallDictionary;
-        List<string> unfoundWordDictionary;
+        List<string> wordCannotBeFoundDictionary;
 
         [TestInitialize]
         public void TestInitialize()
@@ -45,19 +46,27 @@ namespace UnitTests
 
             board3x3 = new Board(new char[,]
             {
-            { 'a', 'b', 'd' },
-            { 'r', 'k', 'x' },
-            { 'x', 'x', 'x' }
+                { 'a', 'b', 'd' },
+                { 'r', 'k', 'x' },
+                { 'x', 'x', 'x' }
+            });
+
+            boardWithNoWords = new Board(new char[,]
+            {
+                {'x', 'x' },
+                {'x', 'x' }
             });
 
             emptyDictionary = new List<string> { };
+
             smallDictionary = new List<string>
             {
             "bark",
+            "bar",
             "cab"
             };
 
-            unfoundWordDictionary = new List<string>
+            wordCannotBeFoundDictionary = new List<string>
             {
                 "daisy"
             };
@@ -214,14 +223,21 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void Walk_WordIsFound3Letters_ReturnsTrue()
+        public void Walk_WordIsFound3Letters2x2_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board2x2);
             Assert.IsTrue(solver.Walk(startOfWordTile2x2, 0, 2));
         }
 
         [TestMethod]
-        public void Walk_WordIsFound4Letters_ReturnsTrue()
+        public void Walk_WordIsFound3Letters3x3_ReturnsTrue()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            Assert.IsTrue(solver.Walk(startOfWordTile3x3, 0, 2));
+        }
+
+        [TestMethod]
+        public void Walk_WordIsFound4Letters3x3_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board3x3);
             Assert.IsTrue(solver.Walk(startOfWordTile3x3, 0, 3));
@@ -231,43 +247,59 @@ namespace UnitTests
         public void Walk_WordExistsButMaxDepthTooSmall_ReturnsFalse()
         {
             var solver = new Solver(smallDictionary, board3x3);
-            Assert.IsFalse(solver.Walk(startOfWordTile3x3, 0, 2));
+            Assert.IsFalse(solver.Walk(startOfWordTile3x3, 0, 1));
         }
 
         [TestMethod]
         public void Walk_WordIsNotFound_ReturnsFalse()
         {
-            var solver = new Solver(unfoundWordDictionary, board2x2);
+            var solver = new Solver(wordCannotBeFoundDictionary, board2x2);
             Assert.IsFalse(solver.Walk(startOfWordTile2x2, 0, 2));
+        }
+
+        [TestMethod]
+        public void Walk_WordIsNotFoundFromStartingLetter_ReturnsFalse()
+        {
+            var solver = new Solver(smallDictionary, board2x2);
+            Assert.IsFalse(solver.Walk(validUnmarkedTileA, 0, 3));
         }
 
 
 
-    //TODO: Use debugger to watch Walk method in action
-    //TODO: Use different starting letter (word won't be found from that tile)
+        //Word Exists Tests
 
-        //unmark and remove tests - last letter in string is equal to tile letter? (do m/a and then u/r?)
-        //test words of more lengths?
+        [TestMethod]
+        public void WordExists_WordDoesExist3x3_ReturnsTrue()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            Assert.IsTrue(solver.WordExists());
+        }
 
-        //do other smaller methods: 
-        //dictionary - would sort and binary search be helpful?
+        [TestMethod]
+        public void WordExists_WordDoesExist2x2_ReturnsTrue()
+        {
+            var solver = new Solver(smallDictionary, board2x2);
+            Assert.IsTrue(solver.WordExists());
+        }
 
+        [TestMethod]
+        public void WordExists_WordDoesNotExistDictionary_ReturnsFalse()
+        {
+            var solver = new Solver(wordCannotBeFoundDictionary, board3x3);
+            Assert.IsFalse(solver.WordExists());
+        }
 
+        [TestMethod]
+        public void WordExists_WordDoesNotExistBoard_ReturnsFalse()
+        {
+            var solver = new Solver(smallDictionary, boardWithNoWords);
+            Assert.IsFalse(solver.WordExists());
+        }
 
+        //TODO: unmark and remove tests - last letter in string is equal to tile letter? (do m/a and then u/r)?
+        //TODO: Walk - test words of more lengths?
+        //TODO: dictionary - would sort and binary search be helpful for large dictionaries?
 
-
-        //Walk: don't backtrack yourself before you're done searching
-        //maxDepth not greater than longest word in dictionary or size of board
-        //currentdepth is correct
-
-
-        //[TestMethod]
-        //public void WordExists_WordDoesExist_ReturnsTrue()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    var result = solver.WordExists();
-        //    Assert.IsTrue(result, "No words were found");
-        //}
     }
 
 
