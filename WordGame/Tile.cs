@@ -8,7 +8,7 @@ namespace WordGame
 {
     public class Tile : GridSquare
     {
-        bool hasMark;
+        private bool hasMark;
         public bool HasMark
         {
             get { return hasMark; }

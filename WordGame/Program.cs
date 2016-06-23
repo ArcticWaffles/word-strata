@@ -60,7 +60,7 @@ namespace WordGame
             };
 
             var solver = new Solver(smallDictionary, board3x3);
-            bool word = solver.Walk(startOfWordTile3x3, 0, 3);
+            bool word = solver.WordExistsFromStartingTile(startOfWordTile3x3, 3);
             Console.WriteLine(word);
         }
     }

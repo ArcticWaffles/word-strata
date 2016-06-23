@@ -211,14 +211,14 @@ namespace UnitTests
         public void Walk_TileIsNull_ThrowsException()
         {
             var solver = new Solver(smallDictionary, board3x3);
-            solver.Walk(null, 0, 0); 
+            solver.WordExistsFromStartingTile(null, 0); 
         }
 
         [TestMethod]
         public void Walk_TileIsMarked_ReturnsFalse()
         {
             var solver = new Solver(smallDictionary, board2x2);
-            bool result = solver.Walk(validMarkedTileB, 0, 0);
+            bool result = solver.WordExistsFromStartingTile(validMarkedTileB, 0);
             Assert.IsFalse(result);
         }
 
@@ -226,74 +226,76 @@ namespace UnitTests
         public void Walk_WordIsFound3Letters2x2_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board2x2);
-            Assert.IsTrue(solver.Walk(startOfWordTile2x2, 0, 2));
+            Assert.IsTrue(solver.WordExistsFromStartingTile(startOfWordTile2x2, 2));
         }
 
         [TestMethod]
         public void Walk_WordIsFound3Letters3x3_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board3x3);
-            Assert.IsTrue(solver.Walk(startOfWordTile3x3, 0, 2));
+            Assert.IsTrue(solver.WordExistsFromStartingTile(startOfWordTile3x3, 2));
         }
 
         [TestMethod]
         public void Walk_WordIsFound4Letters3x3_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board3x3);
-            Assert.IsTrue(solver.Walk(startOfWordTile3x3, 0, 3));
+            Assert.IsTrue(solver.WordExistsFromStartingTile(startOfWordTile3x3, 3));
         }
 
         [TestMethod]
         public void Walk_WordExistsButMaxDepthTooSmall_ReturnsFalse()
         {
             var solver = new Solver(smallDictionary, board3x3);
-            Assert.IsFalse(solver.Walk(startOfWordTile3x3, 0, 1));
+            Assert.IsFalse(solver.WordExistsFromStartingTile(startOfWordTile3x3, 1));
         }
 
         [TestMethod]
         public void Walk_WordIsNotFound_ReturnsFalse()
         {
             var solver = new Solver(wordCannotBeFoundDictionary, board2x2);
-            Assert.IsFalse(solver.Walk(startOfWordTile2x2, 0, 2));
+            Assert.IsFalse(solver.WordExistsFromStartingTile(startOfWordTile2x2, 2));
         }
 
         [TestMethod]
         public void Walk_WordIsNotFoundFromStartingLetter_ReturnsFalse()
         {
             var solver = new Solver(smallDictionary, board2x2);
-            Assert.IsFalse(solver.Walk(validUnmarkedTileA, 0, 3));
+            Assert.IsFalse(solver.WordExistsFromStartingTile(validUnmarkedTileA, 3));
         }
 
 
 
         //Word Exists Tests
+        //TODO: remove marked attribute from tiles, add list of marked tiles to solver class
+        //TODO: unit tests to ensure all marks are clear after performing WordExists
 
         [TestMethod]
         public void WordExists_WordDoesExist3x3_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board3x3);
-            Assert.IsTrue(solver.WordExists());
+            Assert.IsTrue(solver.WordExistsOnBoard());
         }
 
         [TestMethod]
         public void WordExists_WordDoesExist2x2_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board2x2);
-            Assert.IsTrue(solver.WordExists());
+            Assert.IsTrue(solver.WordExistsOnBoard());
         }
 
         [TestMethod]
         public void WordExists_WordDoesNotExistDictionary_ReturnsFalse()
         {
             var solver = new Solver(wordCannotBeFoundDictionary, board3x3);
-            Assert.IsFalse(solver.WordExists());
+            Assert.IsFalse(solver.WordExistsOnBoard());
         }
 
         [TestMethod]
         public void WordExists_WordDoesNotExistBoard_ReturnsFalse()
         {
             var solver = new Solver(smallDictionary, boardWithNoWords);
-            Assert.IsFalse(solver.WordExists());
+            Assert.IsFalse(solver.WordExistsOnBoard());
         }
 
         //TODO: unmark and remove tests - last letter in string is equal to tile letter? (do m/a and then u/r)?

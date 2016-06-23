@@ -74,10 +74,13 @@ namespace WordGame
             theWord.Remove((theWord.Length - 1), 1);
         }
 
+        public bool WordExistsFromStartingTile(Tile startingTile, int maxDepth)
+        {
+            return WordExistsFromTileRecursive(startingTile, 0, maxDepth);
+        }
 
 
-
-        public bool Walk(Tile tile, int currentDepth, int maxDepth)
+        private bool WordExistsFromTileRecursive(Tile tile, int currentDepth, int maxDepth)
         {
             if (tile == null)
             {
@@ -93,16 +96,9 @@ namespace WordGame
 
             if (currentDepth == maxDepth)
             {
-                if (dictionary.Contains(theWord.ToString()))
-                {
-                    return true;
-                }
-                else
-                {
-                    UnmarkAndRemove(tile, theWord);
-                    return false;
-                }
-
+                bool result = dictionary.Contains(theWord.ToString());
+                UnmarkAndRemove(tile, theWord);
+                return result;
             }
 
             foreach (Board.Direction direction in Enum.GetValues(typeof(Board.Direction)))
@@ -110,8 +106,9 @@ namespace WordGame
                 var neighbor = board.GetNeighbor(tile, direction);
                 if (neighbor is Tile)
                 {
-                   if (Walk(neighbor as Tile, currentDepth + 1, maxDepth))
+                   if (WordExistsFromTileRecursive(neighbor as Tile, currentDepth + 1, maxDepth))
                     {
+                        UnmarkAndRemove(tile, theWord);
                         return true;
                     }
                 }
@@ -123,15 +120,30 @@ namespace WordGame
 
 
 
-        public bool WordExists()
+        public bool WordExistsOnBoard()
         {
-            //TODO: Decide how to determine "maxlength" of a word - find longest word in dictionary, or number of tiles on the board?
-            for (int i = 0; i <= board.Tiles.Count(); i++)
+            //TODO: Decide how to determine "maxlength" of a word - find longest word in dictionary, or number of tiles on the board, or minimum of the two, or hard code for longest word in English or modified hard code?
+            //TODO: more comments to explain what's going on
+            //TODO: rename walk and wordExists for clarity
+            //TODO: extra check for clearing mark on tiles
+
+            //Clear any existing marks
+            foreach (Tile tile in board.Tiles)
             {
-                foreach(Tile tile in board.Tiles)
+                tile.HasMark = false;
+            }
+
+            //Word length can't exceed the number of tiles on the board (temporary upper limit)
+            int tilesOnBoard = board.Tiles.Count();
+
+            //Outer loop: for each max depth
+            for (int i = 0; i <= tilesOnBoard; i++)
+            {
+                //Inner loop: for each starting tile
+                foreach (Tile tile in board.Tiles)
                 {
                     theWord.Clear();
-                    if(Walk(tile, 0, i))
+                    if(WordExistsFromStartingTile(tile, i))
                     {
                         return true;
                     }
