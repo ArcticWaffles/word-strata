@@ -10,7 +10,6 @@ namespace WordGame
     {
         List<string> dictionary;
         Board board;
-        StringBuilder theWord = new StringBuilder("");
 
         public Solver(List<string> dictionary, Board board)
         {
@@ -33,7 +32,7 @@ namespace WordGame
             this.board = board;
         }
 
-        public void MarkAndAppend(Tile tile, StringBuilder theWord)
+        private void MarkAndAppend(Tile tile, StringBuilder theWord, List<Tile> markedTiles)
         {
             if (tile == null)
             {
@@ -43,16 +42,16 @@ namespace WordGame
             {
                 throw new ArgumentNullException("theWord cannot be null");
             }
-            if (tile.HasMark == true)
+            if (markedTiles.Contains(tile))
             {
                 throw new ArgumentException("Tile should be unmarked");
             }
-                
-            tile.Mark();
+
+            markedTiles.Add(tile);
             theWord.Append(tile.Letter);
         }
 
-        public void UnmarkAndRemove(Tile tile, StringBuilder theWord)
+        private void UnmarkAndRemove(Tile tile, StringBuilder theWord, List<Tile> markedTiles)
         {
             if (tile == null)
             {
@@ -62,11 +61,11 @@ namespace WordGame
             {
                 throw new ArgumentNullException("theWord cannot be null");
             }
-            if (tile.HasMark == false)
+            if (!markedTiles.Contains(tile))
             {
                 throw new ArgumentException("Tile should be marked");
             }
-            tile.Unmark();
+            markedTiles.Remove(tile);
             if (theWord.Length < 1)
             {
                 throw new ArgumentException("theWord cannot be empty");
@@ -76,28 +75,30 @@ namespace WordGame
 
         public bool WordExistsFromStartingTile(Tile startingTile, int maxDepth)
         {
-            return WordExistsFromTileRecursive(startingTile, 0, maxDepth);
+            List<Tile> markedTiles = new List<Tile>();
+            StringBuilder theWord = new StringBuilder("");
+            return WordExistsFromTileRecursive(startingTile, 0, maxDepth, markedTiles, theWord);
         }
 
 
-        private bool WordExistsFromTileRecursive(Tile tile, int currentDepth, int maxDepth)
+        private bool WordExistsFromTileRecursive(Tile tile, int currentDepth, int maxDepth, List<Tile> markedTiles, StringBuilder theWord)
         {
             if (tile == null)
             {
                 throw new ArgumentNullException("Tile cannot be null");
             }
 
-            if(tile.HasMark == true)
+            if(markedTiles.Contains(tile))
             {
                 return false;
             }
 
-            MarkAndAppend(tile, theWord);
+            MarkAndAppend(tile, theWord, markedTiles);
 
             if (currentDepth == maxDepth)
             {
                 bool result = dictionary.Contains(theWord.ToString());
-                UnmarkAndRemove(tile, theWord);
+                UnmarkAndRemove(tile, theWord, markedTiles);
                 return result;
             }
 
@@ -106,15 +107,15 @@ namespace WordGame
                 var neighbor = board.GetNeighbor(tile, direction);
                 if (neighbor is Tile)
                 {
-                   if (WordExistsFromTileRecursive(neighbor as Tile, currentDepth + 1, maxDepth))
+                   if (WordExistsFromTileRecursive(neighbor as Tile, currentDepth + 1, maxDepth, markedTiles, theWord))
                     {
-                        UnmarkAndRemove(tile, theWord);
+                        UnmarkAndRemove(tile, theWord, markedTiles);
                         return true;
                     }
                 }
             }
 
-            UnmarkAndRemove(tile, theWord);
+            UnmarkAndRemove(tile, theWord, markedTiles);
             return false;
         }
 
@@ -125,13 +126,6 @@ namespace WordGame
             //TODO: Decide how to determine "maxlength" of a word - find longest word in dictionary, or number of tiles on the board, or minimum of the two, or hard code for longest word in English or modified hard code?
             //TODO: more comments to explain what's going on
             //TODO: rename walk and wordExists for clarity
-            //TODO: extra check for clearing mark on tiles
-
-            //Clear any existing marks
-            foreach (Tile tile in board.Tiles)
-            {
-                tile.HasMark = false;
-            }
 
             //Word length can't exceed the number of tiles on the board (temporary upper limit)
             int tilesOnBoard = board.Tiles.Count();
@@ -142,8 +136,7 @@ namespace WordGame
                 //Inner loop: for each starting tile
                 foreach (Tile tile in board.Tiles)
                 {
-                    theWord.Clear();
-                    if(WordExistsFromStartingTile(tile, i))
+                    if (WordExistsFromStartingTile(tile, i))
                     {
                         return true;
                     }

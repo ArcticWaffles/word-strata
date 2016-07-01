@@ -8,35 +8,16 @@ namespace WordGame
 {
     public class Tile : GridSquare
     {
-        private bool hasMark;
-        public bool HasMark
-        {
-            get { return hasMark; }
-            set { hasMark = value; }
-        }
-
         readonly char letter;
         public char Letter
         {
             get { return letter; }
         }
 
-        public Tile(Coordinates coordsIn, char letterIn, bool hasMarkIn) : base(coordsIn)
+        public Tile(Coordinates coordsIn, char letterIn) : base(coordsIn)
         {
             letter = letterIn;
-            hasMark = hasMarkIn;
         }
-
-        public void Mark()
-        {
-            hasMark = true;
-        }
-
-        public void Unmark()
-        {
-            hasMark = false;
-        }
-
 
     }
 }

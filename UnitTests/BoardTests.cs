@@ -38,10 +38,10 @@ namespace UnitTests
             array1x0 = new char[1, 0];
             array0x1 = new char[0, 1];
 
-            tileA = new Tile(new Coordinates(0, 0), 'a', false);
-            tileB = new Tile(new Coordinates(0, 1), 'b', false);
-            tileD = new Tile(new Coordinates(1, 0), 'd', false);
-            tileE = new Tile(new Coordinates(1, 1), 'e', false);
+            tileA = new Tile(new Coordinates(0, 0), 'a');
+            tileB = new Tile(new Coordinates(0, 1), 'b');
+            tileD = new Tile(new Coordinates(1, 0), 'd');
+            tileE = new Tile(new Coordinates(1, 1), 'e');
             
         }
 
@@ -70,7 +70,6 @@ namespace UnitTests
                     Assert.Fail("Tiles weren't unique");
                 }
                 previousCoords.Add(tile.Coords);
-                Assert.IsFalse(tile.HasMark);
                 Assert.AreEqual(tile.Letter, array3x3[tile.Coords.X, tile.Coords.Y]);
             }
         }
@@ -124,8 +123,6 @@ namespace UnitTests
             Assert.AreEqual(neighbor.Letter, tileA.Letter);
             Assert.AreEqual(neighbor.Coords.X, tileA.Coords.X);
             Assert.AreEqual(neighbor.Coords.Y, tileA.Coords.Y);
-            Assert.AreEqual(neighbor.HasMark, tileA.HasMark);
-
         }
 
         [TestMethod]
@@ -136,7 +133,6 @@ namespace UnitTests
             Assert.AreEqual(neighbor.Letter, tileE.Letter);
             Assert.AreEqual(neighbor.Coords.X, tileE.Coords.X);
             Assert.AreEqual(neighbor.Coords.Y, tileE.Coords.Y);
-            Assert.AreEqual(neighbor.HasMark, tileE.HasMark);
         }
 
         [TestMethod]
@@ -147,7 +143,6 @@ namespace UnitTests
             Assert.AreEqual(neighbor.Letter, tileE.Letter);
             Assert.AreEqual(neighbor.Coords.X, tileE.Coords.X);
             Assert.AreEqual(neighbor.Coords.Y, tileE.Coords.Y);
-            Assert.AreEqual(neighbor.HasMark, tileE.HasMark);
         }
 
         [TestMethod]
@@ -158,7 +153,6 @@ namespace UnitTests
             Assert.AreEqual(neighbor.Letter, tileA.Letter);
             Assert.AreEqual(neighbor.Coords.X, tileA.Coords.X);
             Assert.AreEqual(neighbor.Coords.Y, tileA.Coords.Y);
-            Assert.AreEqual(neighbor.HasMark, tileA.HasMark);
         }
 
         [TestMethod]

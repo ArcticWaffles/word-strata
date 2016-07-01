@@ -52,7 +52,7 @@ namespace WordGame
                     }
                     else
                     {
-                        gridSquares[x, y] = new Tile(new Coordinates(x, y), currentLetter, false);
+                        gridSquares[x, y] = new Tile(new Coordinates(x, y), currentLetter);
                     }
                 }
             }

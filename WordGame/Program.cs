@@ -25,10 +25,10 @@ namespace WordGame
             List<string> smallDictionary;
             List<string> unfoundWordDictionary;
 
-            validUnmarkedTileA = new Tile(new Coordinates(1, 1), 'a', false);
-            validMarkedTileB = new Tile(new Coordinates(2, 2), 'b', true);
-            startOfWordTile2x2 = new Tile(new Coordinates(1, 0), 'c', false);
-            startOfWordTile3x3 = new Tile(new Coordinates(0, 1), 'b', false);
+            validUnmarkedTileA = new Tile(new Coordinates(1, 1), 'a');
+            validMarkedTileB = new Tile(new Coordinates(2, 2), 'b');
+            startOfWordTile2x2 = new Tile(new Coordinates(1, 0), 'c');
+            startOfWordTile3x3 = new Tile(new Coordinates(0, 1), 'b');
 
             newWord = new StringBuilder();
             wordWithSomeLetters = new StringBuilder("cat");
