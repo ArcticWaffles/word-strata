@@ -8,9 +8,14 @@ namespace WordGame
 {
     public class Board
     {
+        //A gridsquare is a specific square on the board and is either a tile or a hole. 
+        //gridSquares is a 2D array representing all the tiles and holes on the board.
         private GridSquare[,] gridSquares;
+
+        //Used for navigating the board
         public enum Direction {North, South, East, West};
 
+        //Returns all the tiles on the board as a list
         public List<Tile> Tiles
         {
             get
@@ -28,7 +33,8 @@ namespace WordGame
             }
         }
 
-
+        //Board constructor. letterGrid is a 2D array representing all the letters on the tiles.
+        //A hole has a space character.
         public Board(char[,] letterGrid)
         {
             if (letterGrid == null)
@@ -58,6 +64,7 @@ namespace WordGame
             }
         }
 
+        //Returns a neighboring tile or hole.
         public GridSquare GetNeighbor(Tile originTile, Direction direction)
         {
             if (originTile == null)
@@ -84,6 +91,7 @@ namespace WordGame
                     break;
             }
 
+            //If the neighbor is outside of the board dimensions, returns a hole
             if (x < 0 || x > gridSquares.GetLength(0)-1 || y < 0 || y > gridSquares.GetLength(1)-1)
             {
                 return new Hole(new Coordinates(x, y));

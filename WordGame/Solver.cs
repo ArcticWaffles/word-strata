@@ -32,6 +32,10 @@ namespace WordGame
             this.board = board;
         }
 
+
+        //"Mark" keeps track of tiles that have already been checked, to prevent using the same letter 
+        //twice in a word and prevent checking duplicate paths.
+        //"Append" updates theWord with a new letter as a new tile is added to the path.
         private void MarkAndAppend(Tile tile, StringBuilder theWord, List<Tile> markedTiles)
         {
             if (tile == null)
@@ -73,6 +77,8 @@ namespace WordGame
             theWord.Remove((theWord.Length - 1), 1);
         }
 
+        //Verifies that a word still exists on the board so the user can be alerted when the game is over.
+        //Public method calls the private, recursive version of the method.
         public bool WordExistsFromStartingTile(Tile startingTile, int maxDepth)
         {
             List<Tile> markedTiles = new List<Tile>();
@@ -81,6 +87,10 @@ namespace WordGame
         }
 
 
+        //Uses a breadth first search to find words on the board, i.e. checks for a 1-letter word first, then a 2-letter word, etc.
+        //Returns true as soon as it finds any word.
+        //currentDepth refers to how many tiles are in the current path
+        //maxDepth refers to 
         private bool WordExistsFromTileRecursive(Tile tile, int currentDepth, int maxDepth, List<Tile> markedTiles, StringBuilder theWord)
         {
             if (tile == null)

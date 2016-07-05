@@ -72,6 +72,8 @@ namespace UnitTests
             };
 
         }
+ 
+
 
         //NewSolver tests
 
@@ -99,115 +101,6 @@ namespace UnitTests
 
 
 
-        //MarkAndAppend tests
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentNullException))]
-        //public void MarkAndAppend_TileIsNull_ThrowsException()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.MarkAndAppend(null, newWord);
-        //}
-
-        //[TestMethod]
-        //public void MarkAndAppend_TileIsValid_StartsEmpty_AppendsLetter()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.MarkAndAppend(validTileA, newWord);
-        //    Assert.AreEqual(newWord.ToString(), validTileA.Letter.ToString());
-        //}
-
-        //[TestMethod]
-        //public void MarkAndAppend_TileIsValid_AlreadyHasLetters_AppendsLetter()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.MarkAndAppend(validTileA, wordWithSomeLetters);
-        //    Assert.AreEqual(wordWithSomeLetters.ToString(), "cat" + validTileA.Letter);
-        //}
-
-        //[TestMethod]
-        //public void MarkAndAppend_TileIsValid_ChangesUnmarkedToMarked()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.MarkAndAppend(validTileA, newWord);
-        //    Assert.IsTrue(solver.markedTiles.Contains(validTileA));
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void MarkAndAppend_TileIsAlreadyMarked_ThrowsExeption()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.markedTiles.Add(validTileB);
-        //    solver.MarkAndAppend(validTileB, newWord);
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentNullException))]
-        //public void MarkAndAppend_theWordIsNull_ThrowsExeption()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.MarkAndAppend(validTileA, null);
-        //}
-
-
-
-
-        //UnmarkAndRemove tests
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentNullException))]
-        //public void UnmarkAndRemove_TileIsNull_ThrowsException()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.UnmarkAndRemove(null, newWord);
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentNullException))]
-        //public void UnmarkAndRemove_theWordIsNull_ThrowsExeption()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.UnmarkAndRemove(validTileB, null);
-        //}
-
-        //[TestMethod]
-        //public void UnmarkAndRemove_TileIsValid_RemovesLetter()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.markedTiles.Add(validTileB);
-        //    solver.UnmarkAndRemove(validTileB, wordWithSomeLetters);
-        //    Assert.AreEqual(wordWithSomeLetters.ToString(), "ca");
-        //}
-
-        //[TestMethod]
-        //public void UnmarkAndRemove_TileIsValid_ChangesMarkedToUnmarked()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.markedTiles.Add(validTileB);
-        //    solver.UnmarkAndRemove(validTileB, wordWithSomeLetters);
-        //    Assert.IsFalse(solver.markedTiles.Contains(validTileB));
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void UnmarkAndRemove_TileIsAlreadyUnmarked_ThrowsExeption()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.UnmarkAndRemove(validTileA, wordWithSomeLetters);
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void UnmarkAndRemove_theWordIsAlreadyEmpty_ThrowsExeption()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.markedTiles.Add(validTileB);
-        //    solver.UnmarkAndRemove(validTileB, newWord);
-        //}
-
-
-
         //Walk tests
 
         [TestMethod]
@@ -217,14 +110,6 @@ namespace UnitTests
             var solver = new Solver(smallDictionary, board3x3);
             solver.WordExistsFromStartingTile(null, 0); 
         }
-
-        //[TestMethod]
-        //public void Walk_TileIsMarked_ReturnsFalse()
-        //{
-        //    var solver = new Solver(smallDictionary, board3x3);
-        //    solver.markedTiles.Add(startOfWordTile3x3);
-        //    Assert.IsFalse(solver.WordExistsFromStartingTile(startOfWordTile3x3, 2));
-        //}
 
         [TestMethod]
         public void Walk_WordIsFound3Letters2x2_ReturnsTrue()
@@ -271,8 +156,6 @@ namespace UnitTests
 
 
         //Word Exists Tests
-        //TODO: unit tests to ensure markedList is clear before performing WordExists
-        //TODO: wordExistsOnBoardTest
 
         [TestMethod]
         public void WordExists_CheckThatMarkedTilesListIsEmpty_ReturnsTrue()
@@ -309,7 +192,6 @@ namespace UnitTests
             Assert.IsFalse(solver.WordExistsOnBoard());
         }
 
-        //TODO: unmark and remove tests - last letter in string is equal to tile letter? (do m/a and then u/r)?
         //TODO: Walk - test words of more lengths?
         //TODO: dictionary - would sort and binary search be helpful for large dictionaries?
 
