@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D343E30D-AD69-4426-9FA7-5AC31C1B448C}</ProjectGuid>
+    <ProjectGuid>{826F82ED-B0D0-419D-8244-AF951C4C4C50}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UnitTests</RootNamespace>
@@ -45,9 +45,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
-          <Private>False</Private>
-        </Reference>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -57,9 +55,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WordGame\WordGame.csproj">
-      <Project>{6e39ba51-4449-449e-b3d2-776ab7c5e34b}</Project>
-      <Name>WordGame</Name>
+    <ProjectReference Include="..\Solver\Solver.csproj">
+      <Project>{27ee285a-1d9e-478a-b409-872c5515cae7}</Project>
+      <Name>Solver</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
