@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordGame
+namespace WordStrata.Solver
 {
     public class Tile : GridSquare
     {

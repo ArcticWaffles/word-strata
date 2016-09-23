@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solver", "Solver\Solver.csproj", "{27EE285A-1D9E-478A-B409-872C5515CAE7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{826F82ED-B0D0-419D-8244-AF951C4C4C50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordStrata", "WordStrata\WordStrata.csproj", "{BA28B9E8-3813-409C-806C-169A16F7C6E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{27EE285A-1D9E-478A-B409-872C5515CAE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27EE285A-1D9E-478A-B409-872C5515CAE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27EE285A-1D9E-478A-B409-872C5515CAE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27EE285A-1D9E-478A-B409-872C5515CAE7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{826F82ED-B0D0-419D-8244-AF951C4C4C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{826F82ED-B0D0-419D-8244-AF951C4C4C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{826F82ED-B0D0-419D-8244-AF951C4C4C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{826F82ED-B0D0-419D-8244-AF951C4C4C50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA28B9E8-3813-409C-806C-169A16F7C6E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA28B9E8-3813-409C-806C-169A16F7C6E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA28B9E8-3813-409C-806C-169A16F7C6E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA28B9E8-3813-409C-806C-169A16F7C6E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -55,9 +55,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Solver\Solver.csproj">
-      <Project>{27ee285a-1d9e-478a-b409-872c5515cae7}</Project>
-      <Name>Solver</Name>
+    <ProjectReference Include="..\WordStrata\WordStrata.csproj">
+      <Project>{ba28b9e8-3813-409c-806c-169a16f7c6e1}</Project>
+      <Name>WordStrata</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
