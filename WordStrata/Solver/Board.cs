@@ -33,6 +33,8 @@ namespace WordStrata.Solver
             }
         }
 
+        //TODO: When creating a board, is it necessary to have a gridsquares list instead of just the tile list?
+
         //Board constructor. letterGrid is a 2D array representing all the letters on the tiles.
         //A hole has a space character.
         public Board(char[,] letterGrid)

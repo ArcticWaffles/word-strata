@@ -55,7 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MainWindowContext.cs" />
     <Compile Include="Solver\Board.cs" />
+    <Compile Include="Solver\BoardGenerator.cs" />
     <Compile Include="Solver\Coordinates.cs" />
     <Compile Include="Solver\GridSquare.cs" />
     <Compile Include="Solver\Hole.cs" />

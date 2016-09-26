@@ -8,6 +8,11 @@
         xmlns:local="clr-namespace:WordStrata"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+
+    <Window.DataContext>
+        <local:MainWindowContext/>
+    </Window.DataContext>
+
     <Window.Resources>
 
     </Window.Resources>
@@ -16,15 +21,15 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <ItemsControl x:Name="boardGrid" DataContext="local" Grid.Row="0">
+        <ItemsControl x:Name="boardGrid" Grid.Row="0" ItemsSource="{Binding GameBoard.Tiles, diag:PresentationTraceSources.TraceLevel=High}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid x:Name="board" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                <DataTemplate x:Name="dataTemplate">
-                    <ToggleButton x:Name="TileToggleButton" Content="{Binding Path= Letter}" Click="TileToggleButton_Click" />
+                <DataTemplate>
+                    <ToggleButton x:Name="TileToggleButton" Content="{Binding Letter, diag:PresentationTraceSources.TraceLevel=High}" Click="TileToggleButton_Click" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

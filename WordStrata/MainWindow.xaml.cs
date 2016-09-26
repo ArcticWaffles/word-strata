@@ -26,18 +26,6 @@ namespace WordStrata
         {
             InitializeComponent();
 
-            List<Tile> tiles = new List<Tile>();
-            Random letterGenerator = new Random();
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    tiles.Add(new Tile(new Coordinates(x, y), Convert.ToChar(letterGenerator.Next(65, 91))));
-                }
-            }
-
-            boardGrid.ItemsSource = tiles;
-
         }
 
 
@@ -59,22 +47,13 @@ namespace WordStrata
 
         }
 
-        private childItem FindVisualChild<childItem>(DependencyObject obj)
-    where childItem : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is childItem)
-                    return (childItem)child;
-                else
-                {
-                    childItem childOfChild = FindVisualChild<childItem>(child);
-                    if (childOfChild != null)
-                        return childOfChild;
-                }
-            }
-            return null;
-        }
     }
 }
+
+//TODO: Make GUI tile class with color?
+//TODO: Make word textblock bigger, bolder, margin, etc
+//TODO: Enforce adjacent tiles
+//TODO: Encorporate dictionary, actual board
+//TODO: Weigh letters so it isn't truly random
+//TODO: in XAML under itemscontrol, set item source
+//TODO: Any other whiteboard stuff I've missed
