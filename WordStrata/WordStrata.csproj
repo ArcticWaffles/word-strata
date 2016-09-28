@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MainWindowContext.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Solver\Board.cs" />
     <Compile Include="Solver\BoardGenerator.cs" />
     <Compile Include="Solver\Coordinates.cs" />
@@ -63,6 +63,7 @@
     <Compile Include="Solver\Hole.cs" />
     <Compile Include="Solver\Solver.cs" />
     <Compile Include="Solver\Tile.cs" />
+    <Compile Include="TileViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

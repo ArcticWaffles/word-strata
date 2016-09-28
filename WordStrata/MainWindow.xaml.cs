@@ -22,10 +22,12 @@ namespace WordStrata
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainWindowViewModel dataContext;
+
         public MainWindow()
         {
             InitializeComponent();
-
+            dataContext = (MainWindowViewModel)DataContext;
         }
 
 
@@ -33,16 +35,45 @@ namespace WordStrata
         {
 
             ToggleButton theSender = (ToggleButton)sender;
+            TileViewModel senderTile = (TileViewModel)theSender.DataContext;
 
-            if(theSender.IsChecked == true)
+            //User clicks a tile: The letter is added to UserWord. The tile is added to the UserSelections list and its properties are updated.
+            if (theSender.IsChecked == true)
             {
-                string startingText = theWord.Text;
-                string endingText = String.Concat(startingText, theSender.Content);
-                theWord.Text = endingText;
+                dataContext.UserWord += theSender.Content;
+                dataContext.UserSelections.Add(senderTile);
+                senderTile.IsClicked = true;
+                senderTile.IsCurrentTile = true;
+            }
+
+            //User unclicks a tile: The letter is removed from UserWord. The tile is removed from the UserSelections list and its properties are updated.
+            else
+            {
+                dataContext.UserWord = dataContext.UserWord.Remove(dataContext.UserWord.Length - 1);
+                dataContext.UserSelections.Remove(senderTile);
+                senderTile.IsClicked = false;
+                senderTile.IsCurrentTile = false;
+            }
+
+            //The last tile in the UserSelections list becomes the new CurrentTile
+            if (dataContext.UserSelections != null && dataContext.UserSelections.Count > 0)
+            {
+                dataContext.CurrentGuiTile = dataContext.UserSelections.Last();
+                dataContext.CurrentGuiTile.IsCurrentTile = true;
             }
             else
             {
-                theWord.Text = theWord.Text.Remove(theWord.Text.Length - 1);
+                dataContext.CurrentGuiTile = null;
+            }
+
+            //IsClickable and IsCurrentTile property is updated for all tiles
+            foreach (var guiTile in dataContext.GuiTiles)
+            {
+                if(guiTile != dataContext.CurrentGuiTile)
+                {
+                    guiTile.IsCurrentTile = false;
+                }
+                guiTile.IsClickable = guiTile.determineClickability(dataContext.CurrentGuiTile, dataContext.UserSelections, dataContext.GameBoard);
             }
 
         }
@@ -50,10 +81,9 @@ namespace WordStrata
     }
 }
 
-//TODO: Make GUI tile class with color?
-//TODO: Make word textblock bigger, bolder, margin, etc
-//TODO: Enforce adjacent tiles
-//TODO: Encorporate dictionary, actual board
+//TODO: Encorporate dictionary (Solver)
 //TODO: Weigh letters so it isn't truly random
-//TODO: in XAML under itemscontrol, set item source
-//TODO: Any other whiteboard stuff I've missed
+//TODO: VM unit tests?
+//TODO: Error handling
+//TODO: Should user selection list be Observable Collection?
+//TODO: "Submit" button, test user word against dictionary
