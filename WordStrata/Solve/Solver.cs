@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordStrata.Solver
+namespace WordStrata.Solve
 {
     public class Solver
     {
-        List<string> dictionary;
+        HashSet<string> dictionary;
         Board board;
 
-        public Solver(List<string> dictionary, Board board)
+        public Solver(HashSet<string> dictionary, Board board)
         {
             if (dictionary == null)
             {
@@ -90,7 +90,7 @@ namespace WordStrata.Solver
         //Uses a breadth first search to find words on the board, i.e. checks for a 1-letter word first, then a 2-letter word, etc.
         //Returns true as soon as it finds any word.
         //currentDepth refers to how many tiles are in the current path
-        //maxDepth refers to 
+        //maxDepth refers to the word length being searched for by the current iteration
         private bool WordExistsFromTileRecursive(Tile tile, int currentDepth, int maxDepth, List<Tile> markedTiles, StringBuilder theWord)
         {
             if (tile == null)

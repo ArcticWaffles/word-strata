@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordStrata.Solver
+namespace WordStrata.Solve
 {
     public class Hole : GridSquare
     {

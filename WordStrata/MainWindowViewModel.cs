@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using WordStrata.Solver;
+using WordStrata.Solve;
 
 namespace WordStrata
 {
@@ -12,7 +12,11 @@ namespace WordStrata
     {
         public MainWindowViewModel()
         {
-            foreach (var tile in gameBoard.Tiles)
+            GameBoard = BoardGenerator.generateWeightedBoard(5, 5);
+            Dictionary = loadDictionary();
+            solver = new Solver(Dictionary, GameBoard);
+
+            foreach (var tile in GameBoard.Tiles)
             {
                 guiTiles.Add(new TileViewModel(tile, 0));
             }
@@ -27,6 +31,42 @@ namespace WordStrata
             }
         }
 
+
+        public Board GameBoard { get; }
+
+        private Solver solver;
+
+        public HashSet<string> Dictionary { get; }
+
+        private HashSet<string> loadDictionary()
+        {
+            var list = new HashSet<string>();
+            string line;
+            System.IO.StreamReader file = new System.IO.StreamReader("sowpods.txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                list.Add(line);
+            }
+            file.Close();
+            return list;
+        }
+
+        //List of tiles the user has clicked, removed when they are unclicked
+        private List<TileViewModel> userSelections = new List<TileViewModel>();
+        public List<TileViewModel> UserSelections
+        {
+            get
+            {
+                return userSelections;
+            }
+
+            set
+            {
+                userSelections = value;
+            }
+        }
+
+        //The last tile in userSelections
         private TileViewModel currentGuiTile;
         public TileViewModel CurrentGuiTile
         {
@@ -45,6 +85,7 @@ namespace WordStrata
             }
         }
 
+        //The word the user is building
         private string userWord = "";
         public string UserWord
         {
@@ -63,31 +104,6 @@ namespace WordStrata
             }
         }
 
-        private Board gameBoard = BoardGenerator.generateWeightedBoard(5, 5);
-
-        public Board GameBoard
-        {
-            get
-            {
-                return gameBoard;
-            }
-        }
-
-        //List of tiles the user has clicked, in sequential order
-        private List<TileViewModel> userSelections = new List<TileViewModel>();
-        public List<TileViewModel> UserSelections
-        {
-            get
-            {
-                return userSelections;
-            }
-
-            set
-            {
-                userSelections = value;
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
@@ -98,16 +114,7 @@ namespace WordStrata
             }
         }
 
-        // This method is called by the Set accessor of each property.
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.
-        //private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        //{
-        //    if (PropertyChanged != null)
-        //    {
-        //        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        //    }
-        //}
+
     }
 
 }

@@ -56,13 +56,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="Solver\Board.cs" />
-    <Compile Include="Solver\BoardGenerator.cs" />
-    <Compile Include="Solver\Coordinates.cs" />
-    <Compile Include="Solver\GridSquare.cs" />
-    <Compile Include="Solver\Hole.cs" />
-    <Compile Include="Solver\Solver.cs" />
-    <Compile Include="Solver\Tile.cs" />
+    <Compile Include="Solve\Board.cs" />
+    <Compile Include="Solve\BoardGenerator.cs" />
+    <Compile Include="Solve\Coordinates.cs" />
+    <Compile Include="Solve\GridSquare.cs" />
+    <Compile Include="Solve\Hole.cs" />
+    <Compile Include="Solve\Solver.cs" />
+    <Compile Include="Solve\Tile.cs" />
     <Compile Include="TileViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -103,6 +103,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sowpods.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WordStrata.Solver;
+using WordStrata.Solve;
 using System.Collections.Generic;
 using System.Linq;
 

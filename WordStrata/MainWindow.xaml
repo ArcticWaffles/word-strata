@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-        xmlns:solver="clr-namespace:WordStrata.Solver"
+        xmlns:solver="clr-namespace:WordStrata.Solve"
         xmlns:local="clr-namespace:WordStrata"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="625">
@@ -132,5 +132,6 @@
         <TextBlock Text="{Binding UserWord}" Grid.Row="1" Margin="10" HorizontalAlignment="Center" FontSize="26">
 
         </TextBlock>
+        <Button x:Name="SubmitButton" Grid.Row="2" Content="Submit Word" Click="SubmitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Padding="5,2"/>
     </Grid>
 </Window>

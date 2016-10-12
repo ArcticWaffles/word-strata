@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using WordStrata.Solver;
+using WordStrata.Solve;
 using System.Text;
 
 namespace UnitTests
@@ -22,9 +22,9 @@ namespace UnitTests
         Board board2x2;
         Board boardWithNoWords;
 
-        List<string> emptyDictionary;
-        List<string> smallDictionary;
-        List<string> wordCannotBeFoundDictionary;
+        HashSet<string> emptyDictionary;
+        HashSet<string> smallDictionary;
+        HashSet<string> wordCannotBeFoundDictionary;
 
         [TestInitialize]
         public void TestInitialize()
@@ -57,18 +57,18 @@ namespace UnitTests
                 {'x', 'x' }
             });
 
-            emptyDictionary = new List<string> { };
+            emptyDictionary = new HashSet<string>();
 
-            smallDictionary = new List<string>
+            smallDictionary = new HashSet<string>
             {
             "bark",
             "bar",
             "cab"
             };
 
-            wordCannotBeFoundDictionary = new List<string>
+            wordCannotBeFoundDictionary = new HashSet<string>
             {
-                "daisy"
+            "daisy"
             };
 
         }
