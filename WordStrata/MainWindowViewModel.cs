@@ -8,7 +8,7 @@ using WordStrata.Solve;
 
 namespace WordStrata
 {
-    public class MainWindowViewModel: INotifyPropertyChanged
+    public class MainWindowViewModel : INotifyPropertyChanged, IMainWindowViewModel
     {
         public MainWindowViewModel()
         {

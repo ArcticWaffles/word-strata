@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DesignTimeMainWindowViewModel.cs" />
+    <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Solve\Board.cs" />
     <Compile Include="Solve\BoardGenerator.cs" />

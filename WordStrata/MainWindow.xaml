@@ -8,7 +8,8 @@
         xmlns:solver="clr-namespace:WordStrata.Solve"
         xmlns:local="clr-namespace:WordStrata"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="625">
+        Title="MainWindow" Height="550" Width="625"
+        d:DataContext="{d:DesignInstance local:DesignTimeMainWindowViewModel, IsDesignTimeCreatable=True}">
 
     <Window.DataContext>
         <local:MainWindowViewModel/>
@@ -130,7 +131,6 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <TextBlock Text="{Binding UserWord}" Grid.Row="1" Margin="10" HorizontalAlignment="Center" FontSize="26">
-
         </TextBlock>
         <Button x:Name="SubmitButton" Grid.Row="2" Content="Submit Word" Click="SubmitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Padding="5,2"/>
     </Grid>
