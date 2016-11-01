@@ -56,7 +56,6 @@ namespace WordStrata
                 }
             }
         }
-        //set change notification, see if being utilized in xaml.cs
 
         private bool isClickable = true;
         public bool IsClickable

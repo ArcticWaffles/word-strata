@@ -18,19 +18,11 @@ namespace WordStrata
 
             foreach (var tile in GameBoard.Tiles)
             {
-                guiTiles.Add(new TileViewModel(tile, 0));
+                GuiTiles.Add(new TileViewModel(tile, 0));
             }
         }
 
-        private List<TileViewModel> guiTiles = new List<TileViewModel>();
-        public List<TileViewModel> GuiTiles
-        {
-            get
-            {
-                return guiTiles;
-            }
-        }
-
+        public List<TileViewModel> GuiTiles { get; } = new List<TileViewModel>();
 
         public Board GameBoard { get; }
 
@@ -49,22 +41,12 @@ namespace WordStrata
             }
             file.Close();
             return list;
+            //TODO: file error handling?
+            //TODO: check dictionary for longest word to set max word length in solver?
         }
 
         //List of tiles the user has clicked, removed when they are unclicked
-        private List<TileViewModel> userSelections = new List<TileViewModel>();
-        public List<TileViewModel> UserSelections
-        {
-            get
-            {
-                return userSelections;
-            }
-
-            set
-            {
-                userSelections = value;
-            }
-        }
+        public List<TileViewModel> UserSelections { get; set; } = new List<TileViewModel>();
 
         //The last tile in userSelections
         private TileViewModel currentGuiTile;

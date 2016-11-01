@@ -79,26 +79,49 @@ namespace WordStrata
 
         }
 
+        // User submits a word
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            if(dataContext.Dictionary.Contains(dataContext.UserWord))
+            // If the word is valid
+            if (dataContext.Dictionary.Contains(dataContext.UserWord))
             {
-                MessageBox.Show("Success!");
+                Word.BorderBrush = Brushes.Green;
+                WordFeedback.Visibility = Visibility.Visible; 
+                WordFeedback.Foreground = Brushes.Green;
+                WordFeedback.Text = "Word Accepted!";
+                // Delete used tiles
+                // Clear user word and user selections
+                // Turn text box green and write success message for a couple seconds
+                // in general: have clear word button
             }
-            else
+            else //Word is not valid
             {
-                MessageBox.Show("Not a word!");
+                Word.BorderBrush = Brushes.Red;
+                WordFeedback.Visibility = Visibility.Visible;
+                WordFeedback.Foreground = Brushes.Red;
+                WordFeedback.Text = "Word Not Accepted!";
+                //Turn text box red and write failure message for a couple seconds
+                // can use clear word button to remove word
+
             }
+        }
+
+        // User clears the word box
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            Word.Text = "";
+            dataContext.UserSelections.Clear();
+            //TODO: redo clickability so it is updated automatically when user selections are cleared.
         }
     }
 }
 
-//TODO: Incorporate dictionary (Solver)
 //TODO: Turning used letters into holes
 //TODO: VM unit tests?
 //TODO: Error handling
+//TODO: Use solver to make sure moves remain
 //TODO: Should user selection list be Observable Collection?
-//TODO: "Submit" button, test user word against dictionary
-//TODO: More comments
+//TODO: "Submit" button - implement results
+//TODO: More comments, use commentreflower
 //TODO: Try /// comments?
-//TODO: install comment flow thingie
+//Make it so user can type the word

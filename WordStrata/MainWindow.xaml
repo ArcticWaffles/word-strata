@@ -8,7 +8,7 @@
         xmlns:solver="clr-namespace:WordStrata.Solve"
         xmlns:local="clr-namespace:WordStrata"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="625"
+        Title="Word Strata" Height="650" Width="625"
         d:DataContext="{d:DesignInstance local:DesignTimeMainWindowViewModel, IsDesignTimeCreatable=True}">
 
     <Window.DataContext>
@@ -130,8 +130,26 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <TextBlock Text="{Binding UserWord}" Grid.Row="1" Margin="10" HorizontalAlignment="Center" FontSize="26">
-        </TextBlock>
-        <Button x:Name="SubmitButton" Grid.Row="2" Content="Submit Word" Click="SubmitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Padding="5,2"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                       FontSize="20" Visibility="Hidden" />
+            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
+                     MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" />
+
+            <Button x:Name="ClearButton" Grid.Row="1" Grid.Column="2" Content="Clear" Click="ClearButton_Click"  HorizontalAlignment="Left" VerticalAlignment="Center"
+                    FontSize="16" Padding="8,4"/>
+        </Grid>
+        <Button x:Name="SubmitButton" Grid.Row="2" Content="Submit Word" Click="SubmitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                FontSize="18" Padding="8,4"/>
+        
     </Grid>
 </Window>
