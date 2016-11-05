@@ -38,7 +38,7 @@ namespace WordStrata
             ToggleButton theSender = (ToggleButton)sender;
             TileViewModel senderTile = (TileViewModel)theSender.DataContext;
 
-            // User clicks a tile: The letter is added to UserWord. The tile is added to the UserSelections list and its properties are updated.
+            // User clicks a tile: Letter is added to UserWord. Tile is added to the UserSelections list and its properties are updated.
             if (theSender.IsChecked == true)
             {
                 dataContext.UserWord += theSender.Content;
@@ -47,7 +47,7 @@ namespace WordStrata
                 senderTile.IsCurrentTile = true;
             }
 
-            // User unclicks a tile: The letter is removed from UserWord. The tile is removed from the UserSelections list and its properties are updated.
+            // User unclicks a tile: Letter is removed from UserWord. Tile is removed from the UserSelections list and its properties are updated.
             else
             {
                 dataContext.UserWord = dataContext.UserWord.Remove(dataContext.UserWord.Length - 1);
@@ -56,7 +56,7 @@ namespace WordStrata
                 senderTile.IsCurrentTile = false;
             }
 
-            // The last tile in the UserSelections list becomes the new CurrentTile
+            // The last tile in the UserSelections list becomes the new CurrentTile.
             if (dataContext.UserSelections != null && dataContext.UserSelections.Count > 0)
             {
                 dataContext.CurrentGuiTile = dataContext.UserSelections.Last();
@@ -67,7 +67,7 @@ namespace WordStrata
                 dataContext.CurrentGuiTile = null;
             }
 
-            // IsClickable and IsCurrentTile property is updated for all tiles
+            // IsClickable and IsCurrentTile property is updated for all tiles.
             foreach (var guiTile in dataContext.GuiTiles)
             {
                 if(guiTile != dataContext.CurrentGuiTile)
@@ -92,15 +92,15 @@ namespace WordStrata
                 // Delete used tiles
                 // Clear user word and user selections
                 // Turn text box green and write success message for a couple seconds
-                // in general: have clear word button
+                // in general: have clear word button. Backspace too?
             }
-            else //Word is not valid
+            else // Word is not valid
             {
                 Word.BorderBrush = Brushes.Red;
                 WordFeedback.Visibility = Visibility.Visible;
                 WordFeedback.Foreground = Brushes.Red;
                 WordFeedback.Text = "Word Not Accepted!";
-                //Turn text box red and write failure message for a couple seconds
+                // Turn text box red and write failure message for a couple seconds
                 // can use clear word button to remove word
 
             }
@@ -111,7 +111,7 @@ namespace WordStrata
         {
             Word.Text = "";
             dataContext.UserSelections.Clear();
-            //TODO: redo clickability so it is updated automatically when user selections are cleared.
+            // TODO: redo clickability so it is updated automatically when user selections are cleared.
         }
     }
 }
@@ -124,4 +124,4 @@ namespace WordStrata
 //TODO: "Submit" button - implement results
 //TODO: More comments, use commentreflower
 //TODO: Try /// comments?
-//Make it so user can type the word
+//TODO: Make it so user can type the word

@@ -80,8 +80,9 @@ namespace WordStrata.Solve
             theWord.Remove((theWord.Length - 1), 1);
         }
 
-        // Verifies that a word still exists on the board so the user can be alerted when the game is over.
-        // Public method calls the private, recursive version of the method.
+        // Verifies that a word still exists on the board so the user can be
+        // alerted when the game is over. Public method calls the private,
+        // recursive version of the method.
         public bool WordExistsFromStartingTile(Tile startingTile, int targetDepth)
         {
             List<Tile> markedTiles = new List<Tile>();
@@ -90,10 +91,11 @@ namespace WordStrata.Solve
         }
 
 
-        // Uses a breadth first search to find words on the board, i.e. checks for a 1-letter word first, then a 2-letter word, etc.
-        // Returns true as soon as it finds any word.
-        // currentDepth refers to how many tiles are in the current path
-        // targetDepth refers to the word length being searched for in the current iteration
+        // Uses a breadth first search to find words on the board, i.e. checks
+        // for a 1-letter word first, then a 2-letter word, etc. Returns true as
+        // soon as it finds any word. currentDepth refers to how many tiles are
+        // in the current path. targetDepth refers to the word length being
+        // searched for in the current iteration.
         private bool WordExistsFromTileRecursive(Tile tile, int currentDepth, int targetDepth, List<Tile> markedTiles, StringBuilder theWord)
         {
             if (tile == null)
@@ -118,6 +120,8 @@ namespace WordStrata.Solve
                 return result;
             }
 
+            // TODO: more comments to explain what's going on
+
             foreach (Board.Direction direction in Enum.GetValues(typeof(Board.Direction)))
             {
                 var neighbor = board.GetNeighbor(tile, direction);
@@ -139,16 +143,20 @@ namespace WordStrata.Solve
 
         public bool WordExistsOnBoard()
         {
-            //TODO: Decide how to determine "max length" of a word - find longest word in dictionary, or number of tiles on the board, or minimum of the two, or hard code for longest word in English or modified hard code?
-            //TODO: more comments to explain what's going on
+            // TODO: Decide how to determine "max length" of a word - find
+            // longest word in dictionary, or number of tiles on the board, or
+            // minimum of the two, or hard code for longest word in English or
+            // modified hard code (longest word that doesn't contain another
+            // word within)?
 
-            //Word length can't exceed the number of tiles on the board (temporary upper limit until better method is decided)
+            // Word length can't exceed the number of tiles on the board
+            // (temporary upper limit until better method is decided)
             int tilesOnBoard = board.Tiles.Count();
 
-            //Outer loop: for each targetDepth
+            // Outer loop: for each targetDepth
             for (int i = 0; i <= tilesOnBoard; i++)
             {
-                //Inner loop: for each starting tile
+                // Inner loop: for each starting tile
                 foreach (Tile tile in board.Tiles)
                 {
                     if (WordExistsFromStartingTile(tile, i))

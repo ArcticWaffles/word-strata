@@ -10,11 +10,11 @@ namespace WordStrata
 {
     public class MainWindowViewModel : INotifyPropertyChanged, IMainWindowViewModel
     {
-        public MainWindowViewModel()
+        public MainWindowViewModel(HashSet<string> dictionary)
         {
             GameBoard = BoardGenerator.generateWeightedBoard(5, 5);
-            Dictionary = loadDictionary();
-            solver = new Solver(Dictionary, GameBoard);
+            solver = new Solver(dictionary, GameBoard);
+            Dictionary = dictionary;
 
             foreach (var tile in GameBoard.Tiles)
             {
@@ -28,22 +28,7 @@ namespace WordStrata
 
         private Solver solver;
 
-        public HashSet<string> Dictionary { get; }
-
-        private HashSet<string> loadDictionary()
-        {
-            var list = new HashSet<string>();
-            string line;
-            System.IO.StreamReader file = new System.IO.StreamReader("sowpods.txt");
-            while ((line = file.ReadLine()) != null)
-            {
-                list.Add(line);
-            }
-            file.Close();
-            return list;
-            //TODO: file error handling?
-            //TODO: check dictionary for longest word to set max word length in solver?
-        }
+        public HashSet<String> Dictionary { get; }
 
         //List of tiles the user has clicked, removed when they are unclicked
         public List<TileViewModel> UserSelections { get; set; } = new List<TileViewModel>();
