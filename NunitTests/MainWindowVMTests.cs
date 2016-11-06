@@ -41,6 +41,11 @@ namespace NunitTests
             }
         }
 
+        [Test]
+        public void Constructor_ByDefault_ProducesSameNumberOfGuiTilesAsGameboardTiles()
+        {
+                Assert.That(viewModel.GameBoard.Tiles.Count, Is.EqualTo(viewModel.GuiTiles.Count));
+        }
     }
 
 }

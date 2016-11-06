@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="MainWindowVMTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TileVMTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
