@@ -12,22 +12,35 @@ namespace NunitTests
     public class MainWindowVMTests
     {
         HashSet<string> dictionary = new HashSet<string>() { "apple", "banana", "sailboat", "zebra" };
+        MainWindowViewModel viewModel;
 
-        //[OneTimeSetUp]
-        //public void Init()
-        //{
-        //    dictionary.Add("apple");
-        //    dictionary.Add("banana");
-        //    dictionary.Add("sailboat");
-        //    dictionary.Add("zebra");
-        //}
-        
+        [SetUp]
+        public void Init()
+        {
+            viewModel = new MainWindowViewModel(dictionary);
+        }
+
         [Test]
         public void Constructor_ByDefault_ProducesValidGameBoard()
         {
-            var viewModel = new MainWindowViewModel(dictionary);
             Assert.That(viewModel.GameBoard.Tiles, Is.Not.Empty);
         }
 
+        [Test]
+        public void Constructor_ByDefault_ProducesValidGuiTiles()
+        {
+            Assert.That(viewModel.GuiTiles, Is.Not.Empty);
+        }
+
+        [Test]
+        public void Constructor_ByDefault_ProducesGuiTilesMatchingGameboardTiles()
+        {
+            foreach (var tileVM in viewModel.GuiTiles)
+            {
+                Assert.That(viewModel.GameBoard.Tiles, Contains.Item(tileVM.TheTile));
+            }
+        }
+
     }
+
 }
