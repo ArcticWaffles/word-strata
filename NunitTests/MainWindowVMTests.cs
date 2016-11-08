@@ -14,10 +14,11 @@ namespace NunitTests
         HashSet<string> dictionary = new HashSet<string>() { "apple", "banana", "sailboat", "zebra" };
         MainWindowViewModel viewModel;
 
+
         [SetUp]
         public void Init()
         {
-            viewModel = new MainWindowViewModel(dictionary);
+            viewModel = new MainWindowViewModel(new GameModel(dictionary));
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace NunitTests
         [Test]
         public void Constructor_ByDefault_ProducesSameNumberOfGuiTilesAsGameboardTiles()
         {
-                Assert.That(viewModel.GameBoard.Tiles.Count, Is.EqualTo(viewModel.GuiTiles.Count));
+            Assert.That(viewModel.GameBoard.Tiles.Count, Is.EqualTo(viewModel.GuiTiles.Count));
         }
     }
 

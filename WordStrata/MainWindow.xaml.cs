@@ -23,12 +23,16 @@ namespace WordStrata
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainWindowViewModel dataContext;
+        MainWindowViewModel viewModel;
+        GameModel gameModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            dataContext = (MainWindowViewModel)DataContext;
+            HashSet<string> dictionary = DictionaryModel.GetDictionary();
+            gameModel = new GameModel(dictionary);
+            viewModel = new MainWindowViewModel(gameModel);
+            this.DataContext = viewModel;
         }
 
 
@@ -38,43 +42,45 @@ namespace WordStrata
             ToggleButton theSender = (ToggleButton)sender;
             TileViewModel senderTile = (TileViewModel)theSender.DataContext;
 
-            // User clicks a tile: Letter is added to UserWord. Tile is added to the UserSelections list and its properties are updated.
+            // User clicks a tile
             if (theSender.IsChecked == true)
             {
-                dataContext.UserWord += theSender.Content;
-                dataContext.UserSelections.Add(senderTile);
-                senderTile.IsClicked = true;
-                senderTile.IsCurrentTile = true;
+                viewModel.ClickTile(senderTile);
             }
+            //{
+            //    viewModel.UserWord += theSender.Content;
+            //    viewModel.UserSelections.Add(senderTile);
+            //    senderTile.IsClicked = true;
+            //    senderTile.IsCurrentTile = true;
+            //}
 
-            // User unclicks a tile: Letter is removed from UserWord. Tile is removed from the UserSelections list and its properties are updated.
+            // User unclicks a tile
             else
             {
-                dataContext.UserWord = dataContext.UserWord.Remove(dataContext.UserWord.Length - 1);
-                dataContext.UserSelections.Remove(senderTile);
-                senderTile.IsClicked = false;
-                senderTile.IsCurrentTile = false;
+                viewModel.UnclickTile(senderTile);
+                //viewModel.UserWord = viewModel.UserWord.Remove(viewModel.UserWord.Length - 1);
+                //viewModel.UserSelections.Remove(senderTile);
+                //senderTile.IsClicked = false;
+                //senderTile.IsCurrentTile = false;
             }
 
             // The last tile in the UserSelections list becomes the new CurrentTile.
-            if (dataContext.UserSelections != null && dataContext.UserSelections.Count > 0)
-            {
-                dataContext.CurrentGuiTile = dataContext.UserSelections.Last();
-                dataContext.CurrentGuiTile.IsCurrentTile = true;
-            }
-            else
-            {
-                dataContext.CurrentGuiTile = null;
-            }
+            // TODO: Binding?
+            //if (viewModel.UserSelections != null && viewModel.UserSelections.Count > 0)
+            //{
+            //    viewModel.CurrentGuiTile = viewModel.UserSelections.Last();
+            //    viewModel.CurrentGuiTile.IsCurrentTile = true;
+            //}
+            //else
+            //{
+            //    viewModel.CurrentGuiTile = null;
+            //}
 
             // IsClickable and IsCurrentTile property is updated for all tiles.
-            foreach (var guiTile in dataContext.GuiTiles)
+            // TODO: Binding?
+            foreach (var guiTile in viewModel.GuiTiles)
             {
-                if(guiTile != dataContext.CurrentGuiTile)
-                {
-                    guiTile.IsCurrentTile = false;
-                }
-                guiTile.IsClickable = guiTile.determineClickability(dataContext.CurrentGuiTile, dataContext.UserSelections, dataContext.GameBoard);
+                guiTile.IsClickable = guiTile.determineClickability(viewModel.CurrentGuiTile, viewModel.UserSelections, viewModel.GameBoard);
             }
 
         }
@@ -83,7 +89,7 @@ namespace WordStrata
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             // If the word is valid
-            if (dataContext.Dictionary.Contains(dataContext.UserWord))
+            if (viewModel.CheckWord())
             {
                 Word.BorderBrush = Brushes.Green;
                 WordFeedback.Visibility = Visibility.Visible; 
@@ -110,7 +116,7 @@ namespace WordStrata
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             Word.Text = "";
-            dataContext.UserSelections.Clear();
+            viewModel.UserSelections.Clear();
             // TODO: redo clickability so it is updated automatically when user selections are cleared.
         }
     }

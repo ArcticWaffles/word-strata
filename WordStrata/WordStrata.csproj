@@ -57,6 +57,8 @@
     </ApplicationDefinition>
     <Compile Include="DictionaryModel.cs" />
     <Compile Include="DesignTimeMainWindowViewModel.cs" />
+    <Compile Include="GameModel.cs" />
+    <Compile Include="IGameModel.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Solve\Board.cs" />

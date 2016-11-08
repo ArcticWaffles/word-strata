@@ -5,70 +5,119 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using WordStrata.Solve;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace WordStrata
 {
     public class MainWindowViewModel : INotifyPropertyChanged, IMainWindowViewModel
     {
-        public MainWindowViewModel(HashSet<string> dictionary)
+        public MainWindowViewModel(IGameModel theGameModel)
         {
-            GameBoard = BoardGenerator.generateWeightedBoard(5, 5);
-            solver = new Solver(dictionary, GameBoard);
-            Dictionary = dictionary;
-
+            gameModel = theGameModel;
             foreach (var tile in GameBoard.Tiles)
             {
                 GuiTiles.Add(new TileViewModel(tile, 0));
             }
         }
 
+        IGameModel gameModel;
+
         public List<TileViewModel> GuiTiles { get; } = new List<TileViewModel>();
 
-        public Board GameBoard { get; }
+        public Board GameBoard
+        {
+            get
+            {
+                return gameModel.GameBoard;
+            }
+        }
 
-        private Solver solver;
-
-        public HashSet<String> Dictionary { get; }
+        public HashSet<String> Dictionary
+        {
+            get
+            {
+                return gameModel.Dictionary;
+            }
+        }
 
         //List of tiles the user has clicked, removed when they are unclicked
-        public List<TileViewModel> UserSelections { get; set; } = new List<TileViewModel>();
+        public ObservableCollection<TileViewModel> UserSelections { get; set; } = new ObservableCollection<TileViewModel>();
 
         //The last tile in userSelections
-        private TileViewModel currentGuiTile;
         public TileViewModel CurrentGuiTile
         {
             get
             {
-                return currentGuiTile;
-            }
-
-            set
-            {
-                if (value != currentGuiTile)
+                if (UserSelections != null && UserSelections.Count > 0)
                 {
-                    currentGuiTile = value;
-                    OnPropertyChanged("CurrentGuiTile");
+                    return UserSelections.Last();
+                }
+                else
+                {
+                    return null;
                 }
             }
+
         }
 
         //The word the user is building
-        private string userWord = "";
         public string UserWord
         {
             get
             {
-                return userWord;
+                gameModel.UserWord = "";
+                foreach (var tile in UserSelections)
+                {
+                    gameModel.UserWord += tile.TheTile.Letter;
+                }
+                return gameModel.UserWord;
             }
 
             set
             {
-                if (value != userWord)
-                {
-                    userWord = value;
-                    OnPropertyChanged("UserWord");
-                }
+                OnPropertyChanged("UserWord");
+                gameModel.UserWord = value;
             }
+            //set
+            //{
+            //    //if (value != gameModel.UserWord)
+            //    //{
+            //        gameModel.UserWord = value;
+            //    //    OnPropertyChanged("UserSelections");
+            //    //}
+            //}
+        }
+
+            
+        // User clicks a tile: Letter is added to UserWord. Tile is added to the
+        // UserSelections list and its properties are updated. 
+
+        public void ClickTile(TileViewModel tileVM)
+        {
+            //UserWord += tileVM.TheTile.Letter;
+            UserSelections.Add(tileVM);
+            gameModel.UserSelections.Add(tileVM);
+            OnPropertyChanged("UserWord");
+            OnPropertyChanged("CurrentGuiTile");
+            tileVM.IsClicked = true;
+        }
+
+        // User unclicks a tile: Letter is removed from UserWord. Tile is
+        // removed from the UserSelections list and its properties are updated.
+        public void UnclickTile(TileViewModel tileVM)
+        {
+            //UserWord = UserWord.Remove(UserWord.Length - 1);
+            UserSelections.Remove(tileVM);
+            gameModel.UserSelections.Remove(tileVM);
+            OnPropertyChanged("UserWord");
+            OnPropertyChanged("CurrentGuiTile");
+            tileVM.IsClicked = false;
+        }
+
+        public bool CheckWord()
+        {
+            return Dictionary.Contains(UserWord);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -79,6 +128,8 @@ namespace WordStrata
         }
 
 
+
     }
 
 }
+ 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -39,24 +40,28 @@ namespace WordStrata
             }
         }
 
-        private bool isCurrentTile;
-        public bool IsCurrentTile
-        {
-            get
-            {
-                return (isCurrentTile);
-            }
+        //private bool isCurrentTile;
+        //public bool IsCurrentTile
+        //{
+        //    get
+        //    {
+        //        return (isCurrentTile);
+        //    }
 
-            set
-            {
-                if (value != isCurrentTile)
-                {
-                    isCurrentTile = value;
-                    OnPropertyChanged("IsCurrentTile");
-                }
-            }
-        }
+        //    set
+        //    {
+        //        if (value != isCurrentTile)
+        //        {
+        //            isCurrentTile = value;
+        //            OnPropertyChanged("IsCurrentTile");
+        //        }
+        //    }
+        //}
 
+        // Tile is clickable if any of the following are true:
+        // 1. It neighbors the current tile and is not already selected
+        // 2. It is the current tile (User can click it to backtrack)
+        // 3. No tiles on the board are selected (UserSelections is null or empty)
         private bool isClickable = true;
         public bool IsClickable
         {
@@ -75,9 +80,9 @@ namespace WordStrata
             }
         }
 
-        public bool determineClickability(TileViewModel officialCurrentTile, List<TileViewModel> userSelections, Board board)
+        public bool determineClickability(TileViewModel officialCurrentTile, ObservableCollection<TileViewModel> userSelections, Board board)
         {
-            return IsNeighbor(officialCurrentTile, board) && (userSelections.Contains(this) == false) || IsCurrentTile == true || userSelections.Count == 0 || userSelections == null;
+            return IsNeighbor(officialCurrentTile, board) && (userSelections.Contains(this) == false) || this == officialCurrentTile || userSelections.Count == 0 || userSelections == null;
         }
 
 
