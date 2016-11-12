@@ -45,7 +45,7 @@ namespace WordStrata
         public ObservableCollection<TileViewModel> UserSelections { get; set; } = new ObservableCollection<TileViewModel>();
 
         //The last tile in userSelections
-        public TileViewModel CurrentGuiTile
+        public TileViewModel CurrentTile
         {
             get
             {
@@ -62,62 +62,71 @@ namespace WordStrata
         }
 
         //The word the user is building
+        private string userWord;
         public string UserWord
         {
             get
             {
-                gameModel.UserWord = "";
+                userWord = "";
                 foreach (var tile in UserSelections)
                 {
-                    gameModel.UserWord += tile.TheTile.Letter;
+                    userWord += tile.TheTile.Letter;
                 }
-                return gameModel.UserWord;
+                return userWord;
             }
 
             set
             {
-                OnPropertyChanged("UserWord");
-                gameModel.UserWord = value;
+                if (value != userWord)
+                {
+                    userWord = value;
+                    OnPropertyChanged("UserWord");
+                }
             }
-            //set
-            //{
-            //    //if (value != gameModel.UserWord)
-            //    //{
-            //        gameModel.UserWord = value;
-            //    //    OnPropertyChanged("UserSelections");
-            //    //}
-            //}
+
         }
 
             
-        // User clicks a tile: Letter is added to UserWord. Tile is added to the
-        // UserSelections list and its properties are updated. 
-
+        // User clicks a tile 
         public void ClickTile(TileViewModel tileVM)
         {
-            //UserWord += tileVM.TheTile.Letter;
             UserSelections.Add(tileVM);
-            gameModel.UserSelections.Add(tileVM);
             OnPropertyChanged("UserWord");
-            OnPropertyChanged("CurrentGuiTile");
-            tileVM.IsClicked = true;
+            OnPropertyChanged("CurrentTile");
         }
 
-        // User unclicks a tile: Letter is removed from UserWord. Tile is
-        // removed from the UserSelections list and its properties are updated.
+
+        // User unclicks a tile: 
         public void UnclickTile(TileViewModel tileVM)
         {
-            //UserWord = UserWord.Remove(UserWord.Length - 1);
             UserSelections.Remove(tileVM);
-            gameModel.UserSelections.Remove(tileVM);
             OnPropertyChanged("UserWord");
-            OnPropertyChanged("CurrentGuiTile");
-            tileVM.IsClicked = false;
+            OnPropertyChanged("CurrentTile");
         }
+
+
+        public void DetermineClickability()
+        {
+            foreach (var tile in GuiTiles)
+            {
+                tile.IsClickable = tile.IsNeighbor(CurrentTile, GameBoard) && (UserSelections.Contains(tile) == false) 
+                    || tile == CurrentTile || UserSelections.Count == 0 || UserSelections == null;
+            }
+        }
+
 
         public bool CheckWord()
         {
             return Dictionary.Contains(UserWord);
+        }
+
+
+        public void ClearWord()
+        {
+            foreach (var tile in UserSelections.ToList())
+            {
+                UnclickTile(tile);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -127,9 +136,10 @@ namespace WordStrata
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
-
     }
 
 }
- 
+// TODO 11/10: Make utility? Clean up. Think about taking out VM storage. Modify
+// unit tests - add game model, move MWVM where appropriate, add more MWVM
+
+// TODO retrieving saved game - make new MWVM but pass in existing game model instead of new one

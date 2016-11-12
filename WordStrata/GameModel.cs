@@ -14,8 +14,6 @@ namespace WordStrata
             GameBoard = BoardGenerator.generateWeightedBoard(5, 5);
             solver = new Solver(dictionary, GameBoard);
             Dictionary = dictionary;
-
-
         }
 
         public Board GameBoard { get; }
@@ -24,14 +22,14 @@ namespace WordStrata
 
         public HashSet<String> Dictionary { get; }
 
-        //List of tiles the user has clicked, removed when they are unclicked
-        public List<TileViewModel> UserSelections { get; set; } = new List<TileViewModel>();
+        ////List of tiles the user has clicked, removed when they are unclicked
+        //public List<TileViewModel> UserSelections { get; set; } = new List<TileViewModel>();
 
-        //The last tile in userSelections
-        public TileViewModel CurrentGuiTile { get; set; }
+        ////The last tile in userSelections
+        //public TileViewModel CurrentGuiTile { get; set; }
 
-        //The word the user is building
-        public string UserWord { get; set; }
+        ////The word the user is building
+        //public string UserWord { get; set; }
 
     }
 }

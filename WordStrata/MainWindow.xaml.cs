@@ -38,7 +38,6 @@ namespace WordStrata
 
         private void TileToggleButton_Click(object sender, RoutedEventArgs e)
         {
-
             ToggleButton theSender = (ToggleButton)sender;
             TileViewModel senderTile = (TileViewModel)theSender.DataContext;
 
@@ -47,41 +46,14 @@ namespace WordStrata
             {
                 viewModel.ClickTile(senderTile);
             }
-            //{
-            //    viewModel.UserWord += theSender.Content;
-            //    viewModel.UserSelections.Add(senderTile);
-            //    senderTile.IsClicked = true;
-            //    senderTile.IsCurrentTile = true;
-            //}
 
             // User unclicks a tile
             else
             {
                 viewModel.UnclickTile(senderTile);
-                //viewModel.UserWord = viewModel.UserWord.Remove(viewModel.UserWord.Length - 1);
-                //viewModel.UserSelections.Remove(senderTile);
-                //senderTile.IsClicked = false;
-                //senderTile.IsCurrentTile = false;
             }
 
-            // The last tile in the UserSelections list becomes the new CurrentTile.
-            // TODO: Binding?
-            //if (viewModel.UserSelections != null && viewModel.UserSelections.Count > 0)
-            //{
-            //    viewModel.CurrentGuiTile = viewModel.UserSelections.Last();
-            //    viewModel.CurrentGuiTile.IsCurrentTile = true;
-            //}
-            //else
-            //{
-            //    viewModel.CurrentGuiTile = null;
-            //}
-
-            // IsClickable and IsCurrentTile property is updated for all tiles.
-            // TODO: Binding?
-            foreach (var guiTile in viewModel.GuiTiles)
-            {
-                guiTile.IsClickable = guiTile.determineClickability(viewModel.CurrentGuiTile, viewModel.UserSelections, viewModel.GameBoard);
-            }
+            viewModel.DetermineClickability();
 
         }
 
@@ -115,9 +87,8 @@ namespace WordStrata
         // User clears the word box
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            Word.Text = "";
-            viewModel.UserSelections.Clear();
-            // TODO: redo clickability so it is updated automatically when user selections are cleared.
+            viewModel.ClearWord();
+            viewModel.DetermineClickability();
         }
     }
 }
