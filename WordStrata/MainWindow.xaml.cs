@@ -36,26 +36,26 @@ namespace WordStrata
         }
 
 
-        private void TileToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            ToggleButton theSender = (ToggleButton)sender;
-            TileViewModel senderTile = (TileViewModel)theSender.DataContext;
+        //private void TileToggleButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ToggleButton theSender = (ToggleButton)sender;
+        //    TileViewModel senderTile = (TileViewModel)theSender.DataContext;
 
-            // User clicks a tile
-            if (theSender.IsChecked == true)
-            {
-                viewModel.ClickTile(senderTile);
-            }
+        //    // User clicks a tile
+        //    if (theSender.IsChecked == true)
+        //    {
+        //        viewModel.ClickTile(senderTile);
+        //    }
 
-            // User unclicks a tile
-            else
-            {
-                viewModel.UnclickTile(senderTile);
-            }
+        //    // User unclicks a tile
+        //    else
+        //    {
+        //        viewModel.UnclickTile(senderTile);
+        //    }
 
-            viewModel.DetermineClickability();
+        //    viewModel.DetermineClickability();
 
-        }
+        //}
 
         // User submits a word
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
@@ -67,6 +67,7 @@ namespace WordStrata
                 WordFeedback.Visibility = Visibility.Visible; 
                 WordFeedback.Foreground = Brushes.Green;
                 WordFeedback.Text = "Word Accepted!";
+                // Make this a trigger in XAML?
                 // Delete used tiles
                 // Clear user word and user selections
                 // Turn text box green and write success message for a couple seconds
@@ -88,7 +89,7 @@ namespace WordStrata
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             viewModel.ClearWord();
-            viewModel.DetermineClickability();
+            //viewModel.DetermineClickability();
         }
     }
 }
@@ -97,8 +98,7 @@ namespace WordStrata
 //TODO: VM unit tests?
 //TODO: Error handling
 //TODO: Use solver to make sure moves remain
-//TODO: Should user selection list be Observable Collection?
 //TODO: "Submit" button - implement results
-//TODO: More comments, use commentreflower
+//TODO: More comments, use comment reflower
 //TODO: Try /// comments?
 //TODO: Make it so user can type the word

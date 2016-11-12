@@ -8,15 +8,13 @@ namespace WordStrata.Solve
 {
     public class Tile : GridSquare
     {
-        readonly char letter;
-        public char Letter
-        {
-            get { return letter; }
-        }
+        public char Letter { get; }
+
+        public int Depth { get; } = 0;
 
         public Tile(Coordinates coordsIn, char letterIn) : base(coordsIn)
         {
-            letter = letterIn;
+            Letter = letterIn;
         }
 
     }

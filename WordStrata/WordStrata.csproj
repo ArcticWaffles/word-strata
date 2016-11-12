@@ -59,7 +59,7 @@
     <Compile Include="DesignTimeMainWindowViewModel.cs" />
     <Compile Include="GameModel.cs" />
     <Compile Include="IGameModel.cs" />
-    <Compile Include="IMainWindowViewModel.cs" />
+    <Compile Include="MainWindowViewModelBase.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Solve\Board.cs" />
     <Compile Include="Solve\BoardGenerator.cs" />
@@ -69,6 +69,7 @@
     <Compile Include="Solve\Solver.cs" />
     <Compile Include="Solve\Tile.cs" />
     <Compile Include="TileViewModel.cs" />
+    <Compile Include="UserTileSelections.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

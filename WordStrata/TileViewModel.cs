@@ -12,39 +12,64 @@ namespace WordStrata
 {
     public class TileViewModel : INotifyPropertyChanged
     {
-        public TileViewModel(Tile tile, int depth)
-            // TODO: depth belongs in regular tile?
+        public TileViewModel(Tile tile, Action<TileViewModel, bool> clickTile, Func<TileViewModel, bool> tileIsChecked,
+            Func<TileViewModel, bool> tileIsClickable)
         {
             TheTile = tile;
-            Depth = depth;
+            Checked = tileIsChecked;
+            ClickTile = clickTile;
+            TileIsClickable = tileIsClickable;
         }
 
         public Tile TheTile { get; }
-
-        public int Depth { get; set; }
 
         //Tile is clickable if any of the following are true:
         // 1. It neighbors the current tile and is not already selected
         // 2. It is the current tile (User can click it to backtrack)
         // 3. No tiles on the board are selected (UserSelections is null or empty)
-        private bool isClickable = true;
+
+        Func<TileViewModel, bool> TileIsClickable;
         public bool IsClickable
         {
             get
             {
-                return (isClickable);
+                return TileIsClickable(this);
+            }
+
+            //set
+            //{
+            //    if (value != isClickable)
+            //    {
+            //        isClickable = value;
+            //        OnPropertyChanged("IsClickable");
+            //    }
+            //}
+        }
+
+        Func<TileViewModel, bool> Checked;
+        Action<TileViewModel, bool> ClickTile;
+
+        //private bool isChecked;
+        public bool IsChecked
+        {
+            get
+            {
+                return Checked(this);
             }
 
             set
             {
-                if (value != isClickable)
+                if(value) 
                 {
-                    isClickable = value;
-                    OnPropertyChanged("IsClickable");
+                    ClickTile(this, true);
                 }
+                else
+                {
+                    ClickTile(this, false);
+                }
+                OnPropertyChanged(null);
             }
         }
-
 
         public bool IsNeighbor(TileViewModel otherTile, Board theBoard)
         {
@@ -63,12 +88,8 @@ namespace WordStrata
 
         private void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
 
     }
 }

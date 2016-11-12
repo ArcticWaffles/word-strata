@@ -193,7 +193,6 @@ namespace UnitTests
         }
 
         //TODO: Walk - test words of more lengths?
-        //TODO: dictionary - would sort and binary search be helpful for large dictionaries?
 
     }
 

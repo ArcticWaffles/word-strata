@@ -125,7 +125,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" BorderBrush="LightSeaGreen" Content="{Binding TheTile.Letter, diag:PresentationTraceSources.TraceLevel=High}" FontSize="18" FontFamily="Georgia"
-                                  Click="TileToggleButton_Click" BorderThickness="2" Padding="10" IsEnabled="{Binding IsClickable, diag:PresentationTraceSources.TraceLevel=High}">
+                                   BorderThickness="2" Padding="10" IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsClickable, diag:PresentationTraceSources.TraceLevel=High}">
                     </ToggleButton>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -142,7 +142,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" 
                        FontSize="20" Visibility="Hidden" />
-            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
+            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserSelections.UserWord}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
                      MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" />
 
             <Button x:Name="ClearButton" Grid.Row="1" Grid.Column="2" Content="Clear" Click="ClearButton_Click"  HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -150,6 +150,5 @@
         </Grid>
         <Button x:Name="SubmitButton" Grid.Row="2" Content="Submit Word" Click="SubmitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 FontSize="18" Padding="8,4"/>
-        
     </Grid>
 </Window>

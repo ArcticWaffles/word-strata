@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WordStrata.Solve;
 
 namespace WordStrata
 {
-    class DesignTimeMainWindowViewModel : IMainWindowViewModel
+    class DesignTimeMainWindowViewModel : MainWindowViewModelBase
     {
-        public List<TileViewModel> GuiTiles
+        public override List<TileViewModel> GuiTiles
         {
             get
             {
@@ -17,12 +18,17 @@ namespace WordStrata
 
                 foreach (var tile in GameBoard.Tiles)
                 {
-                    guiTiles.Add(new TileViewModel(tile, 0));
+                    guiTiles.Add(new TileViewModel(tile, ClickTile, TileIsChecked, TileIsClickable));
                 }
                 return guiTiles;
             }
         }
 
-        public string UserWord { get; set; } = "ABIOGENETICALLY";
+        //meaningless for now
+        public override Board GameBoard { get; }
+
+        public override UserTileSelections UserSelections { get; set; } = new UserTileSelections();
+
+        //public string UserWord { get; set; } = "ABIOGENETICALLY";
     }
 }
