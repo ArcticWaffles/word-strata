@@ -16,6 +16,8 @@
     </Window.DataContext>-->
 
     <Window.Resources>
+        <local:IsClickableValueConverter x:Key="IsClickableValueConverter"/>
+        <local:IsCheckedValueConverter x:Key="IsCheckedValueConverter"/>
         <ControlTemplate x:Key="toggleButtonTemplate" TargetType="ToggleButton" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
             <Border BorderThickness="{TemplateBinding Border.BorderThickness}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" Name="border" SnapsToDevicePixels="True">
                 <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" Name="contentPresenter" Margin="{TemplateBinding Control.Padding}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" Focusable="False" />
@@ -116,7 +118,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ItemsControl x:Name="boardItemsControl" Grid.Row="0" ItemsSource="{Binding GuiTiles, diag:PresentationTraceSources.TraceLevel=High}">
+        <ItemsControl x:Name="boardItemsControl" Grid.Row="0" ItemsSource="{Binding GuiTiles}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid x:Name="board" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -124,8 +126,21 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" BorderBrush="LightSeaGreen" Content="{Binding TheTile.Letter, diag:PresentationTraceSources.TraceLevel=High}" FontSize="18" FontFamily="Georgia"
-                                   BorderThickness="2" Padding="10" IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsClickable, diag:PresentationTraceSources.TraceLevel=High}">
+                    <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" BorderBrush="LightSeaGreen" Content="{Binding TheTile.Letter}" FontSize="18" FontFamily="Georgia"
+                                   BorderThickness="2" Padding="10" Click="TileToggleButton_Click">
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">
+                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.UserSelections.Selections" />
+                                <Binding Path="." />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
+                        <ToggleButton.IsEnabled>
+                            <MultiBinding Converter="{StaticResource IsClickableValueConverter}">
+                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.UserSelections.Selections" />
+                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.UserSelections.CurrentTile" />
+                                <Binding />
+                            </MultiBinding>
+                        </ToggleButton.IsEnabled>
                     </ToggleButton>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

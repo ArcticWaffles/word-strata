@@ -18,13 +18,13 @@ namespace WordStrata
 
                 foreach (var tile in GameBoard.Tiles)
                 {
-                    guiTiles.Add(new TileViewModel(tile, ClickTile, TileIsChecked, TileIsClickable));
+                    guiTiles.Add(new TileViewModel(tile));
                 }
                 return guiTiles;
             }
         }
 
-        //meaningless for now
+        //TODO This is meaningless for now
         public override Board GameBoard { get; }
 
         public override UserTileSelections UserSelections { get; set; } = new UserTileSelections();

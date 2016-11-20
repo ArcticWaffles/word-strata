@@ -112,16 +112,17 @@ namespace WordStrata.Solve
             return GridSquares[x, y];
         }
 
-        //Returns all of a tile's neighboring tiles or holes
-        public List<GridSquare> getAllNeighbors(Tile originTile, Board theBoard)
-        {
-            List<GridSquare> allNeighbors = new List<GridSquare>();
-            allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.North));
-            allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.East));
-            allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.South));
-            allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.West));
+        // TODO: Get rid of? Not being used anymore
+        ////Returns all of a tile's neighboring tiles or holes
+        //public List<GridSquare> getAllNeighbors(Tile originTile, Board theBoard)
+        //{
+        //    List<GridSquare> allNeighbors = new List<GridSquare>();
+        //    allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.North));
+        //    allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.East));
+        //    allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.South));
+        //    allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.West));
 
-            return allNeighbors;
-        }
+        //    return allNeighbors;
+        //}
     }
 }

@@ -32,30 +32,28 @@ namespace WordStrata
             HashSet<string> dictionary = DictionaryModel.GetDictionary();
             gameModel = new GameModel(dictionary);
             viewModel = new MainWindowViewModel(gameModel);
-            this.DataContext = viewModel;
+            DataContext = viewModel;
         }
 
 
-        //private void TileToggleButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ToggleButton theSender = (ToggleButton)sender;
-        //    TileViewModel senderTile = (TileViewModel)theSender.DataContext;
+        private void TileToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleButton theSender = (ToggleButton)sender;
+            TileViewModel senderTile = (TileViewModel)theSender.DataContext;
 
-        //    // User clicks a tile
-        //    if (theSender.IsChecked == true)
-        //    {
-        //        viewModel.ClickTile(senderTile);
-        //    }
+            // User clicks a tile
+            if (theSender.IsChecked == true)
+            {
+                viewModel.ClickTile(senderTile);
+            }
 
-        //    // User unclicks a tile
-        //    else
-        //    {
-        //        viewModel.UnclickTile(senderTile);
-        //    }
+            // User unclicks a tile
+            else
+            {
+                viewModel.UnclickTile(senderTile);
+            }
 
-        //    viewModel.DetermineClickability();
-
-        //}
+        }
 
         // User submits a word
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
@@ -89,7 +87,6 @@ namespace WordStrata
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             viewModel.ClearWord();
-            //viewModel.DetermineClickability();
         }
     }
 }

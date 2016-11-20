@@ -10,86 +10,15 @@ using WordStrata.Solve;
 
 namespace WordStrata
 {
-    public class TileViewModel : INotifyPropertyChanged
+    public class TileViewModel
     {
-        public TileViewModel(Tile tile, Action<TileViewModel, bool> clickTile, Func<TileViewModel, bool> tileIsChecked,
-            Func<TileViewModel, bool> tileIsClickable)
+        public TileViewModel(Tile tile)
         {
             TheTile = tile;
-            Checked = tileIsChecked;
-            ClickTile = clickTile;
-            TileIsClickable = tileIsClickable;
         }
 
         public Tile TheTile { get; }
 
-        //Tile is clickable if any of the following are true:
-        // 1. It neighbors the current tile and is not already selected
-        // 2. It is the current tile (User can click it to backtrack)
-        // 3. No tiles on the board are selected (UserSelections is null or empty)
-
-        Func<TileViewModel, bool> TileIsClickable;
-        public bool IsClickable
-        {
-            get
-            {
-                return TileIsClickable(this);
-            }
-
-            //set
-            //{
-            //    if (value != isClickable)
-            //    {
-            //        isClickable = value;
-            //        OnPropertyChanged("IsClickable");
-            //    }
-            //}
-        }
-
-        Func<TileViewModel, bool> Checked;
-        Action<TileViewModel, bool> ClickTile;
-
-        //private bool isChecked;
-        public bool IsChecked
-        {
-            get
-            {
-                return Checked(this);
-            }
-
-            set
-            {
-                if(value) 
-                {
-                    ClickTile(this, true);
-                }
-                else
-                {
-                    ClickTile(this, false);
-                }
-                OnPropertyChanged(null);
-            }
-        }
-
-        public bool IsNeighbor(TileViewModel otherTile, Board theBoard)
-        {
-            if (otherTile == null || theBoard == null)
-            {
-                return false;
-            }
-            else
-            {
-                List<GridSquare> neighbors = theBoard.getAllNeighbors(TheTile, theBoard);
-                return (neighbors.Contains((otherTile.TheTile as GridSquare)));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
     }
 }

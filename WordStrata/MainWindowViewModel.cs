@@ -17,7 +17,7 @@ namespace WordStrata
             gameModel = theGameModel;
             foreach (var tile in GameBoard.Tiles)
             {
-                GuiTiles.Add(new TileViewModel(tile, ClickTile, TileIsChecked, TileIsClickable));
+                GuiTiles.Add(new TileViewModel(tile));
             }
         }
 
@@ -42,35 +42,38 @@ namespace WordStrata
         }
 
         //List of tiles the user has clicked, removed when they are unclicked
-        public override UserTileSelections UserSelections { get; set; } = new UserTileSelections();
+        private UserTileSelections userSelections = new UserTileSelections();
+        public override UserTileSelections UserSelections
+        {
+            get
+            {
+                return userSelections;
+            }
+
+            set
+            {
+                if (value != userSelections)
+                {
+                    userSelections = value;
+                    OnPropertyChanged(null);
+                }
+            }
+        }
+
 
 
         //User clicks a tile
-        //public void ClickTile(TileViewModel tileVM)
-        //{
-        //    UserSelections.Selections.Add(tileVM);
-        //    OnPropertyChanged("UserWord");
-        //    OnPropertyChanged("CurrentTile");
-        //}
+        public void ClickTile(TileViewModel tileVM)
+        {
+            UserSelections.Selections.Add(tileVM);
+        }
 
 
         //User unclicks a tile: 
-        //public void UnclickTile(TileViewModel tileVM)
-        //{
-        //    UserSelections.Selections.Remove(tileVM);
-        //    OnPropertyChanged("UserWord");
-        //    OnPropertyChanged("CurrentTile");
-        //}
-
-
-        //public void DetermineClickability()
-        //{
-        //    foreach (var tile in GuiTiles)
-        //    {
-        //        tile.IsClickable = tile.IsNeighbor(UserSelections.CurrentTile, GameBoard) && (UserSelections.Selections.Contains(tile) == false) 
-        //            || tile == UserSelections.CurrentTile || UserSelections.Selections.Count == 0 || UserSelections == null;
-        //    }
-        //}
+        public void UnclickTile(TileViewModel tileVM)
+        {
+            UserSelections.Selections.Remove(tileVM);
+        }
 
 
         public bool CheckWord()

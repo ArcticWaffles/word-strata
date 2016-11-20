@@ -59,6 +59,8 @@
     <Compile Include="DesignTimeMainWindowViewModel.cs" />
     <Compile Include="GameModel.cs" />
     <Compile Include="IGameModel.cs" />
+    <Compile Include="IsCheckedValueConverter.cs" />
+    <Compile Include="IsClickableValueConverter.cs" />
     <Compile Include="MainWindowViewModelBase.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Solve\Board.cs" />
