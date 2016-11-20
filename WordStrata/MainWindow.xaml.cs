@@ -39,7 +39,7 @@ namespace WordStrata
         private void TileToggleButton_Click(object sender, RoutedEventArgs e)
         {
             ToggleButton theSender = (ToggleButton)sender;
-            TileViewModel senderTile = (TileViewModel)theSender.DataContext;
+            Tile senderTile = (Tile)theSender.DataContext;
 
             // User clicks a tile
             if (theSender.IsChecked == true)

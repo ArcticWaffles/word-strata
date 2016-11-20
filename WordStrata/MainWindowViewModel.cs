@@ -15,15 +15,9 @@ namespace WordStrata
         public MainWindowViewModel(IGameModel theGameModel)
         {
             gameModel = theGameModel;
-            foreach (var tile in GameBoard.Tiles)
-            {
-                GuiTiles.Add(new TileViewModel(tile));
-            }
         }
 
         IGameModel gameModel;
-
-        public override List<TileViewModel> GuiTiles { get; } = new List<TileViewModel>();
 
         public override Board GameBoard
         {
@@ -52,6 +46,7 @@ namespace WordStrata
 
             set
             {
+                // TODO: Will this property changed be used?
                 if (value != userSelections)
                 {
                     userSelections = value;
@@ -63,16 +58,16 @@ namespace WordStrata
 
 
         //User clicks a tile
-        public void ClickTile(TileViewModel tileVM)
+        public void ClickTile(Tile theTile)
         {
-            UserSelections.Selections.Add(tileVM);
+            UserSelections.Selections.Add(theTile);
         }
 
 
         //User unclicks a tile: 
-        public void UnclickTile(TileViewModel tileVM)
+        public void UnclickTile(Tile theTile)
         {
-            UserSelections.Selections.Remove(tileVM);
+            UserSelections.Selections.Remove(theTile);
         }
 
 
@@ -99,7 +94,5 @@ namespace WordStrata
 }
 // TODO 11/10: Make utility? Clean up. Think about taking out VM storage. Modify
 // unit tests - add game model, move MWVM where appropriate, add more MWVM
-
-// TODO: Resolve slang use of GuiTile for TileViewModel
 
 // TODO retrieving saved game - make new MWVM but pass in existing game model instead of new one

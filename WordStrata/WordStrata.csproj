@@ -70,7 +70,6 @@
     <Compile Include="Solve\Hole.cs" />
     <Compile Include="Solve\Solver.cs" />
     <Compile Include="Solve\Tile.cs" />
-    <Compile Include="TileViewModel.cs" />
     <Compile Include="UserTileSelections.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

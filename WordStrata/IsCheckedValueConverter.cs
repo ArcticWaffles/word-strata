@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using WordStrata.Solve;
 
 namespace WordStrata
 {
@@ -14,8 +15,8 @@ namespace WordStrata
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var userSelections = values[0] as Collection<TileViewModel>;
-            var tile = values[1] as TileViewModel;
+            var userSelections = values[0] as Collection<Tile>;
+            var tile = values[1] as Tile;
             return userSelections.Contains(tile);
         }
 

@@ -45,7 +45,6 @@ namespace WordStrata.Solve
         }
 
 
-
         //Board constructor. letterGrid is a 2D array representing all the letters on the tiles.
         //A hole has a space character.
         public Board(char[,] letterGrid)

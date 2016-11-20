@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using WordStrata.Solve;
 
 namespace WordStrata
 {
@@ -17,8 +18,8 @@ namespace WordStrata
         }
         
         //List of tiles the user has clicked, removed when they are unclicked.
-        private ObservableCollection<TileViewModel> selections = new ObservableCollection<TileViewModel>();
-        public ObservableCollection<TileViewModel> Selections
+        private ObservableCollection<Tile> selections = new ObservableCollection<Tile>();
+        public ObservableCollection<Tile> Selections
         {
             get
             {
@@ -36,7 +37,7 @@ namespace WordStrata
         }
 
         //The last tile in the list. Used for determining which tiles are clickable.
-        public TileViewModel CurrentTile
+        public Tile CurrentTile
         {
             get
             {
@@ -61,7 +62,7 @@ namespace WordStrata
                 userWord = "";
                 foreach (var tile in Selections)
                 {
-                    userWord += tile.TheTile.Letter;
+                    userWord += tile.Letter;
                 }
                 return userWord;
             }

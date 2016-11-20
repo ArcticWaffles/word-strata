@@ -30,13 +30,13 @@ namespace NunitTests
         [Test]
         public void Constructor_ByDefault_ProducesValidGuiTiles()
         {
-            Assert.That(viewModel.GuiTiles, Is.Not.Empty);
+            Assert.That(viewModel.TileList, Is.Not.Empty);
         }
 
         [Test]
         public void Constructor_ByDefault_ProducesGuiTilesMatchingGameboardTiles()
         {
-            foreach (var tileVM in viewModel.GuiTiles)
+            foreach (var tileVM in viewModel.TileList)
             {
                 Assert.That(viewModel.GameBoard.Tiles, Contains.Item(tileVM.TheTile));
             }
@@ -45,7 +45,7 @@ namespace NunitTests
         [Test]
         public void Constructor_ByDefault_ProducesSameNumberOfGuiTilesAsGameboardTiles()
         {
-            Assert.That(viewModel.GameBoard.Tiles.Count, Is.EqualTo(viewModel.GuiTiles.Count));
+            Assert.That(viewModel.GameBoard.Tiles.Count, Is.EqualTo(viewModel.TileList.Count));
         }
     }
 

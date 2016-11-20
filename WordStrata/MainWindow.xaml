@@ -118,7 +118,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ItemsControl x:Name="boardItemsControl" Grid.Row="0" ItemsSource="{Binding GuiTiles}">
+        <ItemsControl x:Name="boardItemsControl" Grid.Row="0" ItemsSource="{Binding GameBoard.Tiles}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid x:Name="board" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -126,7 +126,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" BorderBrush="LightSeaGreen" Content="{Binding TheTile.Letter}" FontSize="18" FontFamily="Georgia"
+                    <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" BorderBrush="LightSeaGreen" Content="{Binding Letter}" FontSize="18" FontFamily="Georgia"
                                    BorderThickness="2" Padding="10" Click="TileToggleButton_Click">
                         <ToggleButton.IsChecked>
                             <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">

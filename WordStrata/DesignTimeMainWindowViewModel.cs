@@ -9,23 +9,7 @@ namespace WordStrata
 {
     class DesignTimeMainWindowViewModel : MainWindowViewModelBase
     {
-        public override List<TileViewModel> GuiTiles
-        {
-            get
-            {
-                var GameBoard = Solve.BoardGenerator.generateWeightedBoard(5, 5);
-                var guiTiles = new List<TileViewModel>();
-
-                foreach (var tile in GameBoard.Tiles)
-                {
-                    guiTiles.Add(new TileViewModel(tile));
-                }
-                return guiTiles;
-            }
-        }
-
-        //TODO This is meaningless for now
-        public override Board GameBoard { get; }
+        public override Board GameBoard { get; } = Solve.BoardGenerator.generateWeightedBoard(5, 5);
 
         public override UserTileSelections UserSelections { get; set; } = new UserTileSelections();
 
