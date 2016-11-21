@@ -24,4 +24,3 @@ namespace WordStrata
     }
 }
 
-// TODO: GameModel unit testing? And remove tests from MWVM section that don't belong anymore

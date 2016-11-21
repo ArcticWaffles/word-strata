@@ -92,10 +92,10 @@ namespace WordStrata
 }
 
 //TODO: Turning used letters into holes
-//TODO: VM unit tests?
+//TODO: Combine unit test classes, convert old ones to NUnit
 //TODO: Error handling
 //TODO: Use solver to make sure moves remain
 //TODO: "Submit" button - implement results
-//TODO: More comments, use comment reflower
+//TODO: Clean up and commenting
 //TODO: Try /// comments?
-//TODO: Make it so user can type the word
+//TODO: Allow user to type the word

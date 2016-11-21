@@ -140,7 +140,6 @@ namespace WordStrata.Solve
         }
 
 
-
         public bool WordExistsOnBoard()
         {
             // TODO: Decide how to determine "max length" of a word - find

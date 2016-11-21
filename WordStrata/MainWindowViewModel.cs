@@ -56,7 +56,6 @@ namespace WordStrata
         }
 
 
-
         //User clicks a tile
         public void ClickTile(Tile theTile)
         {
@@ -92,7 +91,5 @@ namespace WordStrata
     }
 
 }
-// TODO 11/10: Make utility? Clean up. Think about taking out VM storage. Modify
-// unit tests - add game model, move MWVM where appropriate, add more MWVM
 
 // TODO retrieving saved game - make new MWVM but pass in existing game model instead of new one

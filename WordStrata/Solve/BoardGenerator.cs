@@ -73,7 +73,6 @@ namespace WordStrata.Solve
             var key = dictionary.First(x=> random < x.Key);
             return key.Value;
         }
-        //TODO: Unit tests for board generators
     }
 }
 

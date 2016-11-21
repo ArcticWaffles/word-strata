@@ -26,27 +26,9 @@ namespace NunitTests
         {
             Assert.That(viewModel.GameBoard.Tiles, Is.Not.Empty);
         }
-
-        [Test]
-        public void Constructor_ByDefault_ProducesValidGuiTiles()
-        {
-            Assert.That(viewModel.TileList, Is.Not.Empty);
-        }
-
-        [Test]
-        public void Constructor_ByDefault_ProducesGuiTilesMatchingGameboardTiles()
-        {
-            foreach (var tileVM in viewModel.TileList)
-            {
-                Assert.That(viewModel.GameBoard.Tiles, Contains.Item(tileVM.TheTile));
-            }
-        }
-
-        [Test]
-        public void Constructor_ByDefault_ProducesSameNumberOfGuiTilesAsGameboardTiles()
-        {
-            Assert.That(viewModel.GameBoard.Tiles.Count, Is.EqualTo(viewModel.TileList.Count));
-        }
     }
 
 }
+// TODO: Tests on other public properties and methods
+// TODO: UserTileSelections tests?
+// TODO: DictionaryModel tests?

@@ -9,7 +9,7 @@ using WordStrata;
 namespace NunitTests
 {
     [TestFixture]
-    public class TileVMTests
+    public class GameModelTests
     {
 
     }

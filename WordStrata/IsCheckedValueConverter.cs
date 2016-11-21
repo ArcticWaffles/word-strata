@@ -11,7 +11,7 @@ using WordStrata.Solve;
 
 namespace WordStrata
 {
-    class IsCheckedValueConverter : DependencyObject, IMultiValueConverter
+    class IsCheckedValueConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
