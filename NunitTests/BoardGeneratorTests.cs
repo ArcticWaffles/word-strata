@@ -3,37 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using WordStrata;
 using WordStrata.Solve;
 
-
-
-namespace UnitTests
+namespace NUnitTests
 {
-    [TestClass]
-    public class BoardGeneratorTests
+    [TestFixture]
+    class BoardGeneratorTests
     {
         //RandomBoard tests
 
-        [TestMethod]
+        [Test]
         public void RandomBoard_3x3_TileCountIsCorrect()
         {
-            var board = BoardGenerator.generateRandomBoard(3,3);
-            Assert.AreEqual(board.Tiles.Count, 9);
+            var board = BoardGenerator.generateRandomBoard(3, 3);
+            Assert.That(board.Tiles.Count.Equals(9));
         }
 
 
 
         //WeightedBoard tests
 
-        [TestMethod]
+        [Test]
         public void WeightedBoard_3x3_TileCountIsCorrect()
         {
-            var board = BoardGenerator.generateRandomBoard(3, 3);
-            Assert.AreEqual(board.Tiles.Count, 9);
+            var board = BoardGenerator.generateWeightedBoard(3, 3);
+            Assert.That(board.Tiles.Count.Equals(9));
         }
 
-        [TestMethod]
+        [Test]
+        // TODO: Improve this test
         public void WeightedBoard_LettersAreWeighted()
         {
             var board = BoardGenerator.generateWeightedBoard(10, 10);
@@ -48,15 +48,14 @@ namespace UnitTests
                 where letter == 'E'
                 select letter;
             int j = 0;
-            foreach(var letter in query)
+            foreach (var letter in query)
             {
                 j++;
             }
-            Assert.AreEqual(j, 12, 4);
+            Assert.AreEqual(j, 12, 5);
         }
     }
 }
 
 //Tile list size matches rows x columns  - more data values?
-
 

@@ -18,6 +18,28 @@
     <Window.Resources>
         <local:IsClickableValueConverter x:Key="IsClickableValueConverter"/>
         <local:IsCheckedValueConverter x:Key="IsCheckedValueConverter"/>
+        <Storyboard x:Key="AcceptWord">
+            <ColorAnimationUsingKeyFrames Duration="00:00:03" Storyboard.TargetProperty="(TextBox.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="Word">
+                <DiscreteColorKeyFrame Value="Green" KeyTime="00:00:00"/>
+                <LinearColorKeyFrame Value="Gray" KeyTime="00:00:03"/>
+            </ColorAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Duration="00:00:03" Storyboard.TargetName="WordFeedback" Storyboard.TargetProperty="Opacity">
+                <SplineDoubleKeyFrame Value="1" KeyTime="00:00:01" KeySpline="0,1 .75,1"/>
+                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:03"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="RejectWord">
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(TextBox.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="Word">
+                <DiscreteColorKeyFrame Value="Red" KeyTime="00:00:00"/>
+                <LinearColorKeyFrame Value="Gray" KeyTime="00:00:03"/>
+            </ColorAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="WordFeedback" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:00"/>
+                <LinearDoubleKeyFrame Value="1" KeyTime="00:00:01"/>
+                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:03"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
         <ControlTemplate x:Key="toggleButtonTemplate" TargetType="ToggleButton" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
             <Border BorderThickness="{TemplateBinding Border.BorderThickness}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" Name="border" SnapsToDevicePixels="True">
                 <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" Name="contentPresenter" Margin="{TemplateBinding Control.Padding}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" Focusable="False" />
@@ -156,12 +178,17 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                       FontSize="20" Visibility="Hidden" />
+                       FontSize="20" Opacity="0" />
             <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserSelections.UserWord}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
-                     MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" />
+                     MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom">
+                <TextBox.Triggers>
+                    
+                </TextBox.Triggers>
+            </TextBox>
+
 
             <Button x:Name="ClearButton" Grid.Row="1" Grid.Column="2" Content="Clear" Click="ClearButton_Click"  HorizontalAlignment="Left" VerticalAlignment="Center"
-                    FontSize="16" Padding="8,4"/>
+                    FontSize="16" Padding="8,4" />
         </Grid>
         <Button x:Name="SubmitButton" Grid.Row="2" Content="Submit Word" Click="SubmitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 FontSize="18" Padding="8,4"/>

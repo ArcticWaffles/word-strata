@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -61,25 +62,17 @@ namespace WordStrata
             // If the word is valid
             if (viewModel.CheckWord())
             {
-                Word.BorderBrush = Brushes.Green;
-                WordFeedback.Visibility = Visibility.Visible; 
-                WordFeedback.Foreground = Brushes.Green;
                 WordFeedback.Text = "Word Accepted!";
-                // Make this a trigger in XAML?
-                // Delete used tiles
-                // Clear user word and user selections
-                // Turn text box green and write success message for a couple seconds
-                // in general: have clear word button. Backspace too?
+                WordFeedback.Foreground = Brushes.Green;
+                (Resources["AcceptWord"] as Storyboard).Begin();
+                viewModel.ClearWord();
+                // TODO: Delete used tiles
             }
             else // Word is not valid
             {
-                Word.BorderBrush = Brushes.Red;
-                WordFeedback.Visibility = Visibility.Visible;
                 WordFeedback.Foreground = Brushes.Red;
                 WordFeedback.Text = "Word Not Accepted!";
-                // Turn text box red and write failure message for a couple seconds
-                // can use clear word button to remove word
-
+                (Resources["RejectWord"] as Storyboard).Begin();
             }
         }
 

@@ -1,13 +1,16 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WordStrata.Solve;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WordStrata.Solve;
 
-namespace UnitTests
+
+namespace NUnitTests
 {
-    [TestClass]
-    public class BoardTests
+    [TestFixture]
+    class BoardTests
     {
         char[,] array3x3;
         char[,] arrayEmpty;
@@ -20,10 +23,10 @@ namespace UnitTests
         Tile tileD;
         Tile tileE;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void Init()
         {
-            array3x3 = new char[,] 
+            array3x3 = new char[,]
             {
                 { 'a', 'b', 'c' },
                 { 'd', 'e', 'f' },
@@ -42,13 +45,14 @@ namespace UnitTests
             tileB = new Tile(new Coordinates(0, 1), 'b');
             tileD = new Tile(new Coordinates(1, 0), 'd');
             tileE = new Tile(new Coordinates(1, 1), 'e');
-            
         }
 
+    
 
-        //Tiles tests
 
-        [TestMethod]
+    //Tiles tests
+
+    [Test]
         public void Tiles_board3x3_CountIs9()
         {
             var board = new Board(array3x3);
@@ -56,7 +60,7 @@ namespace UnitTests
             Assert.AreEqual(9, tiles.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void Tiles_board3x3_TileContentIsCorrect()
         {
             var board = new Board(array3x3);
@@ -74,48 +78,50 @@ namespace UnitTests
             }
         }
 
+        //TODO: Are these tests worth resurrecting in NUnit syntax?
+
         //NewBoard tests
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void NewBoard_arrayEmpty_ThrowsException()
-        {
-            var board = new Board(arrayEmpty);
-        }
+        //[Test]
+        //[ExpectedException(typeof(ArgumentException))]
+        //public void NewBoard_arrayEmpty_ThrowsException()
+        //{
+        //    var board = new Board(arrayEmpty);
+        //}
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void NewBoard_array1x0_ThrowsException()
-        {
-            var board = new Board(array1x0);
-        }
+        //[Test]
+        //[ExpectedException(typeof(ArgumentException))]
+        //public void NewBoard_array1x0_ThrowsException()
+        //{
+        //    var board = new Board(array1x0);
+        //}
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void NewBoard_array0x1_ThrowsException()
-        {
-            var board = new Board(array0x1);
-        }
+        //[Test]
+        //[ExpectedException(typeof(ArgumentException))]
+        //public void NewBoard_array0x1_ThrowsException()
+        //{
+        //    var board = new Board(array0x1);
+        //}
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void NewBoard_arraynull_ThrowsException()
-        {
-            var board = new Board(null);
-        }
+        //[Test]
+        //[ExpectedException(typeof(ArgumentNullException))]
+        //public void NewBoard_arraynull_ThrowsException()
+        //{
+        //    var board = new Board(null);
+        //}
 
 
         //GetNeighbor tests
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GetNeighbor_TileIsNull_ThrowsException()
-        {
-            var board = new Board(array2x2);
-            board.GetNeighbor(null, Board.Direction.North);
-        }
+        //[Test]
+        //[ExpectedException(typeof(ArgumentNullException))]
+        //public void GetNeighbor_TileIsNull_ThrowsException()
+        //{
+        //    var board = new Board(array2x2);
+        //    board.GetNeighbor(null, Board.Direction.North);
+        //}
 
-        [TestMethod]
+        [Test]
         public void GetNeighbor_board2x2_NeighborIsCorrect_North()
         {
             var board = new Board(array2x2);
@@ -125,7 +131,7 @@ namespace UnitTests
             Assert.AreEqual(neighbor.Coords.Y, tileA.Coords.Y);
         }
 
-        [TestMethod]
+        [Test]
         public void GetNeighbor_board2x2_NeighborIsCorrect_East()
         {
             var board = new Board(array2x2);
@@ -135,7 +141,7 @@ namespace UnitTests
             Assert.AreEqual(neighbor.Coords.Y, tileE.Coords.Y);
         }
 
-        [TestMethod]
+        [Test]
         public void GetNeighbor_board2x2_NeigborIsCorrect_South()
         {
             var board = new Board(array2x2);
@@ -145,7 +151,7 @@ namespace UnitTests
             Assert.AreEqual(neighbor.Coords.Y, tileE.Coords.Y);
         }
 
-        [TestMethod]
+        [Test]
         public void GetNeighbor_board2x2_NeighborIsCorrect_West()
         {
             var board = new Board(array2x2);
@@ -155,38 +161,39 @@ namespace UnitTests
             Assert.AreEqual(neighbor.Coords.Y, tileA.Coords.Y);
         }
 
-        [TestMethod]
+
+        [Test]
         public void GetNeighbor_goesBeyondGrid_North_returnsHole()
         {
             var board = new Board(array2x2);
             var neighbor = board.GetNeighbor(tileA, Board.Direction.North);
-            Assert.IsInstanceOfType(neighbor, typeof(Hole));
+            Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
         }
 
-        [TestMethod]
+        [Test]
         public void GetNeighbor_goesBeyondGrid_East_returnsHole()
         {
             var board = new Board(array2x2);
             var neighbor = board.GetNeighbor(tileB, Board.Direction.East);
-            Assert.IsInstanceOfType(neighbor, typeof(Hole));
+            Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
         }
 
-        [TestMethod]
+        [Test]
         public void GetNeighbor_goesBeyondGrid_South_returnsHole()
         {
             var board = new Board(array2x2);
             var neighbor = board.GetNeighbor(tileE, Board.Direction.South);
-            Assert.IsInstanceOfType(neighbor, typeof(Hole));
+            Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
         }
 
-        [TestMethod]
+        [Test]
         public void GetNeighbor_goesBeyondGrid_West_returnsHole()
         {
             var board = new Board(array2x2);
             var neighbor = board.GetNeighbor(tileD, Board.Direction.West);
-            Assert.IsInstanceOfType(neighbor, typeof(Hole));
+            Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
         }
-
 
     }
 }
+

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using WordStrata;
 
-namespace NunitTests
+namespace NUnitTests
 {
     [TestFixture]
     public class GameModelTests

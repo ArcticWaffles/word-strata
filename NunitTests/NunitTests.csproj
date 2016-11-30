@@ -7,8 +7,8 @@
     <ProjectGuid>{00AF87CA-140A-437B-AAB8-C0B5E18998FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NunitTests</RootNamespace>
-    <AssemblyName>NunitTests</AssemblyName>
+    <RootNamespace>NUnitTests</RootNamespace>
+    <AssemblyName>NUnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoardGeneratorTests.cs" />
+    <Compile Include="BoardTests.cs" />
     <Compile Include="MainWindowVMTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameModelTests.cs" />
