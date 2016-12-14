@@ -10,7 +10,7 @@ namespace WordStrata
     {
         public static HashSet<string> GetDictionary()
         {
-            var list = new HashSet<string>();
+            var list = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             string line;
             System.IO.StreamReader file = new System.IO.StreamReader("sowpods.txt");
             while ((line = file.ReadLine()) != null)

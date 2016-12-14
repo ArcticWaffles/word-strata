@@ -52,7 +52,7 @@ namespace NUnitTests
 
     //Tiles tests
 
-    [Test]
+        [Test]
         public void Tiles_board3x3_CountIs9()
         {
             var board = new Board(array3x3);

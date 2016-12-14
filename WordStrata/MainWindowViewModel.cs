@@ -7,6 +7,7 @@ using System.ComponentModel;
 using WordStrata.Solve;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Windows.Input;
 
 namespace WordStrata
 {
@@ -88,6 +89,28 @@ namespace WordStrata
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public bool CheckLetter(Key key)
+        {
+            KeyConverter kc = new KeyConverter();
+            string keyChar = kc.ConvertToString(key);
+
+            foreach (var tile in gameModel.GameBoard.Tiles)
+            {
+                if (keyChar == tile.Letter.ToString())
+                {
+                    // TODO: Decide how to do this part. New method in solver
+                    // for finding a specific word on the board, rather than any
+                    // word, and save the list of tiles, and look for all
+                    // occurrences instead of just the first one? Then let the
+                    // user type any letter instead of checking the input? And
+                    // highlight the possible paths or for now just have a list
+                    // on the side? Check upon submit button click or
+                    // continually check and flash red when they start typing
+                    // non-existent letters?
+                }
+            }
+            throw new NotImplementedException();
+        }
     }
 
 }

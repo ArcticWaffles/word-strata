@@ -49,6 +49,8 @@
     <Compile Include="MainWindowVMTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameModelTests.cs" />
+    <Compile Include="SolverTests.cs" />
+    <Compile Include="WordCheckerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

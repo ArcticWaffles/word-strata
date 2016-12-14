@@ -103,7 +103,7 @@ namespace WordStrata.Solve
                 throw new ArgumentNullException("Tile cannot be null");
             }
 
-            if(markedTiles.Contains(tile))
+            if (markedTiles.Contains(tile))
             {
                 return false;
             }
@@ -127,7 +127,7 @@ namespace WordStrata.Solve
                 var neighbor = board.GetNeighbor(tile, direction);
                 if (neighbor is Tile)
                 {
-                   if (WordExistsFromTileRecursive(neighbor as Tile, currentDepth + 1, targetDepth, markedTiles, theWord))
+                    if (WordExistsFromTileRecursive(neighbor as Tile, currentDepth + 1, targetDepth, markedTiles, theWord))
                     {
                         UnmarkAndRemove(tile, theWord, markedTiles);
                         return true;
@@ -140,7 +140,7 @@ namespace WordStrata.Solve
         }
 
 
-        public bool WordExistsOnBoard()
+        public bool AnyWordExistsOnBoard()
         {
             // TODO: Decide how to determine "max length" of a word - find
             // longest word in dictionary, or number of tiles on the board, or
@@ -162,11 +162,53 @@ namespace WordStrata.Solve
                     {
                         return true;
                     }
-                    
+
                 }
             }
             return false;
         }
+
+        // Used for checking that a given string can be found in a valid path of
+        // tiles on the board, and if so, returns all matching tile lists. If the word is
+        // not found, it returns an empty list. It does not check the word
+        // against the dictionary.
+        public List<List<Tile>> SpecificWordExistsOnBoard(string theWord)
+        {
+            var tileLists = new List<List<Tile>>();
+            // TODO: Rewrite one recursive function for Any and Specific using the checkers
+
+            for (int i = 0; i < theWord.Length; i++)
+            {
+                var letter = theWord.Substring(i, 1);
+                foreach (Tile tile in board.Tiles)
+                {
+                    if (i == 0 && letter == tile.Letter.ToString())
+                    {
+                        tileLists.Add(new List<Tile> { tile });
+                    }
+                    else if (i > 0 && letter == tile.Letter.ToString())
+                    {
+                        foreach (var tileList in tileLists)
+                        {
+                            if (board.getAllNeighbors(tileList.Last(), board).Contains(tile as GridSquare))
+                            {
+                                tileList.Add(tile);
+                            }
+                        }
+                    }
+                }
+            }
+            tileLists.RemoveAll(x => x.Count < theWord.Length);
+            //for(int i = tileLists.Count - 1; i >= 0; i--)
+            //{
+            //    if (tileLists[i].Count < theWord.Length)
+            //    {
+            //        tileLists.Remove(tileLists[i]);
+            //    }
+            //}
+            return tileLists;
+        }
+
 
     }
 }

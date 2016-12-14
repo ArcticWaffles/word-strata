@@ -81,6 +81,11 @@ namespace WordStrata
         {
             viewModel.ClearWord();
         }
+
+        private void Word_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = viewModel.CheckLetter(e.Key);
+        }
     }
 }
 

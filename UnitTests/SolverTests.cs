@@ -155,44 +155,77 @@ namespace UnitTests
 
 
 
-        //Word Exists Tests
+        //AnyWordExists Tests
 
         [TestMethod]
         public void WordExists_CheckThatMarkedTilesListIsEmpty_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board3x3);
-            Assert.IsTrue(solver.WordExistsOnBoard());
+            Assert.IsTrue(solver.AnyWordExistsOnBoard());
         }
 
         [TestMethod]
         public void WordExists_WordDoesExist3x3_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board3x3);
-            Assert.IsTrue(solver.WordExistsOnBoard());
+            Assert.IsTrue(solver.AnyWordExistsOnBoard());
         }
 
         [TestMethod]
         public void WordExists_WordDoesExist2x2_ReturnsTrue()
         {
             var solver = new Solver(smallDictionary, board2x2);
-            Assert.IsTrue(solver.WordExistsOnBoard());
+            Assert.IsTrue(solver.AnyWordExistsOnBoard());
         }
 
         [TestMethod]
         public void WordExists_WordDoesNotExistDictionary_ReturnsFalse()
         {
             var solver = new Solver(wordCannotBeFoundDictionary, board3x3);
-            Assert.IsFalse(solver.WordExistsOnBoard());
+            Assert.IsFalse(solver.AnyWordExistsOnBoard());
         }
 
         [TestMethod]
         public void WordExists_WordDoesNotExistBoard_ReturnsFalse()
         {
             var solver = new Solver(smallDictionary, boardWithNoWords);
-            Assert.IsFalse(solver.WordExistsOnBoard());
+            Assert.IsFalse(solver.AnyWordExistsOnBoard());
         }
 
         //TODO: Walk - test words of more lengths?
+
+        // SpecificWordExists Tests
+        [TestMethod]
+        public void SpecificWordExists_WordDoesNotExist_ReturnsEmptyList()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            var list = solver.SpecificWordExistsOnBoard("yo");
+            Assert.IsTrue(list.Count == 0);
+        }
+
+        [TestMethod]
+        public void SpecificWordExists_OnePathExists_ReturnsOneList()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            var list = solver.SpecificWordExistsOnBoard("kb");
+            Assert.IsTrue(list.Count == 1);
+        }
+
+        [TestMethod]
+        public void SpecificWordExists_TwoPathsExist_ReturnsTwoLists()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            var list = solver.SpecificWordExistsOnBoard("xk");
+            Assert.IsTrue(list.Count == 2);
+        }
+
+        [TestMethod]
+        public void SpecificWordExists_FourPathsExist_ReturnsFourLists()
+        {
+            var solver = new Solver(smallDictionary, board3x3);
+            var list = solver.SpecificWordExistsOnBoard("x");
+            Assert.IsTrue(list.Count == 4);
+        }
 
     }
 
