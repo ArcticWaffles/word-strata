@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WordStrata.Solve
 {
+    // WordChecker is used by the Solver to check a word against a dictionary or
+    // another word. It is the parent class of DictionaryChecker and
+    // StringChecker.
     public abstract class WordChecker
     {
         public bool ShallContinue { get; set; }

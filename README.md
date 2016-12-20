@@ -1,4 +1,4 @@
 # word-strata
-Word Strata is a C# GUI word game, very much still in progress. Eventually, it will be a three dimensional word-finding game, but right now the board solver just works through unit tests. Classes have been established for the board, letter tiles, etc. The solver checks to see if there are any words remaining on the board by using a recursive, breadth-first search algorithm. 
+Word Strata is a WPF word game in progress. The goal is a three dimensional word-finding game with multiple layers of letters, but right now it is still two dimensional. Much of the basic structure has been established, and I wrote a solver that checks to see if there are any words remaining on the board by using a recursive, breadth-first search algorithm. 
 
-I created Word Strata in order to learn WPF/XAML and experiment with test-driven development.
+I created Word Strata in order to learn WPF/XAML and general GUI concepts, such as animation, data binding, and MVVM. I've also used it to explore various testing frameworks and experiment with test-driven development.
