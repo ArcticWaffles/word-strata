@@ -18,6 +18,8 @@ namespace WordStrata.Solve
         {
             masterWord = theMasterWord;
             ShallContinue = true;
+            StartDepth = theMasterWord.Length - 1;
+            EndDepth = theMasterWord.Length;
         }
 
         private string masterWord;
@@ -29,7 +31,8 @@ namespace WordStrata.Solve
             string word = GetLetters(path);
             if (word.Equals(masterWord, StringComparison.OrdinalIgnoreCase))
             {
-                Result.Add(path);
+                var pathCopy = new List<Tile>(path);
+                Result.Add(pathCopy);
             }
         }
     }

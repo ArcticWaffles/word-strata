@@ -40,7 +40,8 @@ namespace NUnitTests
             "back",
             "ark",
             "crab",
-            "arc"
+            "arc",
+            "crabcake"
             };
 
             tileA = new Tile(new Coordinates(0, 0), 'A');
@@ -51,6 +52,8 @@ namespace NUnitTests
 
             tileList = new List<Tile>();
         }
+
+
 
         // DictionaryChecker Tests
 
@@ -102,6 +105,29 @@ namespace NUnitTests
             dChecker.Check(tileList);
             Assert.That(dChecker.ShallContinue, Is.False);
         }
+
+        [Test]
+        public void DictionaryChecker_ByDefault_StartDepthIsZero()
+        {
+            dChecker = new DictionaryChecker(dictionaryA);
+            Assert.That(dChecker.StartDepth, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void DictionaryChecker_DictionaryA_EndDepthIsCorrect()
+        {
+            dChecker = new DictionaryChecker(dictionaryA);
+            Assert.That(dChecker.EndDepth, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void DictionaryChecker_DictionaryB_EndDepthIsCorrect()
+        {
+            dChecker = new DictionaryChecker(dictionaryB);
+            Assert.That(dChecker.EndDepth, Is.EqualTo(8));
+        }
+
+
 
         // StringChecker Tests
 
@@ -188,5 +214,22 @@ namespace NUnitTests
             sChecker.Check(tileList);
             Assert.That(sChecker.Result, Is.Empty);
         }
+
+        [Test]
+        public void StringChecker_ByDefault_StartDepthIsCorrect()
+        {
+            sChecker = new StringChecker("banana");
+            Assert.That(sChecker.StartDepth, Is.EqualTo(5));
+        }
+
+        [Test]
+        public void StringChecker_ByDefault_EndDepthIsCorrect()
+        {
+            sChecker = new StringChecker("banana");
+            Assert.That(sChecker.EndDepth, Is.EqualTo(6));
+        }
     }
 }
+
+// TODO: Do any tests need multiple cases?
+// TODO: Remove old unit test project

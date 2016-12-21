@@ -15,6 +15,8 @@ namespace WordStrata.Solve
         public DictionaryChecker(HashSet<string> theDictionary)
         {
             dictionary = theDictionary;
+            StartDepth = 0;
+            EndDepth = theDictionary.Max(x => x.Length);
         }
 
         private HashSet<String> dictionary;
@@ -24,9 +26,12 @@ namespace WordStrata.Solve
         {
             string word = GetLetters(path);
             Result = dictionary.Contains(word);
+            // Stop if a match is found; otherwise continue.
             ShallContinue = !Result;
         }
 
         public bool Result { get; set; }
     }
 }
+// TODO: Would it be any more efficient to change max word length function to find
+// longest word in dictionary that doesn't have a "subword" in it?
