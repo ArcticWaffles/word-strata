@@ -55,12 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ValueConverters\ContentValueConverter.cs" />
     <Compile Include="DictionaryModel.cs" />
     <Compile Include="DesignTimeMainWindowViewModel.cs" />
     <Compile Include="GameModel.cs" />
     <Compile Include="IGameModel.cs" />
-    <Compile Include="IsCheckedValueConverter.cs" />
-    <Compile Include="IsClickableValueConverter.cs" />
+    <Compile Include="ValueConverters\IsCheckedValueConverter.cs" />
+    <Compile Include="ValueConverters\IsClickableValueConverter.cs" />
     <Compile Include="MainWindowViewModelBase.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Solve\Board.cs" />
@@ -72,7 +73,7 @@
     <Compile Include="Solve\Solver.cs" />
     <Compile Include="Solve\StringChecker.cs" />
     <Compile Include="Solve\Tile.cs" />
-    <Compile Include="Solve\WordChecker.cs" />
+    <Compile Include="Solve\Checker.cs" />
     <Compile Include="UserTileSelections.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -119,6 +120,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

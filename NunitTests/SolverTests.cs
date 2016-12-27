@@ -72,40 +72,40 @@ namespace NUnitTests
         public void FindWordDC_WordExists2x2DA_ResultIsTrue()
         {
             var solver = new Solver(dictionaryA, board2x2);
-            var checker = solver.AnyWordExistsonBoard();
-            Assert.That(checker.Result, Is.True);
+            var result = solver.AnyWordExistsonBoard();
+            Assert.That(result, Is.True);
         }
 
         [Test]
         public void FindWordDC_WordExists3x3DA_ResultIsTrue()
         {
             var solver = new Solver(dictionaryA, board3x3);
-            var checker = solver.AnyWordExistsonBoard();
-            Assert.That(checker.Result, Is.True);
+            var result = solver.AnyWordExistsonBoard();
+            Assert.That(result, Is.True);
         }
 
         [Test]
         public void FindWordDC_WordExists3x3DB_ResultIsTrue()
         {
             var solver = new Solver(dictionaryB, board3x3);
-            var checker = solver.AnyWordExistsonBoard();
-            Assert.That(checker.Result, Is.True);
+            var result = solver.AnyWordExistsonBoard();
+            Assert.That(result, Is.True);
         }
 
         [Test]
         public void FindWordDC_WordDoesNotExist2x2DC_ResultIsFalse()
         {
             var solver = new Solver(dictionaryC, board2x2);
-            var checker = solver.AnyWordExistsonBoard();
-            Assert.That(checker.Result, Is.False);
+            var result = solver.AnyWordExistsonBoard();
+            Assert.That(result, Is.False);
         }
 
         [Test]
         public void FindWordDC_WordDoesNotExist3x3DC_ResultIsFalse()
         {
             var solver = new Solver(dictionaryC, board3x3);
-            var checker = solver.AnyWordExistsonBoard();
-            Assert.That(checker.Result, Is.False);
+            var result = solver.AnyWordExistsonBoard();
+            Assert.That(result, Is.False);
         }
 
 
@@ -121,9 +121,9 @@ namespace NUnitTests
         public void FindWordSC_SinglePathWordExists2x2_ResultIsWord(string word)
         {
             var solver = new Solver(dictionaryA, board2x2);
-            var checker = solver.SpecificWordExistsOnBoard(word);
-            Assert.That(checker.Result.Count, Is.EqualTo(1));
-            Assert.That(checker.GetLetters(checker.Result[0]), Is.EqualTo(word));
+            var result = solver.SpecificWordExistsOnBoard(word);
+            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(Solver.GetLetters(result[0]), Is.EqualTo(word));
         }
 
         [Test]
@@ -135,9 +135,9 @@ namespace NUnitTests
         public void FindWordSC_SinglePathWordExists3x3_ResultIsWord(string word)
         {
             var solver = new Solver(dictionaryA, board3x3);
-            var checker = solver.SpecificWordExistsOnBoard(word);
-            Assert.That(checker.Result.Count, Is.EqualTo(1));
-            Assert.That(checker.GetLetters(checker.Result[0]), Is.EqualTo(word));
+            var result = solver.SpecificWordExistsOnBoard(word);
+            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(Solver.GetLetters(result[0]), Is.EqualTo(word));
         }
 
         [Test]
@@ -147,11 +147,11 @@ namespace NUnitTests
         public void FindWordSC_2PathWordExists3x3_ResultIsAll(string word)
         {
             var solver = new Solver(dictionaryA, board3x3);
-            var checker = solver.SpecificWordExistsOnBoard(word);
-            Assert.That(checker.Result.Count, Is.EqualTo(2));
-            foreach (var list in checker.Result)
+            var result = solver.SpecificWordExistsOnBoard(word);
+            Assert.That(result.Count, Is.EqualTo(2));
+            foreach (var list in result)
             {
-                Assert.That(checker.GetLetters(list), Is.EqualTo(word));
+                Assert.That(Solver.GetLetters(list), Is.EqualTo(word));
             }
         }
 
@@ -159,11 +159,11 @@ namespace NUnitTests
         public void FindWordSC_3PathWordExists3x3_ResultIsAll()
         {
             var solver = new Solver(dictionaryA, board3x3);
-            var checker = solver.SpecificWordExistsOnBoard("x");
-            Assert.That(checker.Result.Count, Is.EqualTo(3));
-            foreach (var list in checker.Result)
+            var result = solver.SpecificWordExistsOnBoard("x");
+            Assert.That(result.Count, Is.EqualTo(3));
+            foreach (var list in result)
             {
-                Assert.That(checker.GetLetters(list), Is.EqualTo("x"));
+                Assert.That(Solver.GetLetters(list), Is.EqualTo("x"));
             }
         }
 
@@ -171,8 +171,8 @@ namespace NUnitTests
         public void FindWordSC_WordDoesNotExist2x2_ResultIsEmpty()
         {
             var solver = new Solver(dictionaryA, board2x2);
-            var checker = solver.SpecificWordExistsOnBoard("sheep");
-            Assert.That(checker.Result, Is.Empty);
+            var result = solver.SpecificWordExistsOnBoard("sheep");
+            Assert.That(result, Is.Empty);
         }
     }
 }

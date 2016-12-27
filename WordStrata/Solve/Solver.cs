@@ -6,35 +6,10 @@ using System.Threading.Tasks;
 
 namespace WordStrata.Solve
 {
-    public class Solver
+    public static class Solver
     {
-        HashSet<string> dictionary;
-        Board board;
-
-        public Solver(HashSet<string> dictionary, Board board)
-        {
-            if (dictionary == null)
-            {
-                throw new ArgumentNullException("Dictionary cannot be null");
-            }
-
-            if (dictionary.Count == 0)
-            {
-                throw new ArgumentException("Dictionary cannot be empty");
-            }
-
-            if (board == null)
-            {
-                throw new ArgumentNullException("Board cannot be null");
-            }
-
-            this.dictionary = dictionary;
-            this.board = board;
-        }
-
-
-        // Public method calls the private, recursive version of the method.
-        public void FindWordFromStartingTileKickoff(WordChecker checker)
+        // Public "kick-off" method calls the private, recursive version of the method.
+        public static void FindWordFromStartingTileKickoff(Checker checker, Board board)
         {
             // Outer loop: for each targetDepth
             for (int i = checker.StartDepth ; i < checker.EndDepth ; i++)
@@ -42,19 +17,13 @@ namespace WordStrata.Solve
                 // Inner loop: for each starting tile
                 foreach (Tile tile in board.Tiles)
                 {
-                    List<Tile> tilePath = new List<Tile>();
-                    FindWordFromStartingTileRecursive(tile, tilePath, checker, 0, i);
-                    if(!checker.ShallContinue)
-                    {
+                    FindWordFromStartingTileRecursive(board, tile, new List<Tile>(), checker, 0, i);
+                    if (!checker.ShallContinue)
                         break;
-                    }
                 }
-                if(!checker.ShallContinue)
-                {
+                if (!checker.ShallContinue)
                     break;
-                }
             }
-
         }
 
         // Uses a breadth first search to find words on the board, i.e. checks
@@ -62,7 +31,8 @@ namespace WordStrata.Solve
         // in the checker. currentDepth refers to how many tiles are in the
         // current path. targetDepth is the size of the word being searched
         // for in the current iteration.
-        private void FindWordFromStartingTileRecursive(Tile tile, List<Tile> tilePath, WordChecker checker, int currentDepth, int targetDepth)
+        private static void FindWordFromStartingTileRecursive(Board board, Tile tile, 
+            List<Tile> tilePath, Checker checker, int currentDepth, int targetDepth)
         {
             tilePath.Add(tile);
 
@@ -73,7 +43,6 @@ namespace WordStrata.Solve
             {
                 checker.Check(tilePath);
             }
-
             else //currentDepth < targetDepth
             {
                 foreach (Board.Direction direction in Enum.GetValues(typeof(Board.Direction)))
@@ -81,7 +50,7 @@ namespace WordStrata.Solve
                     var neighbor = board.GetNeighbor(tile, direction);
                     if (neighbor is Tile && !tilePath.Contains(neighbor) && checker.ShallContinue)
                     {
-                        FindWordFromStartingTileRecursive(neighbor as Tile, tilePath, checker, currentDepth + 1, targetDepth);
+                        FindWordFromStartingTileRecursive(board, neighbor as Tile, tilePath, checker, currentDepth + 1, targetDepth);
                         tilePath.Remove(neighbor as Tile);
                     }
                 }
@@ -91,21 +60,31 @@ namespace WordStrata.Solve
 
         // Checks that a valid word still exists on the board so the user can be
         // alerted when the game is over.
-        public DictionaryChecker AnyWordExistsonBoard()
+        public static bool AnyWordExistsonBoard(HashSet<string> dictionary, Board board)
         {
             var checker = new DictionaryChecker(dictionary);
-            FindWordFromStartingTileKickoff(checker);
-            return checker;
+            FindWordFromStartingTileKickoff(checker, board);
+            return checker.Result;
         }
 
         // Checks that a given string can be found in a valid path of
         // tiles on the board, and if so, returns all matching tile paths. It
         // does not check the word against the dictionary.
-        public StringChecker SpecificWordExistsOnBoard(string theWord)
+        public static List<List<Tile>> SpecificWordExistsOnBoard(string theWord, Board board)
         {
             var checker = new StringChecker(theWord);
-            FindWordFromStartingTileKickoff(checker);
-            return checker;
+            FindWordFromStartingTileKickoff(checker, board);
+            return checker.Result;
+        }
+
+        public static string GetLetters(List<Tile> path)
+        {
+            string word = "";
+            foreach (var tile in path)
+            {
+                word += tile.Letter;
+            }
+            return word;
         }
     }
 }

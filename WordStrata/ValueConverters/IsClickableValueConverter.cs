@@ -16,9 +16,12 @@ namespace WordStrata
         {
             var userSelections = values[0] as Collection<Tile>;
             var currentTile = values[1] as Tile;
-            var tile = values[2] as Tile;
+            var gridsquare = values[2] as GridSquare;
 
-            return TileIsClickable(tile, currentTile, userSelections);
+            if (gridsquare is Tile)
+                return TileIsClickable(gridsquare as Tile, currentTile, userSelections);
+            else //gridsquare is Hole
+                return false;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

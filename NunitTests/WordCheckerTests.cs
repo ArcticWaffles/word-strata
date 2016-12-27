@@ -149,7 +149,7 @@ namespace NUnitTests
             tileList.Add(tileK);
             sChecker.Check(tileList);
             Assert.That(sChecker.Result.Count.Equals(1));
-            Assert.That(sChecker.GetLetters(sChecker.Result[0]), Is.EqualTo("back").IgnoreCase);
+            Assert.That(Solver.GetLetters(sChecker.Result[0]), Is.EqualTo("back").IgnoreCase);
         }
 
         [Test]
@@ -176,7 +176,7 @@ namespace NUnitTests
             tileList.Add(tileK);
             sChecker.Check(tileList);
             Assert.That(sChecker.Result.Count.Equals(1));
-            Assert.That(sChecker.GetLetters(sChecker.Result[0]), Is.EqualTo("bark").IgnoreCase);
+            Assert.That(Solver.GetLetters(sChecker.Result[0]), Is.EqualTo("bark").IgnoreCase);
         }
 
         //ShallContinue should always be true when using a StringChecker
@@ -232,4 +232,3 @@ namespace NUnitTests
 }
 
 // TODO: Do any tests need multiple cases?
-// TODO: Remove old unit test project

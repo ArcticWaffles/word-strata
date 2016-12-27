@@ -18,6 +18,8 @@
     <Window.Resources>
         <local:IsClickableValueConverter x:Key="IsClickableValueConverter"/>
         <local:IsCheckedValueConverter x:Key="IsCheckedValueConverter"/>
+        <local:ContentValueConverter x:Key="ContentValueConverter"/>
+
         <Storyboard x:Key="AcceptWord">
             <ColorAnimationUsingKeyFrames Duration="00:00:03" Storyboard.TargetProperty="(TextBox.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="Word">
                 <DiscreteColorKeyFrame Value="Green" KeyTime="00:00:00"/>
@@ -140,7 +142,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ItemsControl x:Name="boardItemsControl" Grid.Row="0" ItemsSource="{Binding GameBoard.Tiles}">
+        <ItemsControl x:Name="boardItemsControl" Grid.Row="0" ItemsSource="{Binding GameBoard.GridSquares}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid x:Name="board" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -148,7 +150,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" BorderBrush="LightSeaGreen" Content="{Binding Letter}" FontSize="18" FontFamily="Georgia"
+                    <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" Content ="{Binding Converter={StaticResource ContentValueConverter}}" BorderBrush="LightSeaGreen" FontSize="18" FontFamily="Georgia"
                                    BorderThickness="2" Padding="10" Click="TileToggleButton_Click">
                         <ToggleButton.IsChecked>
                             <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">

@@ -33,7 +33,8 @@ namespace NUnitTests
         }
 
         [Test]
-        // TODO: Improve this test
+        // TODO: Improve this test. Pass in a "fake" random number generator and
+        // ensure given numbers match up with the right letters
         public void WeightedBoard_LettersAreWeighted()
         {
             var board = BoardGenerator.generateWeightedBoard(10, 10);

@@ -50,7 +50,7 @@ namespace NUnitTests
     
 
 
-    //Tiles tests
+        //Tiles tests
 
         [Test]
         public void Tiles_board3x3_CountIs9()
@@ -77,6 +77,36 @@ namespace NUnitTests
                 Assert.AreEqual(tile.Letter, array3x3[tile.Coords.X, tile.Coords.Y]);
             }
         }
+
+
+
+        // ConvertTilesToHoles tests
+
+        [Test]
+        public void ConvertTiles_WholeBoard_AllSquaresAreHoles()
+        {
+            var board = new Board(array2x2);
+            var tiles = board.Tiles;
+            board.ConvertTilesToHoles(tiles);
+            foreach (var gridsquare in board.GridSquares)
+            {
+                Assert.That(gridsquare, Is.InstanceOf(typeof(Hole)));
+            }
+            Assert.That(board.Tiles, Is.Empty);
+        }
+
+        [Test]
+        public void ConvertTiles_PartialBoard_RemainingTileCountIsCorrect()
+        {
+            var board = new Board(array2x2);
+            var tiles = new List<Tile>();
+            tiles.Add(tileA);
+            tiles.Add(tileB);
+            board.ConvertTilesToHoles(tiles);
+            Assert.That(board.Tiles.Count.Equals(2));
+        }
+
+
 
         //TODO: Are these tests worth resurrecting in NUnit syntax?
 

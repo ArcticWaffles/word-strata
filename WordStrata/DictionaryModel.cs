@@ -20,7 +20,6 @@ namespace WordStrata
             file.Close();
             return list;
             //TODO: file error handling?
-            //TODO: check dictionary for longest word to set max word length in solver?
         }
     }
 }

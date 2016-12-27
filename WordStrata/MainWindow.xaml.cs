@@ -65,8 +65,8 @@ namespace WordStrata
                 WordFeedback.Text = "Word Accepted!";
                 WordFeedback.Foreground = Brushes.Green;
                 (Resources["AcceptWord"] as Storyboard).Begin();
-                viewModel.ClearWord();
-                // TODO: Delete used tiles
+                viewModel.FinishTurn();
+
             }
             else // Word is not valid
             {
@@ -89,11 +89,7 @@ namespace WordStrata
     }
 }
 
-//TODO: Turning used letters into holes
-//TODO: Combine unit test classes, convert old ones to NUnit
 //TODO: Error handling
-//TODO: Use solver to make sure moves remain
-//TODO: "Submit" button - implement results
 //TODO: Clean up and commenting
 //TODO: Try /// comments?
 //TODO: Allow user to type the word

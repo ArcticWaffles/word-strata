@@ -1,25 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WordStrata.Solve
 {
-    public class Board
+    public class Board : INotifyPropertyChanged
     {
         //A gridsquare is a specific square on the board and is either a tile or a hole. 
         //gridSquares is a 2D array representing all the tiles and holes on the board.
         private GridSquare[,] gridSquares;
-        public GridSquare[,] GridSquares
+
+        public List<GridSquare> GridSquares
         {
             get
             {
-                return gridSquares;
-            }
-            set
-            {
-                gridSquares = value;
+                var squares = new List<GridSquare>();
+                for (int x = 0; x < gridSquares.GetLength(0); x++)
+                {
+                    for (int y = 0; y < gridSquares.GetLength(1); y++)
+                    {
+                        squares.Add(gridSquares[x, y]);
+                    }
+                }
+                return squares;
             }
         }
 
@@ -32,12 +39,12 @@ namespace WordStrata.Solve
             get
             {
                 List<Tile> tiles = new List<Tile>();
-                for (int x = 0; x < GridSquares.GetLength(0); x++)
+                for (int x = 0; x < gridSquares.GetLength(0); x++)
                 {
-                    for (int y = 0; y < GridSquares.GetLength(1); y++)
+                    for (int y = 0; y < gridSquares.GetLength(1); y++)
                     {
-                        if (GridSquares[x, y] is Tile)
-                            tiles.Add(GridSquares[x, y] as Tile);
+                        if (gridSquares[x, y] is Tile)
+                            tiles.Add(gridSquares[x, y] as Tile);
                     }
                 }
                 return tiles;
@@ -58,7 +65,7 @@ namespace WordStrata.Solve
             {
                 throw new ArgumentException("letterGrid dimensions cannot be zero");
             }
-            GridSquares = new GridSquare[letterGrid.GetLength(0), letterGrid.GetLength(1)];
+            gridSquares = new GridSquare[letterGrid.GetLength(0), letterGrid.GetLength(1)];
             for (int x = 0; x < letterGrid.GetLength(0); x++)
             {
                 for (int y = 0; y < letterGrid.GetLength(1); y++)
@@ -66,11 +73,11 @@ namespace WordStrata.Solve
                     var currentLetter = letterGrid[x, y];
                     if (currentLetter == ' ')
                     {
-                        GridSquares[x, y] = new Hole(new Coordinates(x, y));
+                        gridSquares[x, y] = new Hole(new Coordinates(x, y));
                     }
                     else
                     {
-                        GridSquares[x, y] = new Tile(new Coordinates(x, y), currentLetter);
+                        gridSquares[x, y] = new Tile(new Coordinates(x, y), currentLetter);
                     }
                 }
             }
@@ -104,11 +111,32 @@ namespace WordStrata.Solve
             }
 
             //If the neighbor is outside of the board dimensions, returns a hole
-            if (x < 0 || x > GridSquares.GetLength(0) - 1 || y < 0 || y > GridSquares.GetLength(1) - 1)
+            if (x < 0 || x > gridSquares.GetLength(0) - 1 || y < 0 || y > gridSquares.GetLength(1) - 1)
             {
                 return new Hole(new Coordinates(x, y));
             }
-            return GridSquares[x, y];
+            return gridSquares[x, y];
+        }
+
+        public void ConvertTilesToHoles(List<Tile> tiles)
+        {
+            foreach (var tile in tiles)
+            {
+                gridSquares[tile.Coords.X, tile.Coords.Y] = new Hole(tile.Coords);
+                OnPropertyChanged(null);
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(null);
         }
 
         // TODO: Get rid of? Not being used anymore

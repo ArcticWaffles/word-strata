@@ -13,12 +13,12 @@ namespace WordStrata
 {
     public class MainWindowViewModel : MainWindowViewModelBase, INotifyPropertyChanged 
     {
-        public MainWindowViewModel(IGameModel theGameModel)
+        public MainWindowViewModel(GameModel theGameModel)
         {
             gameModel = theGameModel;
         }
 
-        IGameModel gameModel;
+        GameModel gameModel;
 
         public override Board GameBoard
         {
@@ -64,7 +64,7 @@ namespace WordStrata
         }
 
 
-        //User unclicks a tile: 
+        // User unclicks a tile: 
         public void UnclickTile(Tile theTile)
         {
             UserSelections.Selections.Remove(theTile);
@@ -80,6 +80,19 @@ namespace WordStrata
         public void ClearWord()
         {
             UserSelections.Selections.Clear();
+        }
+
+        /// <summary>
+        /// Turns used tiles to holes, clears word, and checks that further moves remain.
+        /// </summary>
+        public void FinishTurn()
+        {
+            GameBoard.ConvertTilesToHoles(UserSelections.Selections.ToList());
+            ClearWord();
+            if(!Solver.AnyWordExistsonBoard(Dictionary, GameBoard))
+            {
+                // TODO: Notify user no more words remain. 
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -98,10 +111,7 @@ namespace WordStrata
             {
                 if (keyChar == tile.Letter.ToString())
                 {
-                    // TODO: Decide how to do this part. New method in solver
-                    // for finding a specific word on the board, rather than any
-                    // word, and save the list of tiles, and look for all
-                    // occurrences instead of just the first one? Then let the
+                    // TODO: Decide how to do this part. New method in solver. Let the
                     // user type any letter instead of checking the input? And
                     // highlight the possible paths or for now just have a list
                     // on the side? Check upon submit button click or

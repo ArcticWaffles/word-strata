@@ -12,15 +12,13 @@ namespace WordStrata
         public GameModel(HashSet<string> dictionary)
         {
             GameBoard = BoardGenerator.generateWeightedBoard(5, 5);
-            solver = new Solver(dictionary, GameBoard);
             Dictionary = dictionary;
         }
 
         public Board GameBoard { get; }
 
-        private Solver solver;
-
-        public HashSet<String> Dictionary { get; }
+        public HashSet<string> Dictionary { get; }
     }
 }
 
+// TODO: Eventually use IGameModel for player and level info.

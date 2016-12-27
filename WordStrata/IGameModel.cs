@@ -13,11 +13,5 @@ namespace WordStrata
 
         HashSet<String> Dictionary { get; }
 
-        //List<TileViewModel> UserSelections { get; set; }
-
-        //TileViewModel CurrentGuiTile { get; set; }
-
-        //string UserWord { get; set; }
-
     }
 }

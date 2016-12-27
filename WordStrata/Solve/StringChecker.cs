@@ -10,9 +10,8 @@ namespace WordStrata.Solve
     // provided string. It is used in the process of verifying that a
     // user-entered word exists on the board as a valid path. Since the word may
     // be formed by more than one combination of tiles, StringChecker looks for
-    // all matching tile paths (ShallContinue is always true) and saves each as
-    // a list.
-    public class StringChecker : WordChecker
+    // all matching tile paths and saves each as a list.
+    public class StringChecker : Checker
     {
         public StringChecker(string theMasterWord)
         {
@@ -28,7 +27,7 @@ namespace WordStrata.Solve
 
         public override void Check(List<Tile> path)
         {
-            string word = GetLetters(path);
+            string word = Solver.GetLetters(path);
             if (word.Equals(masterWord, StringComparison.OrdinalIgnoreCase))
             {
                 var pathCopy = new List<Tile>(path);
@@ -37,3 +36,4 @@ namespace WordStrata.Solve
         }
     }
 }
+    
