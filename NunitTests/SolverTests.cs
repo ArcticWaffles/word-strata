@@ -71,40 +71,35 @@ namespace NUnitTests
         [Test]
         public void FindWordDC_WordExists2x2DA_ResultIsTrue()
         {
-            var solver = new Solver(dictionaryA, board2x2);
-            var result = solver.AnyWordExistsonBoard();
+            var result = Solver.AnyWordExistsonBoard(dictionaryA, board2x2);
             Assert.That(result, Is.True);
         }
 
         [Test]
         public void FindWordDC_WordExists3x3DA_ResultIsTrue()
         {
-            var solver = new Solver(dictionaryA, board3x3);
-            var result = solver.AnyWordExistsonBoard();
+            var result = Solver.AnyWordExistsonBoard(dictionaryA, board3x3);
             Assert.That(result, Is.True);
         }
 
         [Test]
         public void FindWordDC_WordExists3x3DB_ResultIsTrue()
         {
-            var solver = new Solver(dictionaryB, board3x3);
-            var result = solver.AnyWordExistsonBoard();
+            var result = Solver.AnyWordExistsonBoard(dictionaryB, board3x3);
             Assert.That(result, Is.True);
         }
 
         [Test]
         public void FindWordDC_WordDoesNotExist2x2DC_ResultIsFalse()
         {
-            var solver = new Solver(dictionaryC, board2x2);
-            var result = solver.AnyWordExistsonBoard();
+            var result = Solver.AnyWordExistsonBoard(dictionaryC, board2x2);
             Assert.That(result, Is.False);
         }
 
         [Test]
         public void FindWordDC_WordDoesNotExist3x3DC_ResultIsFalse()
         {
-            var solver = new Solver(dictionaryC, board3x3);
-            var result = solver.AnyWordExistsonBoard();
+            var result = Solver.AnyWordExistsonBoard(dictionaryC, board3x3);
             Assert.That(result, Is.False);
         }
 
@@ -120,8 +115,7 @@ namespace NUnitTests
         [TestCase("acdb")]
         public void FindWordSC_SinglePathWordExists2x2_ResultIsWord(string word)
         {
-            var solver = new Solver(dictionaryA, board2x2);
-            var result = solver.SpecificWordExistsOnBoard(word);
+            var result = Solver.SpecificWordExistsOnBoard(word, board2x2);
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(Solver.GetLetters(result[0]), Is.EqualTo(word));
         }
@@ -134,8 +128,7 @@ namespace NUnitTests
         [TestCase("dbarexkxx")]
         public void FindWordSC_SinglePathWordExists3x3_ResultIsWord(string word)
         {
-            var solver = new Solver(dictionaryA, board3x3);
-            var result = solver.SpecificWordExistsOnBoard(word);
+            var result = Solver.SpecificWordExistsOnBoard(word, board3x3);
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(Solver.GetLetters(result[0]), Is.EqualTo(word));
         }
@@ -146,8 +139,7 @@ namespace NUnitTests
         [TestCase("kxx")]
         public void FindWordSC_2PathWordExists3x3_ResultIsAll(string word)
         {
-            var solver = new Solver(dictionaryA, board3x3);
-            var result = solver.SpecificWordExistsOnBoard(word);
+            var result = Solver.SpecificWordExistsOnBoard(word, board3x3);
             Assert.That(result.Count, Is.EqualTo(2));
             foreach (var list in result)
             {
@@ -158,8 +150,7 @@ namespace NUnitTests
         [Test]
         public void FindWordSC_3PathWordExists3x3_ResultIsAll()
         {
-            var solver = new Solver(dictionaryA, board3x3);
-            var result = solver.SpecificWordExistsOnBoard("x");
+            var result = Solver.SpecificWordExistsOnBoard("x", board3x3);
             Assert.That(result.Count, Is.EqualTo(3));
             foreach (var list in result)
             {
@@ -170,8 +161,7 @@ namespace NUnitTests
         [Test]
         public void FindWordSC_WordDoesNotExist2x2_ResultIsEmpty()
         {
-            var solver = new Solver(dictionaryA, board2x2);
-            var result = solver.SpecificWordExistsOnBoard("sheep");
+            var result = Solver.SpecificWordExistsOnBoard("sheep", board2x2);
             Assert.That(result, Is.Empty);
         }
     }

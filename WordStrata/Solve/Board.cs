@@ -15,6 +15,7 @@ namespace WordStrata.Solve
         private GridSquare[,] gridSquares;
 
         public List<GridSquare> GridSquares
+            // TODO: Make this a custom IEnumerable? Or create a private list field.
         {
             get
             {
@@ -134,10 +135,6 @@ namespace WordStrata.Solve
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            OnPropertyChanged(null);
-        }
 
         // TODO: Get rid of? Not being used anymore
         //Returns all of a tile's neighboring tiles or holes

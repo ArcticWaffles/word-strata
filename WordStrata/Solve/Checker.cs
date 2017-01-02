@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WordStrata.Solve
 {
     /// <summary>
-    /// Checker is used by the Solver to check a word against a dictionary or
+    /// Used by the Solver to check a word against a dictionary or
     /// another word.
     /// </summary>
     public abstract class Checker
@@ -22,3 +22,5 @@ namespace WordStrata.Solve
 
     }
 }
+
+// TODO: Make checker classes private?

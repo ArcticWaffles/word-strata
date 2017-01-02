@@ -10,7 +10,7 @@ using WordStrata.Solve;
 namespace NUnitTests
 {
     [TestFixture]
-    class WordCheckerTests
+    class CheckerTests
     {
         HashSet<string> dictionaryA;
         HashSet<string> dictionaryB;

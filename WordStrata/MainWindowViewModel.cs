@@ -83,16 +83,17 @@ namespace WordStrata
         }
 
         /// <summary>
-        /// Turns used tiles to holes, clears word, and checks that further moves remain.
+        /// Turns used tiles to holes and clears word.
         /// </summary>
         public void FinishTurn()
         {
             GameBoard.ConvertTilesToHoles(UserSelections.Selections.ToList());
             ClearWord();
-            if(!Solver.AnyWordExistsonBoard(Dictionary, GameBoard))
-            {
-                // TODO: Notify user no more words remain. 
-            }
+        }
+
+        public bool WordsRemain()
+        {
+            return Solver.AnyWordExistsonBoard(Dictionary, GameBoard);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -68,7 +68,7 @@ namespace NUnitTests
             var previousCoords = new List<Coordinates>();
             foreach (var tile in tiles)
             {
-                //TODO: Test case where next assertion fails
+                // TODO: Test case where next assertion fails
                 if (previousCoords.Any(coord => coord.X == tile.Coords.X && coord.Y == tile.Coords.Y))
                 {
                     Assert.Fail("Tiles weren't unique");
