@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace WordStrata.Solve
 {
     /// <summary>
-    /// DictionaryChecker is used by Solver to check the validity of a word by
-    /// checking it against the dictionary.Its purpose is to verify whether any
-    /// valid word remains on the board, so it has a bool result and stops after
+    /// Used by Solver to check the validity of a word by
+    /// checking it against the dictionary. Verifies whether any
+    /// valid word remains on the board and stops after
     /// finding one match.
     /// </summary>
     public class DictionaryChecker : Checker
@@ -18,6 +18,7 @@ namespace WordStrata.Solve
         {
             dictionary = theDictionary;
             StartDepth = 0;
+            // Max word length to check is the length of the longest word in the dictionary.
             EndDepth = theDictionary.Max(x => x.Length);
         }
 

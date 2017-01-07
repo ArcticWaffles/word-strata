@@ -10,6 +10,9 @@ using WordStrata.Solve;
 
 namespace WordStrata
 {
+    /// <summary>
+    /// Keeps track of tiles the player is currently using
+    /// </summary>
     public class UserTileSelections : INotifyPropertyChanged
     {
         public UserTileSelections()
@@ -17,7 +20,7 @@ namespace WordStrata
             Selections.CollectionChanged += OnCollectionChanged;
         }
         
-        //List of tiles the user has clicked, removed when they are unclicked.
+        /// <summary> List of tiles currently selected. </summary>
         private ObservableCollection<Tile> selections = new ObservableCollection<Tile>();
         public ObservableCollection<Tile> Selections
         {
@@ -31,12 +34,13 @@ namespace WordStrata
                 if (value != selections)
                 {
                     selections = value;
+                    // Changes to this property affect multiple other properties in the class
                     OnPropertyChanged(null);
                 }
             }
         }
 
-        //The last tile in the list. Used for determining which tiles are clickable.
+        /// <summary> Last tile in the <see cref="Selections"/> list. Used for determining which tiles are clickable. </summary>
         public Tile CurrentTile
         {
             get
@@ -53,18 +57,13 @@ namespace WordStrata
 
         }
 
-        //The word the user is building
+        /// <summary> Word the user is building. </summary>
         private string userWord;
         public string UserWord
         {
             get
             {
-                userWord = "";
-                foreach (var tile in Selections)
-                {
-                    userWord += tile.Letter;
-                }
-                return userWord;
+                return Solver.GetLetters(Selections.ToList());
             }
 
             set

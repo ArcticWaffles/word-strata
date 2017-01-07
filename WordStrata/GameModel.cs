@@ -21,4 +21,4 @@ namespace WordStrata
     }
 }
 
-// TODO: Eventually use IGameModel for player and level info.
+// TODO: Eventually use GameModel for player and level info.

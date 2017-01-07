@@ -18,3 +18,5 @@ namespace WordStrata.Solve
         }
     }
 }
+
+// TODO: Should Coordinates remain its own class or just make properties on Gridsquare?

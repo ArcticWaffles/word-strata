@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace WordStrata.Solve
 {
+    /// <summary>
+    /// Finds words on the gameboard.
+    /// </summary>
     public static class Solver
     {
-        // Public "kick-off" method calls the private, recursive version of the method.
+        /// <summary>
+        /// Public "kick-off" method used to inititate a search using <see cref="FindWordFromStartingTileRecursive"/>. 
+        /// </summary>
+        /// <param name="checker"> Checker used for the search. </param>
+        /// <param name="board"> The gameboard. </param>
         public static void FindWordFromStartingTileKickoff(Checker checker, Board board)
         {
             // Outer loop: for each targetDepth
@@ -26,11 +33,18 @@ namespace WordStrata.Solve
             }
         }
 
-        // Uses a breadth first search to find words on the board, i.e. checks
-        // for a 1-letter word first, then a 2-letter word, etc. Stores results
-        // in the checker. currentDepth refers to how many tiles are in the
-        // current path. targetDepth is the size of the word being searched
-        // for in the current iteration.
+
+        /// <summary>
+        /// Uses a breadth first search to find words on the board, i.e. checks
+        /// for a 1-letter word first, then a 2-letter word, etc. Stores results
+        /// in the checker.
+        /// </summary>
+        /// <param name="board"> The gameboard.</param>
+        /// <param name="tile"> Tile to be added to the path. </param>
+        /// <param name="tilePath"> Running list of tiles being checked. </param>
+        /// <param name="checker"> See <see cref="Checker"/>  </param>
+        /// <param name="currentDepth"> Size of the current tile path. </param>
+        /// <param name="targetDepth"> Size of word being checked in the current iteration. </param>
         private static void FindWordFromStartingTileRecursive(Board board, Tile tile, 
             List<Tile> tilePath, Checker checker, int currentDepth, int targetDepth)
         {
@@ -58,8 +72,10 @@ namespace WordStrata.Solve
 
         }
 
-        // Checks that a valid word still exists on the board so the user can be
-        // alerted when the game is over.
+
+        /// <summary> Checks that a valid word remains on the board. </summary>
+        /// <param name="dictionary">All valid words.</param>
+        /// <param name="board">The gameboard.</param>
         public static bool AnyWordExistsonBoard(HashSet<string> dictionary, Board board)
         {
             var checker = new DictionaryChecker(dictionary);
@@ -67,9 +83,10 @@ namespace WordStrata.Solve
             return checker.Result;
         }
 
-        // Checks that a given string can be found in a valid path of
-        // tiles on the board, and if so, returns all matching tile paths. It
-        // does not check the word against the dictionary.
+
+        /// <summary> Checks that a given string can be found on the board. Returns all matches. </summary>
+        /// <param name="theWord">The string to be searched for on the board.</param>
+        /// <param name="board">The gameboard. </param>
         public static List<List<Tile>> SpecificWordExistsOnBoard(string theWord, Board board)
         {
             var checker = new StringChecker(theWord);
@@ -77,6 +94,7 @@ namespace WordStrata.Solve
             return checker.Result;
         }
 
+        /// <summary> Retrieves letters from a list of tiles. </summary>
         public static string GetLetters(List<Tile> path)
         {
             string word = "";
@@ -88,3 +106,6 @@ namespace WordStrata.Solve
         }
     }
 }
+
+// TODO: Make Solver a DLL? (Solver, Checkers) and Core a DLL (Tile, Hole, etc.)?
+// TODO: Re-evaluate access modifiers throughout the Solve namespace.
