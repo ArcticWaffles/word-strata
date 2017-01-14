@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordStrata.Solve
+namespace Core
 {
     public class Board : INotifyPropertyChanged
     {

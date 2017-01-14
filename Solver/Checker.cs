@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core;
 
-namespace WordStrata.Solve
+namespace Solve
 {
     /// <summary>
     /// Used by the Solver to check a word against a dictionary or another word.

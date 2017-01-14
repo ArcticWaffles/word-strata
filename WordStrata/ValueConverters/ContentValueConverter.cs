@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using WordStrata.Solve;
+using Core;
 
 namespace WordStrata
 {

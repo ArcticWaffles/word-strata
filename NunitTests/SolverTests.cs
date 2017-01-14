@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using WordStrata.Solve;
 using NUnit.Framework.Internal;
+using Core;
+using Solve;
 
 namespace NUnitTests
 {

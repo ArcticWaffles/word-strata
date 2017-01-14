@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core;
 
-namespace WordStrata.Solve
+namespace Solve
 {
     /// <summary>
     /// Used by Solver to check the validity of a word by

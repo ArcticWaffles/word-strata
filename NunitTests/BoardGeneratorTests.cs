@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using WordStrata;
-using WordStrata.Solve;
+using Core;
+
 
 namespace NUnitTests
 {

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordStrata", "WordStrata\Wo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests", "NunitTests\NUnitTests.csproj", "{00AF87CA-140A-437B-AAB8-C0B5E18998FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{C105BE09-E353-4B58-994F-7E4FF691D6EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solve", "Solver\Solve.csproj", "{77188F34-33C0-436A-B8AB-7B6407DC5AAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{00AF87CA-140A-437B-AAB8-C0B5E18998FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00AF87CA-140A-437B-AAB8-C0B5E18998FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00AF87CA-140A-437B-AAB8-C0B5E18998FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C105BE09-E353-4B58-994F-7E4FF691D6EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C105BE09-E353-4B58-994F-7E4FF691D6EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C105BE09-E353-4B58-994F-7E4FF691D6EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C105BE09-E353-4B58-994F-7E4FF691D6EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77188F34-33C0-436A-B8AB-7B6407DC5AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77188F34-33C0-436A-B8AB-7B6407DC5AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77188F34-33C0-436A-B8AB-7B6407DC5AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77188F34-33C0-436A-B8AB-7B6407DC5AAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

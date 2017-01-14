@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core;
 
-namespace WordStrata.Solve
+namespace WordStrata
 {
     public static class BoardGenerator
     {

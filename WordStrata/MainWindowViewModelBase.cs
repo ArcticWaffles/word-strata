@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using WordStrata.Solve;
+using Core;
 
 namespace WordStrata
 {

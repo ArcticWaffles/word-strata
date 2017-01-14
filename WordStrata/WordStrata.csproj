@@ -64,16 +64,7 @@
     <Compile Include="ValueConverters\IsClickableValueConverter.cs" />
     <Compile Include="MainWindowViewModelBase.cs" />
     <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="Solve\Board.cs" />
-    <Compile Include="Solve\BoardGenerator.cs" />
-    <Compile Include="Solve\Coordinates.cs" />
-    <Compile Include="Solve\DictionaryChecker.cs" />
-    <Compile Include="Solve\GridSquare.cs" />
-    <Compile Include="Solve\Hole.cs" />
-    <Compile Include="Solve\Solver.cs" />
-    <Compile Include="Solve\StringChecker.cs" />
-    <Compile Include="Solve\Tile.cs" />
-    <Compile Include="Solve\Checker.cs" />
+    <Compile Include="BoardGenerator.cs" />
     <Compile Include="UserTileSelections.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -120,7 +111,16 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{c105be09-e353-4b58-994f-7e4ff691d6ee}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Solver\Solve.csproj">
+      <Project>{77188f34-33c0-436a-b8ab-7b6407dc5aab}</Project>
+      <Name>Solve</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

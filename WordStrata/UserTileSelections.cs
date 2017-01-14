@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.Specialized;
-using WordStrata.Solve;
+using Core;
+using Solve;
 
 namespace WordStrata
 {
