@@ -210,8 +210,8 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" 
                        FontSize="20" Opacity="0" />
-            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserSelections.UserWord}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
-                     MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" PreviewKeyDown="Word_PreviewKeyDown">
+            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserSelections.UserWord, Mode=OneWay}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
+                     MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" KeyUp="Word_KeyUp">
             </TextBox>
 
 
@@ -219,6 +219,6 @@
                     FontSize="16" Padding="8,4" />
         </Grid>
         <Button x:Name="SubmitButton" Grid.Row="2" Content="Submit Word" Click="SubmitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                FontSize="18" Padding="8,4"/>
+                FontSize="18" Padding="8,4" IsEnabled="{Binding UserSelections.EnableSubmit}"/>
     </Grid>
 </Window>

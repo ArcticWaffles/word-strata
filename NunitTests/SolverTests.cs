@@ -67,46 +67,46 @@ namespace NUnitTests
 
 
 
-        // FindWord DictionaryChecker tests
+        // AnyWordExistsOnBoard DictionaryChecker tests
 
         [Test]
         public void FindWordDC_WordExists2x2DA_ResultIsTrue()
         {
-            var result = Solver.AnyWordExistsonBoard(dictionaryA, board2x2);
+            var result = Solver.AnyWordExistsOnBoard(dictionaryA, board2x2);
             Assert.That(result, Is.True);
         }
 
         [Test]
         public void FindWordDC_WordExists3x3DA_ResultIsTrue()
         {
-            var result = Solver.AnyWordExistsonBoard(dictionaryA, board3x3);
+            var result = Solver.AnyWordExistsOnBoard(dictionaryA, board3x3);
             Assert.That(result, Is.True);
         }
 
         [Test]
         public void FindWordDC_WordExists3x3DB_ResultIsTrue()
         {
-            var result = Solver.AnyWordExistsonBoard(dictionaryB, board3x3);
+            var result = Solver.AnyWordExistsOnBoard(dictionaryB, board3x3);
             Assert.That(result, Is.True);
         }
 
         [Test]
         public void FindWordDC_WordDoesNotExist2x2DC_ResultIsFalse()
         {
-            var result = Solver.AnyWordExistsonBoard(dictionaryC, board2x2);
+            var result = Solver.AnyWordExistsOnBoard(dictionaryC, board2x2);
             Assert.That(result, Is.False);
         }
 
         [Test]
         public void FindWordDC_WordDoesNotExist3x3DC_ResultIsFalse()
         {
-            var result = Solver.AnyWordExistsonBoard(dictionaryC, board3x3);
+            var result = Solver.AnyWordExistsOnBoard(dictionaryC, board3x3);
             Assert.That(result, Is.False);
         }
 
 
 
-        // FindWord StringChecker tests
+        // SpecificWordExistsOnBoard StringChecker tests
 
         [Test]
         [TestCase("a")]
@@ -167,3 +167,5 @@ namespace NUnitTests
         }
     }
 }
+
+// TODO: GetLetters tests

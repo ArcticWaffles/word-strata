@@ -33,7 +33,7 @@ namespace WordStrata
         // 1. It neighbors the current tile and is not already selected
         // 2. It is the current tile (user can click it to backtrack)
         // 3. No tiles on the board are selected (UserSelections is null or empty)
-        public bool TileIsClickable(Tile tile, Tile currentTile, Collection<Tile> userSelections)
+        private bool TileIsClickable(Tile tile, Tile currentTile, Collection<Tile> userSelections)
         {
             return (AreNeighbors(currentTile, tile) && (userSelections.Contains(tile) == false)
                     || tile == currentTile || userSelections.Count == 0 || userSelections == null);

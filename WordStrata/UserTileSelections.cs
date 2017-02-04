@@ -78,6 +78,14 @@ namespace WordStrata
 
         }
 
+        public bool EnableSubmit
+        {
+            get
+            {
+                return Selections.Count() > 0;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)

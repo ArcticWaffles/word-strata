@@ -83,14 +83,13 @@ namespace WordStrata
             viewModel.ClearWord();
         }
 
-        private void Word_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Word_KeyUp(object sender, KeyEventArgs e)
         {
-            e.Handled = viewModel.CheckLetter(e.Key);
+            e.Handled = viewModel.CheckKeyboardEntry(e);
         }
     }
 }
 
 //TODO: Error handling
-//TODO: Clean up and commenting
-//TODO: Try /// comments?
+//TODO: XML Commenting
 //TODO: Allow user to type the word

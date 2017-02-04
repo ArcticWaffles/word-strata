@@ -13,9 +13,9 @@ namespace Solve
     /// valid word remains on the board and stops after
     /// finding one match.
     /// </summary>
-    public class DictionaryChecker : Checker
+    class DictionaryChecker : Checker
     {
-        public DictionaryChecker(HashSet<string> theDictionary)
+        internal DictionaryChecker(HashSet<string> theDictionary)
         {
             dictionary = theDictionary;
             StartDepth = 0;
@@ -26,7 +26,7 @@ namespace Solve
         private HashSet<String> dictionary;
 
 
-        public override void Check(List<Tile> path)
+        internal override void Check(List<Tile> path)
         {
             string word = Solver.GetLetters(path);
             Result = dictionary.Contains(word);
@@ -34,7 +34,7 @@ namespace Solve
             ShallContinue = !Result;
         }
 
-        public bool Result { get; set; }
+        internal bool Result { get; set; }
     }
 }
 // TODO: Would it be any more efficient to change max word length function to find

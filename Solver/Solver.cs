@@ -13,11 +13,11 @@ namespace Solve
     public static class Solver
     {
         /// <summary>
-        /// Public "kick-off" method used to inititate a search using <see cref="FindWordFromStartingTileRecursive"/>. 
+        /// "Kick-off" method used to inititate a search using <see cref="FindWordFromStartingTileRecursive"/>. 
         /// </summary>
         /// <param name="checker"> Checker used for the search. </param>
         /// <param name="board"> The gameboard. </param>
-        public static void FindWordFromStartingTileKickoff(Checker checker, Board board)
+        private static void FindWordFromStartingTileKickoff(Checker checker, Board board)
         {
             // Outer loop: for each targetDepth
             for (int i = checker.StartDepth ; i < checker.EndDepth ; i++)
@@ -77,7 +77,7 @@ namespace Solve
         /// <summary> Checks that a valid word remains on the board. </summary>
         /// <param name="dictionary">All valid words.</param>
         /// <param name="board">The gameboard.</param>
-        public static bool AnyWordExistsonBoard(HashSet<string> dictionary, Board board)
+        public static bool AnyWordExistsOnBoard(HashSet<string> dictionary, Board board)
         {
             var checker = new DictionaryChecker(dictionary);
             FindWordFromStartingTileKickoff(checker, board);
@@ -108,5 +108,3 @@ namespace Solve
     }
 }
 
-// TODO: Make Solver a DLL? (Solver, Checkers) and Core a DLL (Tile, Hole, etc.)?
-// TODO: Re-evaluate access modifiers throughout the Solve namespace.

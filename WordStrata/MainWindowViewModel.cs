@@ -58,6 +58,7 @@ namespace WordStrata
         }
 
 
+
         //User clicks a tile
         public void ClickTile(Tile theTile)
         {
@@ -83,6 +84,8 @@ namespace WordStrata
             UserSelections.Selections.Clear();
         }
 
+
+
         /// <summary>
         /// Turns used tiles to holes and clears word.
         /// </summary>
@@ -94,7 +97,7 @@ namespace WordStrata
 
         public bool WordsRemain()
         {
-            return Solver.AnyWordExistsonBoard(Dictionary, GameBoard);
+            return Solver.AnyWordExistsOnBoard(Dictionary, GameBoard);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -104,23 +107,17 @@ namespace WordStrata
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public bool CheckLetter(Key key)
+        public bool CheckKeyboardEntry(KeyEventArgs args)
         {
-            KeyConverter kc = new KeyConverter();
-            string keyChar = kc.ConvertToString(key);
+            // Let user type any letter. Check word after each char.
+            // add contents of textbox + new letter to userword. find specific word on board. 
+            // if 0 lists exist, clear user selections (unclick all tiles)
+            // if > 0 lists exist, enable submit button. 
+            // if 1 list exists, update usertileselections. 
+            // if > 1 list exists, add alternate paths to usertileselections? 
 
-            foreach (var tile in gameModel.GameBoard.Tiles)
-            {
-                if (keyChar == tile.Letter.ToString())
-                {
-                    // TODO: Decide how to do this part. New method in solver. Let the
-                    // user type any letter instead of checking the input? And
-                    // highlight the possible paths or for now just have a list
-                    // on the side? Check upon submit button click or
-                    // continually check and flash red when they start typing
-                    // non-existent letters?
-                }
-            }
+            // TODO: Change User selections to observable collection class. Selections as the collection (of tile lists)
+            
             throw new NotImplementedException();
         }
     }

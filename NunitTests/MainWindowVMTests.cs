@@ -30,5 +30,4 @@ namespace NUnitTests
 
 }
 // TODO: Tests on other public properties and methods
-// TODO: UserTileSelections tests?
 // TODO: DictionaryModel tests?

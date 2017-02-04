@@ -138,15 +138,8 @@ namespace NUnitTests
         //}
 
 
-        //GetNeighbor tests
 
-        //[Test]
-        //[ExpectedException(typeof(ArgumentNullException))]
-        //public void GetNeighbor_TileIsNull_ThrowsException()
-        //{
-        //    var board = new Board(array2x2);
-        //    board.GetNeighbor(null, Board.Direction.North);
-        //}
+        //GetNeighbor tests
 
         [Test]
         public void GetNeighbor_board2x2_NeighborIsCorrect_North()

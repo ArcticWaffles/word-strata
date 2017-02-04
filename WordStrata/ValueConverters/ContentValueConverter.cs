@@ -9,7 +9,7 @@ using Core;
 
 namespace WordStrata
 {
-    public class ContentValueConverter : IValueConverter
+     class ContentValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
