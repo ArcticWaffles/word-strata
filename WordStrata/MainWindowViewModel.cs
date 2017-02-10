@@ -9,6 +9,7 @@ using System.Collections.Specialized;
 using System.Windows.Input;
 using Core;
 using Solve;
+using System.Runtime.CompilerServices;
 
 namespace WordStrata
 {
@@ -37,53 +38,71 @@ namespace WordStrata
             }
         }
 
-        //List of tiles the user has clicked, removed when they are unclicked
-        private UserTileSelections userSelections = new UserTileSelections();
-        public override UserTileSelections UserSelections
+        /// <summary> Word the user is building. </summary>
+        private string userWord = "";
+        public string UserWord
         {
             get
             {
-                return userSelections;
+                return userWord;
             }
 
             set
             {
-                // TODO: Will this property changed be used?
-                if (value != userSelections)
+                userWord = value;
+                var paths = new UserPaths();
+                var lists = Solver.SpecificWordExistsOnBoard(userWord, GameBoard);
+                foreach (var list in lists)
                 {
-                    userSelections = value;
-                    OnPropertyChanged(null);
+                    paths.Add(list);
                 }
+                Paths = paths;
+
             }
         }
 
+        //Current valid tile paths based on UserWord 
+        private UserPaths paths = new UserPaths();
 
+        public override UserPaths Paths
+        {
+            get { return paths; }
+            set
+            {
+                if (value == paths) return;
+                paths = value;
+                OnPropertyChanged("Paths");
+                OnPropertyChanged("EnableSubmit");
+            }
+        }
 
         //User clicks a tile
         public void ClickTile(Tile theTile)
         {
-            UserSelections.Selections.Add(theTile);
+            UserWord += (theTile.Letter);
         }
 
 
-        // User unclicks a tile: 
+        // User unclicks a tile
         public void UnclickTile(Tile theTile)
         {
-            UserSelections.Selections.Remove(theTile);
+            if (UserWord.Length > 0)
+            {
+                UserWord.Remove(UserWord.Last());
+            }
         }
 
 
         public bool CheckWord()
         {
-            return Dictionary.Contains(UserSelections.UserWord);
+            return Dictionary.Contains(UserWord);
         }
 
 
         public void ClearWord()
         {
-            UserSelections.Selections.Clear();
+            UserWord = "";
         }
-
 
 
         /// <summary>
@@ -91,13 +110,21 @@ namespace WordStrata
         /// </summary>
         public void FinishTurn()
         {
-            GameBoard.ConvertTilesToHoles(UserSelections.Selections.ToList());
+            GameBoard.ConvertTilesToHoles(Paths[0]);
             ClearWord();
         }
 
         public bool WordsRemain()
         {
             return Solver.AnyWordExistsOnBoard(Dictionary, GameBoard);
+        }
+
+        public bool EnableSubmit
+        {
+            get
+            {
+                return !Paths.IsEmpty();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

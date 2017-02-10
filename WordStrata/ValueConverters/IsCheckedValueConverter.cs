@@ -15,9 +15,9 @@ namespace WordStrata
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var userSelections = values[0] as Collection<Tile>;
+            var paths = values[0] as UserPaths;
             var tile = values[1] as Tile;
-            return userSelections.Contains(tile);
+            return paths.Contains(tile);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

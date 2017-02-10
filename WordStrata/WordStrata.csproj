@@ -65,7 +65,7 @@
     <Compile Include="MainWindowViewModelBase.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="BoardGenerator.cs" />
-    <Compile Include="UserTileSelections.cs" />
+    <Compile Include="UserPaths.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -14,14 +14,18 @@ namespace WordStrata
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var userSelections = values[0] as Collection<Tile>;
-            var currentTile = values[1] as Tile;
-            var gridsquare = values[2] as GridSquare;
+            var paths = values[0] as UserPaths;
+            var gridsquare = values[1] as GridSquare;
+            var currentTiles = paths.CurrentTiles;
 
-            if (gridsquare is Tile)
-                return TileIsClickable(gridsquare as Tile, currentTile, userSelections);
-            else //gridsquare is Hole
-                return false;
+            if (gridsquare is Hole) return false;
+            if (paths.Count == 0 || paths.IsEmpty() || paths == null) return true;
+            
+            foreach (var tile in currentTiles)
+            {
+                if (TileIsClickable(gridsquare as Tile, tile, paths)) return true;
+            }
+            return false;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -30,13 +34,13 @@ namespace WordStrata
         }
 
         // A tile is clickable if any of the following are true:
-        // 1. It neighbors the current tile and is not already selected
-        // 2. It is the current tile (user can click it to backtrack)
-        // 3. No tiles on the board are selected (UserSelections is null or empty)
-        private bool TileIsClickable(Tile tile, Tile currentTile, Collection<Tile> userSelections)
+        // 1. It neighbors a current tile and is not already selected
+        // 2. It is a current tile (user can click it to backtrack)
+        // 3. No tiles on the board are selected (Paths is null or empty)
+        private bool TileIsClickable(Tile tile, Tile currentTile, UserPaths paths)
         {
-            return (AreNeighbors(currentTile, tile) && (userSelections.Contains(tile) == false)
-                    || tile == currentTile || userSelections.Count == 0 || userSelections == null);
+            return (AreNeighbors(currentTile, tile) && (paths.Contains(tile) == false)) ||
+                tile == currentTile; 
         }
 
         private bool AreNeighbors(Tile tile1, Tile tile2)

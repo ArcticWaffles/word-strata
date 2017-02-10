@@ -183,15 +183,14 @@
                                    BorderThickness="2" Padding="10" Click="TileToggleButton_Click">
                         <ToggleButton.IsChecked>
                             <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">
-                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.UserSelections.Selections" />
+                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
                                 <Binding Path="." />
                             </MultiBinding>
                         </ToggleButton.IsChecked>
                         <ToggleButton.IsEnabled>
                             <MultiBinding Converter="{StaticResource IsClickableValueConverter}">
-                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.UserSelections.Selections" />
-                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.UserSelections.CurrentTile" />
-                                <Binding />
+                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
+                                <Binding Path="."/>
                             </MultiBinding>
                         </ToggleButton.IsEnabled>
                     </ToggleButton>
@@ -210,15 +209,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" 
                        FontSize="20" Opacity="0" />
-            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserSelections.UserWord, Mode=OneWay}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
+            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
                      MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" KeyUp="Word_KeyUp">
             </TextBox>
-
-
             <Button x:Name="ClearButton" Grid.Row="1" Grid.Column="2" Content="Clear" Click="ClearButton_Click"  HorizontalAlignment="Left" VerticalAlignment="Center"
                     FontSize="16" Padding="8,4" />
         </Grid>
         <Button x:Name="SubmitButton" Grid.Row="2" Content="Submit Word" Click="SubmitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                FontSize="18" Padding="8,4" IsEnabled="{Binding UserSelections.EnableSubmit}"/>
+                FontSize="18" Padding="8,4" IsEnabled="{Binding EnableSubmit}"/>
     </Grid>
 </Window>
