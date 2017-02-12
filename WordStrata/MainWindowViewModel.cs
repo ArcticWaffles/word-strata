@@ -57,7 +57,7 @@ namespace WordStrata
                     paths.Add(list);
                 }
                 Paths = paths;
-
+                OnPropertyChanged("UserWord");
             }
         }
 
@@ -88,7 +88,7 @@ namespace WordStrata
         {
             if (UserWord.Length > 0)
             {
-                UserWord.Remove(UserWord.Last());
+                UserWord = UserWord.Remove(UserWord.Length-1);
             }
         }
 
@@ -138,10 +138,6 @@ namespace WordStrata
         {
             // Let user type any letter. Check word after each char.
             // add contents of textbox + new letter to userword. find specific word on board. 
-            // if 0 lists exist, clear user selections (unclick all tiles)
-            // if > 0 lists exist, enable submit button. 
-            // if 1 list exists, update usertileselections. 
-            // if > 1 list exists, add alternate paths to usertileselections? 
 
             // TODO: Change User selections to observable collection class. Selections as the collection (of tile lists)
             

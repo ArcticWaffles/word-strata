@@ -83,10 +83,10 @@ namespace WordStrata
             viewModel.ClearWord();
         }
 
-        private void Word_KeyUp(object sender, KeyEventArgs e)
-        {
-            e.Handled = viewModel.CheckKeyboardEntry(e);
-        }
+        //private void Word_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    e.Handled = viewModel.CheckKeyboardEntry(e);
+        //}
     }
 }
 

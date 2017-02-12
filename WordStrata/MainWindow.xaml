@@ -209,8 +209,8 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" 
                        FontSize="20" Opacity="0" />
-            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
-                     MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" KeyUp="Word_KeyUp">
+            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
+                     MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" CharacterCasing="Upper">
             </TextBox>
             <Button x:Name="ClearButton" Grid.Row="1" Grid.Column="2" Content="Clear" Click="ClearButton_Click"  HorizontalAlignment="Left" VerticalAlignment="Center"
                     FontSize="16" Padding="8,4" />

@@ -20,7 +20,8 @@ namespace Solve
             masterWord = theMasterWord;
             // ShallContinue is always true because StringChecker searches for all possible matches.
             ShallContinue = true;
-            StartDepth = theMasterWord.Length - 1;
+            if (theMasterWord.Length <= 0) StartDepth = 0;
+            else StartDepth = theMasterWord.Length - 1;
             EndDepth = theMasterWord.Length;
         }
 
