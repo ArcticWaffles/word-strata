@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class GridSquare
+    /// <summary>
+    /// A specific location on the board (instantiated either as a tile or a hole).
+    /// </summary>
+    public abstract class GridSquare
     {
-        private Coordinates coords;
-        public Coordinates Coords
-        {
-            get { return coords; }
-            private set { coords = value; }
-        }
-
         public GridSquare(Coordinates coordsIn)
         {
             Coords = coordsIn;
         }
+
+        public Coordinates Coords { get; set; }
     }
 }

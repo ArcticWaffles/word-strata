@@ -58,12 +58,19 @@ namespace WordStrata
         // User submits a word
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            // If more than one path exists
+            if (viewModel.Paths.Count > 1)
+            {
+                // TODO: Figure out UI for selecting from multiple paths
+            }
+            
             // If the word is valid
             if (viewModel.CheckWord())
             {
                 //WordFeedback.Foreground = Brushes.Green;
                 (Resources["AcceptWord"] as Storyboard).Begin();
                 viewModel.FinishTurn();
+                // If no more words remain on the board
                 if(!viewModel.WordsRemain())
                 {
                     (Resources["NoMoreWords"] as Storyboard).Begin();
@@ -83,13 +90,8 @@ namespace WordStrata
             viewModel.ClearWord();
         }
 
-        //private void Word_KeyUp(object sender, KeyEventArgs e)
-        //{
-        //    e.Handled = viewModel.CheckKeyboardEntry(e);
-        //}
     }
 }
 
 //TODO: Error handling
 //TODO: XML Commenting
-//TODO: Allow user to type the word

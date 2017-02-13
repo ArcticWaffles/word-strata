@@ -8,9 +8,8 @@ using Core;
 namespace Solve
 {
     /// <summary>
-    /// Used by Solver to check the validity of a word by
-    /// checking it against the dictionary. Verifies whether any
-    /// valid word remains on the board and stops after
+    /// Checks the validity of a word by comparing it to a dictionary. Used by
+    /// Solver to check whether any valid word remains on the board; stops after
     /// finding one match.
     /// </summary>
     class DictionaryChecker : Checker
@@ -23,6 +22,7 @@ namespace Solve
             EndDepth = theDictionary.Max(x => x.Length);
         }
 
+
         private HashSet<String> dictionary;
 
 
@@ -34,6 +34,7 @@ namespace Solve
             ShallContinue = !Result;
         }
 
+        /// <summary> Indicated whether the word is found in the dictionary. </summary>
         internal bool Result { get; set; }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core
 {
+    /// <summary>
+    /// Cartesian coordinates
+    /// </summary>
     public class Coordinates
     {
         public int X;
@@ -20,3 +23,4 @@ namespace Core
 }
 
 // TODO: Should Coordinates remain its own class or just make properties on Gridsquare?
+// TODO: Implement Z coordinate for depth.

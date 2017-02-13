@@ -21,6 +21,7 @@ namespace Solve
         /// <summary> Maximum size of word to check (exclusive) </summary>
         internal int EndDepth { get; set; }
 
+        /// <summary> Tile list whose letters are used as the string for comparison.</summary>
         internal abstract void Check(List<Tile> path);
     }
 }

@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Core
 {
+    /// <summary>
+    /// Building blocks of the gameboard.
+    /// </summary>
     public class Tile : GridSquare
     {
-        public char Letter { get; }
-
-        public int Depth { get; } = 0;
-
         public Tile(Coordinates coordsIn, char letterIn) : base(coordsIn)
         {
             Letter = letterIn;
         }
 
+        public char Letter { get; }
     }
 }

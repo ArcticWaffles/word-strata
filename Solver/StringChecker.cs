@@ -8,13 +8,13 @@ using Core;
 namespace Solve
 { 
     /// <summary>
-    /// Used by Solver to check a word on the board against a provided string.
-    /// Verifies that a user-entered word exists on the board as a valid path.
+    /// Used by Solver to check whether a provided string exists on the board as a valid path. 
     /// Since the word may be formed by more than one combination of tiles,
     /// StringChecker looks for and returns all matching tile paths.
     /// </summary>
     class StringChecker : Checker
     {
+        /// <param name="theMasterWord"> Word to be searched for on the board. </param>
         internal StringChecker(string theMasterWord)
         {
             masterWord = theMasterWord;
@@ -25,14 +25,16 @@ namespace Solve
             EndDepth = theMasterWord.Length;
         }
 
+
         /// <summary> Word to be searched for on the board. </summary>
         private string masterWord;
+
 
         /// <summary> Contains all matching tile paths found on the board. </summary>
         internal List<List<Tile>> Result { get; set; } = new List<List<Tile>>();
 
+
         /// <summary> Checks <see cref="masterWord"/> against a tile path's letters. </summary>
-        /// <param name="path"></param>
         internal override void Check(List<Tile> path)
         {
             string word = Solver.GetLetters(path);

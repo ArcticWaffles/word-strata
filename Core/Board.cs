@@ -8,53 +8,15 @@ using System.Threading.Tasks;
 
 namespace Core
 {
+    /// <summary>
+    /// Gameboard containing a collection of gridsquares.
+    /// </summary>
     public class Board : INotifyPropertyChanged
     {
-        //A gridsquare is a specific square on the board and is either a tile or a hole. 
-        //gridSquares is a 2D array representing all the tiles and holes on the board.
-        private GridSquare[,] gridSquares;
-
-        public List<GridSquare> GridSquares
-            // TODO: Make this a custom IEnumerable? Or create a private list field.
-        {
-            get
-            {
-                var squares = new List<GridSquare>();
-                for (int x = 0; x < gridSquares.GetLength(0); x++)
-                {
-                    for (int y = 0; y < gridSquares.GetLength(1); y++)
-                    {
-                        squares.Add(gridSquares[x, y]);
-                    }
-                }
-                return squares;
-            }
-        }
-
-        //Used for navigating the board
-        public enum Direction { North, South, East, West };
-
-        //Returns all the tiles (no holes) on the board as a list. Used for solving.
-        public List<Tile> Tiles
-        {
-            get
-            {
-                List<Tile> tiles = new List<Tile>();
-                for (int x = 0; x < gridSquares.GetLength(0); x++)
-                {
-                    for (int y = 0; y < gridSquares.GetLength(1); y++)
-                    {
-                        if (gridSquares[x, y] is Tile)
-                            tiles.Add(gridSquares[x, y] as Tile);
-                    }
-                }
-                return tiles;
-            }
-        }
-
-
-        //Board constructor. letterGrid is a 2D array representing all the letters on the tiles.
-        //A hole has a space character.
+        /// <summary>
+        /// Constructor. Creates the board's gridsquares.
+        /// </summary>
+        /// <param name="letterGrid"> A 2D array containing letters for tiles and spaces for holes. </param>
         public Board(char[,] letterGrid)
         {
             if (letterGrid == null)
@@ -66,6 +28,7 @@ namespace Core
             {
                 throw new ArgumentException("letterGrid dimensions cannot be zero");
             }
+
             gridSquares = new GridSquare[letterGrid.GetLength(0), letterGrid.GetLength(1)];
             for (int x = 0; x < letterGrid.GetLength(0); x++)
             {
@@ -84,7 +47,59 @@ namespace Core
             }
         }
 
-        //Returns a tile's neighboring tile or hole of a given compass direction.
+
+        /// <summary> A 2D array containing all gridsquares on the board. </summary>
+        private GridSquare[,] gridSquares;
+
+
+        /// <summary> A list of all gridsquares on the board. </summary>
+        public List<GridSquare> GridSquares
+            // TODO: Make this a custom IEnumerable? Or create a private list field.
+            // A list is used for getting the board's gridsquares (rather than a 2D array) for data binding purposes.
+        {
+            get
+            {
+                var squares = new List<GridSquare>();
+                for (int x = 0; x < gridSquares.GetLength(0); x++)
+                {
+                    for (int y = 0; y < gridSquares.GetLength(1); y++)
+                    {
+                        squares.Add(gridSquares[x, y]);
+                    }
+                }
+                return squares;
+            }
+        }
+
+
+        /// <summary> Used for navigating the board.</summary>
+        public enum Direction { North, South, East, West };
+
+
+        /// <summary> A list of all tiles on the board (no holes). </summary>
+        public List<Tile> Tiles
+        {
+            get
+            {
+                List<Tile> tiles = new List<Tile>();
+                for (int x = 0; x < gridSquares.GetLength(0); x++)
+                {
+                    for (int y = 0; y < gridSquares.GetLength(1); y++)
+                    {
+                        if (gridSquares[x, y] is Tile)
+                            tiles.Add(gridSquares[x, y] as Tile);
+                    }
+                }
+                return tiles;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a tile's neighboring tile or hole of a given compass direction.
+        /// </summary>
+        /// <param name="originTile">Tile whose neighbor is returned.</param>
+        /// <param name="direction">Compass direction of the desired neighbor.</param>
         public GridSquare GetNeighbor(Tile originTile, Direction direction)
         {
             if (originTile == null)
@@ -111,14 +126,17 @@ namespace Core
                     break;
             }
 
-            //If the neighbor is outside of the board dimensions, returns a hole
+            //If the neighbor is outside of the board dimensions, return a hole
             if (x < 0 || x > gridSquares.GetLength(0) - 1 || y < 0 || y > gridSquares.GetLength(1) - 1)
             {
                 return new Hole(new Coordinates(x, y));
             }
+
             return gridSquares[x, y];
         }
 
+
+        /// <summary> Converts a list of tiles to holes. </summary>
         public void ConvertTilesToHoles(List<Tile> tiles)
         {
             foreach (var tile in tiles)
@@ -128,25 +146,13 @@ namespace Core
             }
         }
 
+
         public event PropertyChangedEventHandler PropertyChanged;
+
 
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
-        // TODO: Get rid of? Not being used anymore
-        //Returns all of a tile's neighboring tiles or holes
-        public List<GridSquare> getAllNeighbors(Tile originTile, Board theBoard)
-        {
-            List<GridSquare> allNeighbors = new List<GridSquare>();
-            allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.North));
-            allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.East));
-            allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.South));
-            allNeighbors.Add(theBoard.GetNeighbor(originTile, Board.Direction.West));
-
-            return allNeighbors;
         }
     }
 }
