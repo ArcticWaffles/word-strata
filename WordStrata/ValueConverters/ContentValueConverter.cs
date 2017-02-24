@@ -9,14 +9,17 @@ using Core;
 
 namespace WordStrata
 {
-     class ContentValueConverter : IValueConverter
+    /// <summary>
+    /// Converts a gridsquare to a char.
+    /// </summary>
+    class ContentValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var gridsquare = value as GridSquare;
             if (gridsquare is Tile)
                 return (gridsquare as Tile).Letter;
-            else return "";
+            else return " ";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

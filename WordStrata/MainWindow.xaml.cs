@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Core;
 
 namespace WordStrata
@@ -61,15 +49,22 @@ namespace WordStrata
             // If more than one path exists
             if (viewModel.Paths.Count > 1)
             {
-                // TODO: Figure out UI for selecting from multiple paths
+                // Prompt user
+                (Resources["PickAPath"] as Storyboard).Begin();
+                viewModel.CreateSnakes(boardItemsControl);
+                // Freeze tile clicking (modify isClickable converter to disallow all when ___(snakesEnabled) OR UserPaths is empty so it works anyway?
+                // Enact snake click handler? Or color-based picker.
+                // Upon clicking a snake, clear snakes, update UserPaths, enable tile clicking (auto), and call SubmitButton_Click again
+                // Return
             }
-            
+
             // If the word is valid
-            if (viewModel.CheckWord())
+            else if (viewModel.CheckWord())
             {
-                //WordFeedback.Foreground = Brushes.Green;
+                // WordFeedback.Foreground = Brushes.Green;
                 (Resources["AcceptWord"] as Storyboard).Begin();
                 viewModel.FinishTurn();
+
                 // If no more words remain on the board
                 if(!viewModel.WordsRemain())
                 {

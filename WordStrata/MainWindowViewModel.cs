@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Windows.Input;
+using System.Windows;
 using Core;
 using Solve;
 using System.Runtime.CompilerServices;
@@ -76,6 +76,13 @@ namespace WordStrata
             }
         }
 
+        List<Snake> snakes;
+        public List<Snake> Snakes
+        {
+            get { return snakes; }
+            set { if (snakes == value) return; snakes = value; OnPropertyChanged("Snakes"); }
+        }
+
         //User clicks a tile
         public void ClickTile(Tile theTile)
         {
@@ -102,6 +109,22 @@ namespace WordStrata
         public void ClearWord()
         {
             UserWord = "";
+        }
+
+        public void CreateSnakes(System.Windows.Controls.ItemsControl control)
+        {
+            var allSnakes = new List<Snake>();
+            var pathGroups = Paths.OrganizePaths();
+            int i = 0;
+            foreach (var group in pathGroups)
+            {
+                foreach (var path in group)
+                {
+                    var location = (1 / (group.Count + 1)) * (i + 1);
+                    allSnakes.Add(new Snake(location, path));
+                    i++;
+                }
+            }
         }
 
 
@@ -134,15 +157,6 @@ namespace WordStrata
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public bool CheckKeyboardEntry(KeyEventArgs args)
-        {
-            // Let user type any letter. Check word after each char.
-            // add contents of textbox + new letter to userword. find specific word on board. 
-
-            // TODO: Change User selections to observable collection class. Selections as the collection (of tile lists)
-            
-            throw new NotImplementedException();
-        }
     }
 
 }

@@ -13,9 +13,7 @@ namespace Core
     /// </summary>
     public class Board : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Constructor. Creates the board's gridsquares.
-        /// </summary>
+        /// <summary> Constructor. Creates the board's gridsquares.</summary>
         /// <param name="letterGrid"> A 2D array containing letters for tiles and spaces for holes. </param>
         public Board(char[,] letterGrid)
         {

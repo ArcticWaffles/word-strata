@@ -38,6 +38,7 @@
                 <DiscreteStringKeyFrame Value="Well done!" KeyTime="00:00:00"/>
             </StringAnimationUsingKeyFrames>
         </Storyboard>
+        
         <Storyboard x:Key="RejectWord">
             <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(TextBox.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="Word">
                 <DiscreteColorKeyFrame Value="Red" KeyTime="00:00:00"/>
@@ -57,6 +58,7 @@
                 <DiscreteStringKeyFrame Value="Not a word!" KeyTime="00:00:00"/>
             </StringAnimationUsingKeyFrames>
         </Storyboard>
+        
         <Storyboard x:Key="NoMoreWords">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback" 
                                            Storyboard.TargetProperty="Opacity">
@@ -68,6 +70,22 @@
             </ColorAnimationUsingKeyFrames>
             <StringAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback" Storyboard.TargetProperty="Text">
                 <DiscreteStringKeyFrame Value="No more words left!" KeyTime="00:00:00"/>
+            </StringAnimationUsingKeyFrames>
+        </Storyboard>
+        
+        <Storyboard x:Key="PickAPath">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback" 
+                                           Storyboard.TargetProperty="Opacity" Duration="00:00:05">
+                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:00"/>
+                <LinearDoubleKeyFrame Value="1" KeyTime="00:00:01"/>
+                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:04"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback"
+                                          Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="00:00:05">
+                <DiscreteColorKeyFrame Value="Blue" KeyTime="00:00:00"/>
+            </ColorAnimationUsingKeyFrames>
+            <StringAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback" Storyboard.TargetProperty="Text" Duration="00:00:05">
+                <DiscreteStringKeyFrame Value="Your word can be found in more than one combo of tiles! Pick which path you want to use." KeyTime="00:00:00"/>
             </StringAnimationUsingKeyFrames>
         </Storyboard>
 
@@ -167,8 +185,11 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <!--Board-->
             <RowDefinition Height="3*" />
+            <!--Textbox and word feedback messages-->
             <RowDefinition Height="Auto"/>
+            <!--Submit button-->
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ItemsControl x:Name="boardItemsControl" Grid.Row="0" ItemsSource="{Binding GameBoard.GridSquares}">
@@ -179,7 +200,8 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" Content ="{Binding Converter={StaticResource ContentValueConverter}}" BorderBrush="LightSeaGreen" FontSize="18" FontFamily="Georgia"
+                    <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" Content ="{Binding Converter={StaticResource ContentValueConverter}}" 
+                                  BorderBrush="LightSeaGreen" FontSize="18" FontFamily="Georgia"
                                    BorderThickness="2" Padding="10" Click="TileToggleButton_Click">
                         <ToggleButton.IsChecked>
                             <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">
@@ -197,6 +219,18 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Snakes}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Polyline Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" StrokeLineJoin="Round" Stroke="{Binding Color}" 
+                  StrokeThickness="6" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
+                        <Polyline.Points>
+                            <MultiBinding />
+                        </Polyline.Points>
+                    </Polyline>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*" />
@@ -208,7 +242,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                       FontSize="20" Opacity="0" />
+                       FontSize="20" TextWrapping="Wrap" TextAlignment="Center" Opacity="0" />
             <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray" 
                      MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" CharacterCasing="Upper">
             </TextBox>

@@ -8,6 +8,8 @@ using System.ComponentModel;
 using System.Collections.Specialized;
 using Core;
 using Solve;
+using System.Collections;
+using System.Windows;
 
 namespace WordStrata
 {
@@ -47,7 +49,7 @@ namespace WordStrata
             bool isEmpty = true;
             foreach (var list in this)
             {
-                if (!(list.Count == 0))
+                if (list.Any())
                 {
                     isEmpty = false;
                 }
@@ -55,6 +57,63 @@ namespace WordStrata
             return isEmpty;
         }
 
+        internal class PathComparison : IComparer<List<Tile>>
+        {
+            public int Compare(List<Tile> listA, List<Tile> listB)
+            {
+                // Find the "average point" of each list.
+                Point pointA = new Point();
+                Point pointB = new Point();
+                pointA.X = listA.Average(t => t.Coords.X);
+                pointA.Y = listA.Average(t => t.Coords.Y);
+                pointB.X = listB.Average(t => t.Coords.X);
+                pointB.Y = listB.Average(t => t.Coords.Y);
+
+                // TODO: improve algorithm to reflect notes
+                if (pointA == pointB)
+                {
+                    return 0;
+                }
+                else if (pointA.Y > pointB.Y) return 1;
+                else if (pointA.Y == pointB.Y && pointA.X < pointB.X) return 1;
+                else return -1;
+            }
+        }
+
+        public List<SortedSet<List<Tile>>> OrganizePaths()
+        {
+            var groupsOfPaths = new List<SortedSet<List<Tile>>>();
+            while (Count > 1)
+            {
+                // Find busiest tile
+                var allTiles = new List<Tile>();
+                foreach (var path in this)
+                {
+                    foreach (var tile in path)
+                    {
+                        allTiles.Add(tile);
+                    }
+                }
+                var mostFrequentTile = (from t in allTiles
+                                        group t by t into grp
+                                        orderby grp.Count() descending
+                                        select grp.Key).First();
+                var intersectingPaths = new SortedSet<List<Tile>>(new PathComparison());
+                foreach (var path in this)
+                {
+                    if (path.Contains(mostFrequentTile))
+                    {
+                        intersectingPaths.Add(path);
+                    }
+                }
+                groupsOfPaths.Add(intersectingPaths);
+                foreach (var path in intersectingPaths)
+                {
+                    Remove(path);
+                }
+            }
+            return groupsOfPaths;
+        }
     }
 
 }
