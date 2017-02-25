@@ -10,7 +10,7 @@ namespace WordStrata
 {
     public class Snake
     {
-        public Snake(double location, List<Tile> path)
+        public Snake(double location, Path path)
         {
             LocationOnTile = location;
             Path = path;
@@ -22,6 +22,6 @@ namespace WordStrata
 
         public double LocationOnTile { get; }
 
-        public List<Tile> Path { get; }
+        public Path Path { get; }
     }
 }

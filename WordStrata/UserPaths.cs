@@ -16,14 +16,14 @@ namespace WordStrata
     /// <summary>
     /// Keeps track of tile path(s) the player has selected, either by clicking or typing. May be more than one path if the board has multiple occurrences.
     /// </summary>
-    public class UserPaths : List<List<Tile>>
+    public class UserPaths : List<Path>
     {
         /// <summary> Last tile(s) in the <see cref="UserPaths"/> path(s). Used for determining which tiles on the board are clickable. </summary>
-        public List<Tile> CurrentTiles
+        public Path CurrentTiles
         {
             get
             {
-                var allCurrentTiles = new List<Tile>();
+                var allCurrentTiles = new Path();
                 foreach (var list in this)
                 {
                     allCurrentTiles.Add(list.Last());
@@ -57,9 +57,9 @@ namespace WordStrata
             return isEmpty;
         }
 
-        internal class PathComparison : IComparer<List<Tile>>
+        internal class PathComparison : IComparer<Path>
         {
-            public int Compare(List<Tile> listA, List<Tile> listB)
+            public int Compare(Path listA, Path listB)
             {
                 // Find the "average point" of each list.
                 Point pointA = new Point();
@@ -80,13 +80,13 @@ namespace WordStrata
             }
         }
 
-        public List<SortedSet<List<Tile>>> OrganizePaths()
+        public List<SortedSet<Path>> GroupPaths()
         {
-            var groupsOfPaths = new List<SortedSet<List<Tile>>>();
+            var groupsOfPaths = new List<SortedSet<Path>>();
             while (Count > 1)
             {
                 // Find busiest tile
-                var allTiles = new List<Tile>();
+                var allTiles = new Path();
                 foreach (var path in this)
                 {
                     foreach (var tile in path)
@@ -98,7 +98,7 @@ namespace WordStrata
                                         group t by t into grp
                                         orderby grp.Count() descending
                                         select grp.Key).First();
-                var intersectingPaths = new SortedSet<List<Tile>>(new PathComparison());
+                var intersectingPaths = new SortedSet<Path>(new PathComparison());
                 foreach (var path in this)
                 {
                     if (path.Contains(mostFrequentTile))

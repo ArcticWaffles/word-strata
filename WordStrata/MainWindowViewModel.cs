@@ -113,8 +113,9 @@ namespace WordStrata
 
         public void CreateSnakes(System.Windows.Controls.ItemsControl control)
         {
+            // TODO: Add color when creating snakes?
             var allSnakes = new List<Snake>();
-            var pathGroups = Paths.OrganizePaths();
+            var pathGroups = Paths.GroupPaths();
             int i = 0;
             foreach (var group in pathGroups)
             {

@@ -83,8 +83,8 @@ namespace NUnitTests
         public void ConvertTiles_WholeBoard_AllSquaresAreHoles()
         {
             var board = new Board(array2x2);
-            var tiles = board.Tiles;
-            board.ConvertTilesToHoles(tiles);
+            var path = new Path(board.Tiles);
+            board.ConvertTilesToHoles(path);
             foreach (var gridsquare in board.GridSquares)
             {
                 Assert.That(gridsquare, Is.InstanceOf(typeof(Hole)));
@@ -96,7 +96,7 @@ namespace NUnitTests
         public void ConvertTiles_PartialBoard_RemainingTileCountIsCorrect()
         {
             var board = new Board(array2x2);
-            var tiles = new List<Tile>();
+            var tiles = new Path();
             tiles.Add(tileA);
             tiles.Add(tileB);
             board.ConvertTilesToHoles(tiles);

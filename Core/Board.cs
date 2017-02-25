@@ -135,7 +135,7 @@ namespace Core
 
 
         /// <summary> Converts a list of tiles to holes. </summary>
-        public void ConvertTilesToHoles(List<Tile> tiles)
+        public void ConvertTilesToHoles(Path tiles)
         {
             foreach (var tile in tiles)
             {

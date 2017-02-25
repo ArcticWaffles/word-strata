@@ -31,17 +31,16 @@ namespace Solve
 
 
         /// <summary> Contains all matching tile paths found on the board. </summary>
-        internal List<List<Tile>> Result { get; set; } = new List<List<Tile>>();
+        internal List<Path> Result { get; set; } = new List<Path>();
 
 
         /// <summary> Checks <see cref="masterWord"/> against a tile path's letters. </summary>
-        internal override void Check(List<Tile> path)
+        internal override void Check(Path path)
         {
             string word = Solver.GetLetters(path);
             if (word.Equals(masterWord, StringComparison.OrdinalIgnoreCase))
             {
-                var pathCopy = new List<Tile>(path);
-                Result.Add(pathCopy);
+                Result.Add(path);
             }
         }
     }

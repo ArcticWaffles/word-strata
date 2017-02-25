@@ -26,7 +26,7 @@ namespace Solve
         private HashSet<String> dictionary;
 
 
-        internal override void Check(List<Tile> path)
+        internal override void Check(Path path)
         {
             string word = Solver.GetLetters(path);
             Result = dictionary.Contains(word);
