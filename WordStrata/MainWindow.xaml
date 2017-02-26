@@ -188,49 +188,45 @@
             <!--Board-->
             <RowDefinition Height="3*" />
             <!--Textbox and word feedback messages-->
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
             <!--Submit button-->
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <ItemsControl x:Name="boardItemsControl" Grid.Row="0" ItemsSource="{Binding GameBoard.GridSquares}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid x:Name="board" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" Content ="{Binding Converter={StaticResource ContentValueConverter}}" 
-                                  BorderBrush="LightSeaGreen" FontSize="18" FontFamily="Georgia"
-                                   BorderThickness="2" Padding="10" Click="TileToggleButton_Click">
-                        <ToggleButton.IsChecked>
-                            <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">
-                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
-                                <Binding Path="." />
-                            </MultiBinding>
-                        </ToggleButton.IsChecked>
-                        <ToggleButton.IsEnabled>
-                            <MultiBinding Converter="{StaticResource IsClickableValueConverter}">
-                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
-                                <Binding Path="."/>
-                            </MultiBinding>
-                        </ToggleButton.IsEnabled>
-                    </ToggleButton>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Snakes}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Polyline Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" StrokeLineJoin="Round" Stroke="{Binding Color}" 
-                  StrokeThickness="6" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
-                        <Polyline.Points>
-                            <MultiBinding />
-                        </Polyline.Points>
-                    </Polyline>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <ItemsControl x:Name="boardItemsControl"  ItemsSource="{Binding GameBoard.GridSquares}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid x:Name="board" Rows="{Binding Rows}" Columns="{Binding Columns}"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" Content ="{Binding Converter={StaticResource ContentValueConverter}}" 
+                                      BorderBrush="LightSeaGreen" FontSize="18" FontFamily="Georgia"
+                                       BorderThickness="2" Padding="15" Click="TileToggleButton_Click">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">
+                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
+                                    <Binding Path="." />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
+                            <ToggleButton.IsEnabled>
+                                <MultiBinding Converter="{StaticResource IsClickableValueConverter}">
+                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
+                                    <Binding Path="."/>
+                                </MultiBinding>
+                            </ToggleButton.IsEnabled>
+                        </ToggleButton>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Viewbox>
+                <local:SnakePlane Width="1" Height="1"/>
+            </Viewbox>
+
+        </Grid>
+
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*" />

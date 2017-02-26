@@ -10,6 +10,7 @@ using System.Windows;
 using Core;
 using Solve;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 
 namespace WordStrata
 {
@@ -24,18 +25,23 @@ namespace WordStrata
 
         public override Board GameBoard
         {
-            get
-            {
-                return gameModel.GameBoard;
-            }
+            get {return gameModel.GameBoard;}
         }
+
+        public int Rows
+        {
+            get {return gameModel.GameBoard.Rows;}
+        }
+
+        public int Columns
+        {
+            get {return gameModel.GameBoard.Columns;}
+        }
+
 
         public HashSet<String> Dictionary
         {
-            get
-            {
-                return gameModel.Dictionary;
-            }
+            get {return gameModel.Dictionary;}
         }
 
         /// <summary> Word the user is building. </summary>
@@ -57,13 +63,13 @@ namespace WordStrata
                     paths.Add(list);
                 }
                 Paths = paths;
+                CreateSnakes();
                 OnPropertyChanged("UserWord");
             }
         }
 
         //Current valid tile paths based on UserWord 
         private UserPaths paths = new UserPaths();
-
         public override UserPaths Paths
         {
             get { return paths; }
@@ -71,12 +77,11 @@ namespace WordStrata
             {
                 if (value == paths) return;
                 paths = value;
-                OnPropertyChanged("Paths");
-                OnPropertyChanged("EnableSubmit");
+                OnPropertyChanged("");
             }
         }
 
-        List<Snake> snakes;
+        List<Snake> snakes = new List<Snake>();
         public List<Snake> Snakes
         {
             get { return snakes; }
@@ -99,33 +104,53 @@ namespace WordStrata
             }
         }
 
-
+        // Checks user-submitted word against the dictionary.
         public bool CheckWord()
         {
             return Dictionary.Contains(UserWord);
         }
 
-
+        // Clears UserWord, thereby clearing the input text box and the gameboard.
         public void ClearWord()
         {
             UserWord = "";
         }
 
-        public void CreateSnakes(System.Windows.Controls.ItemsControl control)
+        public void CreateSnakes()
         {
             // TODO: Add color when creating snakes?
+
             var allSnakes = new List<Snake>();
-            var pathGroups = Paths.GroupPaths();
+            //var pathGroups = Paths.GroupPaths();
+            //int i = 0;
+            //foreach (var group in pathGroups)
+            //{
+            //    foreach (var path in group)
+            //    {
+            //        double location = (1 / (double)(group.Count + 1)) * (i + 1);
+            //        allSnakes.Add(new Snake(location, path));
+            //        i++;
+            //    }
+            //}
             int i = 0;
-            foreach (var group in pathGroups)
+            // Creates a snake for each path.
+            foreach (var path in Paths)
             {
-                foreach (var path in group)
-                {
-                    var location = (1 / (group.Count + 1)) * (i + 1);
-                    allSnakes.Add(new Snake(location, path));
-                    i++;
-                }
+                double location = (1 / (Paths.Count + 1.0)) * (i + 1);
+                allSnakes.Add(new Snake(location, path));
+                i++;
             }
+            foreach (var snake in allSnakes)
+            {
+                foreach (var tile in snake.Path)
+                {
+                    var endCoordsX = ((double)tile.Coords.Y / Columns) + snake.LocationOnTile * (1 / (double)Columns);
+                    var endCoordsY = ((double)tile.Coords.X / Rows) + snake.LocationOnTile * (1 / (double)Rows);
+                    snake.Points.Add(new Point(endCoordsX, endCoordsY));
+                }
+                snake.Color = Brushes.Blue;
+            }
+            Snakes = allSnakes;
         }
 
 

@@ -51,7 +51,7 @@ namespace WordStrata
             {
                 // Prompt user
                 (Resources["PickAPath"] as Storyboard).Begin();
-                viewModel.CreateSnakes(boardItemsControl);
+                viewModel.CreateSnakes();
                 // Freeze tile clicking (modify isClickable converter to disallow all when ___(snakesEnabled) OR UserPaths is empty so it works anyway?
                 // Enact snake click handler? Or color-based picker.
                 // Upon clicking a snake, clear snakes, update UserPaths, enable tile clicking (auto), and call SubmitButton_Click again

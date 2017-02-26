@@ -43,8 +43,13 @@ namespace Core
                     }
                 }
             }
+            Rows = letterGrid.GetLength(0);
+            Columns = letterGrid.GetLength(1);
         }
 
+        public int Rows { get; set; }
+
+        public int Columns { get; set; }
 
         /// <summary> A 2D array containing all gridsquares on the board. </summary>
         private GridSquare[,] gridSquares;

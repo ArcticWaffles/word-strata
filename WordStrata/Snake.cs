@@ -16,7 +16,7 @@ namespace WordStrata
             Path = path;
         }
 
-        public PointCollection Points { get; set; }
+        public PointCollection Points { get; set; } = new PointCollection();
 
         public SolidColorBrush Color { get; set; }
 
