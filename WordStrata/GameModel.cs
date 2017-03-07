@@ -12,6 +12,12 @@ namespace WordStrata
         public GameModel(HashSet<string> dictionary)
         {
             GameBoard = BoardGenerator.generateWeightedBoard(5, 5);
+            //GameBoard = new Board(new char[,]
+            //{
+            //    { 'a', 'b', 'c' },
+            //    { 'b', 'c', 'b' },
+            //    { 'a', 'b', 'a' }
+            //});
             Dictionary = dictionary;
         }
 

@@ -83,11 +83,12 @@ namespace WordStrata
         public List<SortedSet<Path>> GroupPaths()
         {
             var groupsOfPaths = new List<SortedSet<Path>>();
-            while (Count > 1)
+            var pathsCopy = new List<Path>(this);
+            while (pathsCopy.Count > 1)
             {
                 // Find busiest tile
                 var allTiles = new Path();
-                foreach (var path in this)
+                foreach (var path in pathsCopy)
                 {
                     foreach (var tile in path)
                     {
@@ -99,7 +100,7 @@ namespace WordStrata
                                         orderby grp.Count() descending
                                         select grp.Key).First();
                 var intersectingPaths = new SortedSet<Path>(new PathComparison());
-                foreach (var path in this)
+                foreach (var path in pathsCopy)
                 {
                     if (path.Contains(mostFrequentTile))
                     {
@@ -109,7 +110,7 @@ namespace WordStrata
                 groupsOfPaths.Add(intersectingPaths);
                 foreach (var path in intersectingPaths)
                 {
-                    Remove(path);
+                    pathsCopy.Remove(path);
                 }
             }
             return groupsOfPaths;

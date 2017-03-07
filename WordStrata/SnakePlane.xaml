@@ -10,26 +10,31 @@
     <UserControl.Resources>
         <local:StrokeValueConverter x:Key="StrokeValueConverter"/>
     </UserControl.Resources>
-    <Canvas Width="1" Height="1">
-        <ItemsControl ItemsSource="{Binding Snakes}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Polyline Points="{Binding Points}" StrokeLineJoin="Round" Stroke="{Binding Color}" StrokeEndLineCap="Triangle" StrokeStartLineCap="Flat"
+    <ItemsControl ItemsSource="{Binding Snakes}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Canvas Width="100" Height="100"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Polyline  Points="{Binding Points}" StrokeLineJoin="Round" Stroke="{Binding SnakeColor}" StrokeEndLineCap="Triangle" StrokeStartLineCap="Flat"
                               Opacity=".4">
-                        <Polyline.StrokeThickness>
-                            <MultiBinding Converter="{StaticResource StrokeValueConverter}">
-                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.GameBoard" />
-                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
-                            </MultiBinding>
-                        </Polyline.StrokeThickness>
-                    </Polyline>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Canvas>
+                    <Polyline.StrokeThickness>
+                        <MultiBinding Converter="{StaticResource StrokeValueConverter}">
+                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.GameBoard" />
+                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
+                        </MultiBinding>
+                    </Polyline.StrokeThickness>
+                    <!--<Polyline.Clip>
+                            <PathGeometry>
+                                <PathFigure>
+                                    <PolyLineSegment Points="{Binding Points}" />
+                                </PathFigure>
+                            </PathGeometry>
+                        </Polyline.Clip>-->
+                </Polyline>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 </UserControl>

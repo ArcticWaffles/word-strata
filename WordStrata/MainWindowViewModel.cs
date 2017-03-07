@@ -118,8 +118,6 @@ namespace WordStrata
 
         public void CreateSnakes()
         {
-            // TODO: Add color when creating snakes?
-
             var allSnakes = new List<Snake>();
             //var pathGroups = Paths.GroupPaths();
             //int i = 0;
@@ -132,23 +130,25 @@ namespace WordStrata
             //        i++;
             //    }
             //}
+            var colors = Snake.makeUniqueColors(Paths.Count);
             int i = 0;
             // Creates a snake for each path.
             foreach (var path in Paths)
             {
-                double location = (1 / (Paths.Count + 1.0)) * (i + 1);
-                allSnakes.Add(new Snake(location, path));
+                double location = (1.0 / (Paths.Count + 1.0)) * (i + 1);
+                allSnakes.Add(new Snake(location, path, new SolidColorBrush(colors[i])));
                 i++;
             }
             foreach (var snake in allSnakes)
             {
                 foreach (var tile in snake.Path)
                 {
-                    var endCoordsX = ((double)tile.Coords.Y / Columns) + snake.LocationOnTile * (1 / (double)Columns);
-                    var endCoordsY = ((double)tile.Coords.X / Rows) + snake.LocationOnTile * (1 / (double)Rows);
+                    //var endCoordsX = 100 * ((double)tile.Coords.Y / Columns) + snake.LocationOnTile * (1 / (double)Columns);
+                    //var endCoordsY = 100 * ((double)tile.Coords.X / Rows) + snake.LocationOnTile * (1 / (double)Rows);
+                    var endCoordsX = 100 * ((double)tile.Coords.Y / Columns + .5 / (double)Columns);
+                    var endCoordsY = 100 * ((double)tile.Coords.X / Rows + .5 / (double)Rows);
                     snake.Points.Add(new Point(endCoordsX, endCoordsY));
                 }
-                snake.Color = Brushes.Blue;
             }
             Snakes = allSnakes;
         }

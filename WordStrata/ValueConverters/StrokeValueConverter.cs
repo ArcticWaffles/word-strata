@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Core;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using Core;
 
 namespace WordStrata
 {
@@ -15,7 +11,7 @@ namespace WordStrata
         {
             var board = values[0] as Board;
             var paths = values[1] as UserPaths;
-            double thickness = 1 / (double)(Math.Max(board.Rows, board.Columns) * (paths.Count + 1));
+            double thickness = 100 / (double)(Math.Max(board.Rows, board.Columns) * (paths.Count + 1));
             return thickness;
         }
 

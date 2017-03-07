@@ -222,7 +222,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
             <Viewbox>
-                <local:SnakePlane Width="1" Height="1"/>
+                <local:SnakePlane/>
             </Viewbox>
 
         </Grid>

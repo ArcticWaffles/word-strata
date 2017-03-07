@@ -88,5 +88,3 @@ namespace WordStrata
     }
 }
 
-//TODO: Error handling
-//TODO: XML Commenting
