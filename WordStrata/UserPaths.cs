@@ -84,9 +84,9 @@ namespace WordStrata
         {
             var groupsOfPaths = new List<SortedSet<Path>>();
             var pathsCopy = new List<Path>(this);
-            while (pathsCopy.Count > 1)
+            while (pathsCopy.Count > 0)
             {
-                // Find busiest tile
+                // Find "busiest" tile (contained by the most paths)
                 var allTiles = new Path();
                 foreach (var path in pathsCopy)
                 {

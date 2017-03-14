@@ -1,47 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Windows;
-using Core;
+﻿using Core;
 using Solve;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Media;
 
 namespace WordStrata
 {
-    public class MainWindowViewModel : MainWindowViewModelBase, INotifyPropertyChanged 
+    public class MainWindowViewModel : MainWindowViewModelBase, INotifyPropertyChanged
     {
         public MainWindowViewModel(GameModel theGameModel)
         {
             gameModel = theGameModel;
         }
 
-        GameModel gameModel;
+        private GameModel gameModel;
 
         public override Board GameBoard
         {
-            get {return gameModel.GameBoard;}
+            get { return gameModel.GameBoard; }
         }
 
         public int Rows
         {
-            get {return gameModel.GameBoard.Rows;}
+            get { return gameModel.GameBoard.Rows; }
         }
 
         public int Columns
         {
-            get {return gameModel.GameBoard.Columns;}
+            get { return gameModel.GameBoard.Columns; }
         }
-
 
         public HashSet<String> Dictionary
         {
-            get {return gameModel.Dictionary;}
+            get { return gameModel.Dictionary; }
         }
 
         /// <summary> Word the user is building. </summary>
@@ -68,7 +61,7 @@ namespace WordStrata
             }
         }
 
-        //Current valid tile paths based on UserWord 
+        //Current valid tile paths based on UserWord
         private UserPaths paths = new UserPaths();
         public override UserPaths Paths
         {
@@ -81,7 +74,7 @@ namespace WordStrata
             }
         }
 
-        List<Snake> snakes = new List<Snake>();
+        private List<Snake> snakes = new List<Snake>();
         public List<Snake> Snakes
         {
             get { return snakes; }
@@ -94,13 +87,12 @@ namespace WordStrata
             UserWord += (theTile.Letter);
         }
 
-
         // User unclicks a tile
         public void UnclickTile(Tile theTile)
         {
             if (UserWord.Length > 0)
             {
-                UserWord = UserWord.Remove(UserWord.Length-1);
+                UserWord = UserWord.Remove(UserWord.Length - 1);
             }
         }
 
@@ -119,40 +111,49 @@ namespace WordStrata
         public void CreateSnakes()
         {
             var allSnakes = new List<Snake>();
-            //var pathGroups = Paths.GroupPaths();
-            //int i = 0;
-            //foreach (var group in pathGroups)
-            //{
-            //    foreach (var path in group)
-            //    {
-            //        double location = (1 / (double)(group.Count + 1)) * (i + 1);
-            //        allSnakes.Add(new Snake(location, path));
-            //        i++;
-            //    }
-            //}
             var colors = Snake.makeUniqueColors(Paths.Count);
-            int i = 0;
-            // Creates a snake for each path.
-            foreach (var path in Paths)
+            int colorCounter = 0;
+
+            if (Paths.Count == 0)
             {
-                double location = (1.0 / (Paths.Count + 1.0)) * (i + 1);
-                allSnakes.Add(new Snake(location, path, new SolidColorBrush(colors[i])));
-                i++;
+                Snakes = new List<Snake>();
+                return;
             }
+            else if (Paths.Count == 1)
+            {
+                allSnakes.Add(new Snake(.5, Paths[0], new SolidColorBrush(colors[0])));
+            }
+            else // More than one path exists
+            {
+                // Creates a snake for each path.
+                List<SortedSet<Path>> groupedPaths = Paths.GroupPaths();
+                foreach (var group in groupedPaths)
+                {
+                    int i = 0;
+                    foreach (var path in group)
+                    {
+                        double location = (1.0 / (group.Count + 1.0)) * (i + 1);
+                        allSnakes.Add(new Snake(location, path, new SolidColorBrush(colors[colorCounter])));
+                        i++;
+                        colorCounter++;
+                    }
+                }
+            }
+
+            // Assigns Points to each snake
             foreach (var snake in allSnakes)
             {
                 foreach (var tile in snake.Path)
                 {
-                    //var endCoordsX = 100 * ((double)tile.Coords.Y / Columns) + snake.LocationOnTile * (1 / (double)Columns);
-                    //var endCoordsY = 100 * ((double)tile.Coords.X / Rows) + snake.LocationOnTile * (1 / (double)Rows);
-                    var endCoordsX = 100 * ((double)tile.Coords.Y / Columns + .5 / (double)Columns);
-                    var endCoordsY = 100 * ((double)tile.Coords.X / Rows + .5 / (double)Rows);
+                    var endCoordsX = 100 * ((double)tile.Coords.Y / Columns + snake.LocationOnTile / Columns);
+                    var endCoordsY = 100 * ((double)tile.Coords.X / Rows + snake.LocationOnTile / Rows);
+                    // var endCoordsX = 100 * ((double)tile.Coords.Y / Columns + .5 / (double)Columns);
+                    // var endCoordsY = 100 * ((double)tile.Coords.X / Rows + .5 / (double)Rows);
                     snake.Points.Add(new Point(endCoordsX, endCoordsY));
                 }
             }
             Snakes = allSnakes;
         }
-
 
         /// <summary>
         /// Turns used tiles to holes and clears word.
@@ -182,9 +183,7 @@ namespace WordStrata
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
-
 }
 
 // TODO retrieving saved game - make new MWVM but pass in existing game model instead of new one
