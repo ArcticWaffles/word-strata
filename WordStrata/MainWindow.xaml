@@ -134,7 +134,7 @@
                         <s:Boolean>True</s:Boolean>
                     </Trigger.Value>
                 </Trigger>
-                <Trigger Property="ToggleButton.IsChecked">
+                <!--<Trigger Property="ToggleButton.IsChecked">
                     <Setter Property="Panel.Background" TargetName="border">
                         <Setter.Value>
                             <SolidColorBrush>#FFBCDDEE</SolidColorBrush>
@@ -148,7 +148,7 @@
                     <Trigger.Value>
                         <s:Boolean>True</s:Boolean>
                     </Trigger.Value>
-                </Trigger>
+                </Trigger>-->
                 <Trigger Property="UIElement.IsEnabled">
                     <Setter Property="Panel.Background" TargetName="border">
                         <Setter.Value>
@@ -169,7 +169,7 @@
                         <s:Boolean>False</s:Boolean>
                     </Trigger.Value>
                 </Trigger>
-                <MultiTrigger>
+                <!--<MultiTrigger>
                     <MultiTrigger.Conditions>
                         <Condition Property="IsEnabled" Value="False"/>
                         <Condition Property="IsChecked"  Value="True"/>
@@ -179,7 +179,7 @@
                             <SolidColorBrush>#FFBCDDEE</SolidColorBrush>
                         </Setter.Value>
                     </Setter>
-                </MultiTrigger>
+                </MultiTrigger>-->
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>

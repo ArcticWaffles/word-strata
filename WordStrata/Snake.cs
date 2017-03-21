@@ -33,13 +33,14 @@ namespace WordStrata
             Color color = new Color();
             for(int i = 0; i < listSize; i++)
             {
-                //var random = new Random();
-                //r = (byte)((i + 1) * (random.Next()) % 255);
-                //g = (byte)((i + 1) * (random.Next()) % 255);
-                //b = (byte)((i + 1) * (random.Next()) % 255);
+
+                //r = (byte)(60 * (i + 1) % 255);
+                //g = (byte)(110 * (i + 2) % 255);
+                //b = (byte)(180 * (i + 3) % 255);
+
                 r = (byte)(60 * (i + 1) % 255);
                 g = (byte)(110 * (i + 2) % 255);
-                b = (byte)(180 * (i + 3) % 255);
+                b = (byte)(215 * (i + 3) % 255);
 
                 color = Color.FromRgb(r, g, b);
                 colorList.Add(color);

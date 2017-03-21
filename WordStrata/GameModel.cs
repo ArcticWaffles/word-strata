@@ -14,9 +14,9 @@ namespace WordStrata
             GameBoard = BoardGenerator.generateWeightedBoard(5, 5);
             //GameBoard = new Board(new char[,]
             //{
-            //    { 'a', 'b', 'c' },
-            //    { 'b', 'c', 'b' },
-            //    { 'a', 'b', 'a' }
+            //    { 'a', 'b', 'c', 'b'},
+            //    { 'b', 'c', 'b', 'c' },
+            //    { 'a', 'b', 'a', 'b' }
             //});
             Dictionary = dictionary;
         }
