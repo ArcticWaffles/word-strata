@@ -83,7 +83,7 @@ namespace NUnitTests
         public void ConvertTiles_WholeBoard_AllSquaresAreHoles()
         {
             var board = new Board(array2x2);
-            var path = new Path(board.Tiles);
+            var path = new TilePath(board.Tiles);
             board.ConvertTilesToHoles(path);
             foreach (var gridsquare in board.GridSquares)
             {
@@ -96,7 +96,7 @@ namespace NUnitTests
         public void ConvertTiles_PartialBoard_RemainingTileCountIsCorrect()
         {
             var board = new Board(array2x2);
-            var tiles = new Path();
+            var tiles = new TilePath();
             tiles.Add(tileA);
             tiles.Add(tileB);
             board.ConvertTilesToHoles(tiles);

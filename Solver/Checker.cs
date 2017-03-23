@@ -22,7 +22,7 @@ namespace Solve
         internal int EndDepth { get; set; }
 
         /// <summary> Tile list whose letters are used as the string for comparison.</summary>
-        internal abstract void Check(Path path);
+        internal abstract void Check(TilePath path);
     }
 }
 

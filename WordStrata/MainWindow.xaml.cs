@@ -23,31 +23,27 @@ namespace WordStrata
             DataContext = viewModel;
         }
 
-
-        private void TileToggleButton_Click(object sender, RoutedEventArgs e)
+        // User selects a tile
+        private void TileToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             ToggleButton theSender = (ToggleButton)sender;
             Tile senderTile = (Tile)theSender.DataContext;
+            viewModel.AddTile(senderTile);
+        }
 
-            // User clicks a tile
-            if (theSender.IsChecked == true)
-            {
-                viewModel.ClickTile(senderTile);
-            }
-
-            // User unclicks a tile
-            else
-            {
-                viewModel.UnclickTile(senderTile);
-            }
-
+        // User deselects a tile
+        private void TileToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ToggleButton theSender = (ToggleButton)sender;
+            Tile senderTile = (Tile)theSender.DataContext;
+            viewModel.RemoveTile(senderTile);
         }
 
         // User submits a word
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             // If more than one path exists
-            if (viewModel.Paths.Count > 1)
+            if (viewModel.ThePath.Count > 1)
             {
                 // Prompt user
                 (Resources["PickAPath"] as Storyboard).Begin();
@@ -83,7 +79,6 @@ namespace WordStrata
         {
             viewModel.ClearWord();
         }
-
     }
 }
 

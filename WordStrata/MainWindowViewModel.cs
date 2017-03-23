@@ -3,6 +3,7 @@ using Solve;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
@@ -41,59 +42,52 @@ namespace WordStrata
         private string userWord = "";
         public string UserWord
         {
-            get
-            {
-                return userWord;
-            }
+            get { return userWord; }
 
             set
             {
+                if (value == userWord) return;
                 userWord = value;
-                var paths = new UserPaths();
-                var lists = Solver.SpecificWordExistsOnBoard(userWord, GameBoard);
-                foreach (var list in lists)
-                {
-                    paths.Add(list);
-                }
-                Paths = paths;
-                CreateSnakes();
                 OnPropertyChanged("UserWord");
             }
         }
 
-        //Current valid tile paths based on UserWord
-        private UserPaths paths = new UserPaths();
-        public override UserPaths Paths
+        //Current path of clicked tiles
+        private TilePath thePath = new TilePath();
+        public override TilePath ThePath
         {
-            get { return paths; }
+            get { return thePath; }
             set
             {
-                if (value == paths) return;
-                paths = value;
-                OnPropertyChanged("");
+                if (value == thePath) return;
+                thePath = value;
+                OnPropertyChanged("ThePath");
             }
         }
 
-        private List<Snake> snakes = new List<Snake>();
-        public List<Snake> Snakes
+        private Snake currentSnake = new Snake();
+        public Snake CurrentSnake
         {
-            get { return snakes; }
-            set { if (snakes == value) return; snakes = value; OnPropertyChanged("Snakes"); }
+            get { return currentSnake; }
+            set { if (currentSnake == value) return; currentSnake = value; OnPropertyChanged("CurrentSnake"); }
         }
 
-        //User clicks a tile
-        public void ClickTile(Tile theTile)
+        // User selects a tile
+        public void AddTile(Tile theTile)
         {
-            UserWord += (theTile.Letter);
+            ThePath.Add(theTile);
+            UserWord = Solver.GetLetters(ThePath);
+            BuildSnake();
+            OnPropertyChanged("ThePath");
         }
 
-        // User unclicks a tile
-        public void UnclickTile(Tile theTile)
+        // User deselects a tile
+        public void RemoveTile(Tile theTile)
         {
-            if (UserWord.Length > 0)
-            {
-                UserWord = UserWord.Remove(UserWord.Length - 1);
-            }
+            ThePath.Remove(theTile);
+            UserWord = Solver.GetLetters(ThePath);
+            BuildSnake();
+            OnPropertyChanged("ThePath");
         }
 
         // Checks user-submitted word against the dictionary.
@@ -102,57 +96,31 @@ namespace WordStrata
             return Dictionary.Contains(UserWord);
         }
 
-        // Clears UserWord, thereby clearing the input text box and the gameboard.
+        // Clears UserWord, thereby clearing the textblock and the gameboard.
         public void ClearWord()
         {
-            UserWord = "";
+            // TODO: Make TilePath observable collection to cut down on the repetition.
+            ThePath.Clear();
+            UserWord = Solver.GetLetters(ThePath);
+            BuildSnake();
+            OnPropertyChanged("ThePath");
         }
 
-        public void CreateSnakes()
+        public void BuildSnake()
         {
-            var allSnakes = new List<Snake>();
-            var colors = Snake.makeUniqueColors(Paths.Count);
-            int colorCounter = 0;
-
-            if (Paths.Count == 0)
+            if (ThePath.Any())
             {
-                Snakes = new List<Snake>();
-                return;
-            }
-            else if (Paths.Count == 1)
-            {
-                allSnakes.Add(new Snake(.5, Paths[0], new SolidColorBrush(colors[0])));
-            }
-            else // More than one path exists
-            {
-                // Creates a snake for each path.
-                List<SortedSet<Path>> groupedPaths = Paths.GroupPaths();
-                foreach (var group in groupedPaths)
+                var theSnake = new Snake();
+                // Add points
+                foreach (var tile in ThePath)
                 {
-                    int i = 0;
-                    foreach (var path in group)
-                    {
-                        double location = (1.0 / (group.Count + 1.0)) * (i + 1);
-                        allSnakes.Add(new Snake(location, path, new SolidColorBrush(colors[colorCounter])));
-                        i++;
-                        colorCounter++;
-                    }
+                    var endCoordsX = 100 * ((double)tile.Coords.Y / Columns + .5 / Columns);
+                    var endCoordsY = 100 * ((double)tile.Coords.X / Rows + .5 / Rows);
+                    theSnake.Points.Add(new Point(endCoordsX, endCoordsY));
                 }
+                CurrentSnake = theSnake;
             }
-
-            // Assigns Points to each snake
-            foreach (var snake in allSnakes)
-            {
-                foreach (var tile in snake.Path)
-                {
-                    var endCoordsX = 100 * ((double)tile.Coords.Y / Columns + snake.LocationOnTile / Columns);
-                    var endCoordsY = 100 * ((double)tile.Coords.X / Rows + snake.LocationOnTile / Rows);
-                    // var endCoordsX = 100 * ((double)tile.Coords.Y / Columns + .5 / (double)Columns);
-                    // var endCoordsY = 100 * ((double)tile.Coords.X / Rows + .5 / (double)Rows);
-                    snake.Points.Add(new Point(endCoordsX, endCoordsY));
-                }
-            }
-            Snakes = allSnakes;
+            else CurrentSnake = new Snake(); // ThePath is empty
         }
 
         /// <summary>
@@ -160,10 +128,10 @@ namespace WordStrata
         /// </summary>
         public void FinishTurn()
         {
-            GameBoard.ConvertTilesToHoles(Paths[0]);
+            GameBoard.ConvertTilesToHoles(ThePath);
             ClearWord();
         }
-
+          
         public bool WordsRemain()
         {
             return Solver.AnyWordExistsOnBoard(Dictionary, GameBoard);
@@ -173,7 +141,7 @@ namespace WordStrata
         {
             get
             {
-                return !Paths.IsEmpty();
+                return !ThePath.Any();
             }
         }
 

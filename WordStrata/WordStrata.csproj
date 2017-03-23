@@ -65,13 +65,10 @@
     <Compile Include="GameModel.cs" />
     <Compile Include="IGameModel.cs" />
     <Compile Include="ValueConverters\EllipseVisibilityConverter.cs" />
-    <Compile Include="ValueConverters\IsCheckedValueConverter.cs" />
     <Compile Include="ValueConverters\IsClickableValueConverter.cs" />
     <Compile Include="MainWindowViewModelBase.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="BoardGenerator.cs" />
-    <Compile Include="UserPaths.cs" />
-    <Compile Include="ValueConverters\StrokeValueConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

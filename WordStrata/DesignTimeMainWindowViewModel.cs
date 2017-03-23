@@ -12,7 +12,7 @@ namespace WordStrata
     {
         public override Board GameBoard { get; } = BoardGenerator.generateWeightedBoard(5, 5);
 
-        public override UserPaths Paths { get; set; } = new UserPaths();
+        public override TilePath ThePath { get; set; } = new TilePath();
 
         //public string UserWord { get; set; } = "ABIOGENETICALLY";
     }

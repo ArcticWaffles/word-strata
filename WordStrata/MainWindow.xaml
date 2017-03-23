@@ -1,5 +1,4 @@
 ﻿<Window x:Class="WordStrata.MainWindow"
-        x:Name="test"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,13 +9,10 @@
         Title="Word Strata" Height="650" Width="625"
         d:DataContext="{d:DesignInstance local:DesignTimeMainWindowViewModel, IsDesignTimeCreatable=True}">
 
-    <!--<Window.DataContext>
-        <local:MainWindowViewModel/>
-    </Window.DataContext>-->
+
 
     <Window.Resources>
         <local:IsClickableValueConverter x:Key="IsClickableValueConverter"/>
-        <local:IsCheckedValueConverter x:Key="IsCheckedValueConverter"/>
         <local:ContentValueConverter x:Key="ContentValueConverter"/>
 
         <Storyboard x:Key="AcceptWord">
@@ -89,9 +85,15 @@
             </StringAnimationUsingKeyFrames>
         </Storyboard>
 
-        <ControlTemplate x:Key="toggleButtonTemplate" TargetType="ToggleButton" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-            <Border BorderThickness="{TemplateBinding Border.BorderThickness}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" Name="border" SnapsToDevicePixels="True">
-                <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" Name="contentPresenter" Margin="{TemplateBinding Control.Padding}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" Focusable="False" />
+        <ControlTemplate x:Key="toggleButtonTemplate" TargetType="ToggleButton" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                         xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+            <Border BorderThickness="{TemplateBinding Border.BorderThickness}" BorderBrush="{TemplateBinding Border.BorderBrush}" 
+                    Background="{TemplateBinding Panel.Background}" Name="border" SnapsToDevicePixels="True">
+                <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding ContentControl.Content}" 
+                                  ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
+                                  Name="contentPresenter" Margin="{TemplateBinding Control.Padding}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" 
+                                  VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" 
+                                  Focusable="False" />
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="Button.IsDefaulted">
@@ -193,7 +195,6 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-
             <ItemsControl x:Name="boardItemsControl"  ItemsSource="{Binding GameBoard.GridSquares}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -202,29 +203,29 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}" Content ="{Binding Converter={StaticResource ContentValueConverter}}" 
-                                      BorderBrush="LightSeaGreen" FontSize="18" FontFamily="Georgia"
-                                       BorderThickness="2" Padding="15" Click="TileToggleButton_Click">
-                            <ToggleButton.IsChecked>
-                                <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">
-                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
-                                    <Binding Path="." />
-                                </MultiBinding>
-                            </ToggleButton.IsChecked>
-                            <ToggleButton.IsEnabled>
-                                <MultiBinding Converter="{StaticResource IsClickableValueConverter}">
-                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
-                                    <Binding Path="."/>
-                                </MultiBinding>
-                            </ToggleButton.IsEnabled>
-                        </ToggleButton>
+						<ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}"
+                            Content ="{Binding Converter={StaticResource ContentValueConverter}}" 
+							BorderBrush="LightSeaGreen" FontSize="18" FontFamily="Georgia" BorderThickness="2" Padding="15" 
+							Checked="TileToggleButton_Checked" Unchecked="TileToggleButton_Unchecked" >
+							<!--<ToggleButton.IsChecked>
+								<MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">
+									<Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.ThePath" />
+									<Binding Path="." />
+								</MultiBinding>
+							</ToggleButton.IsChecked>-->
+							<ToggleButton.IsEnabled>
+								<MultiBinding Converter="{StaticResource IsClickableValueConverter}">
+									<Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.ThePath" />
+									<Binding Path="."/>
+								</MultiBinding>
+							</ToggleButton.IsEnabled>
+						</ToggleButton>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
             <Viewbox>
                 <local:SnakePlane/>
             </Viewbox>
-
         </Grid>
 
         <Grid Grid.Row="1">

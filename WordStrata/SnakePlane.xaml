@@ -8,35 +8,26 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <local:StrokeValueConverter x:Key="StrokeValueConverter"/>
         <local:EllipseVisibilityConverter x:Key="EllipseVisibility"/>
     </UserControl.Resources>
-    <ItemsControl ItemsSource="{Binding Snakes}">
+    <!--<ItemsControl ItemsSource="{Binding CurrentSnake}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas Width="100" Height="100"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <Canvas>
-                    <Polyline  Points="{Binding Points}" StrokeLineJoin="Round" Stroke="{Binding SnakeColor}" StrokeEndLineCap="Triangle" StrokeStartLineCap="Round"
+            <DataTemplate>-->
+    <Canvas Width="100" Height="100">
+        <Polyline  Points="{Binding CurrentSnake.Points}" StrokeLineJoin="Round" Stroke="{Binding CurrentSnake.SnakeColor}" StrokeThickness="8" StrokeEndLineCap="Triangle" StrokeStartLineCap="Round"
                               Opacity=".5" IsHitTestVisible="False">
-                        <Polyline.StrokeThickness>
-                            <MultiBinding Converter="{StaticResource StrokeValueConverter}">
-                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.GameBoard" />
-                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.Paths" />
-                            </MultiBinding>
-                        </Polyline.StrokeThickness>
-                    </Polyline>
-                    <Path Stroke="{Binding SnakeColor}" StrokeThickness="8" Opacity=".5" Visibility="{Binding Points,Converter={StaticResource EllipseVisibility} }" IsHitTestVisible="False">
-                        <Path.Data>
-                            <EllipseGeometry 
-                                Center="{Binding Points[0]}" />
-                        </Path.Data>
-                    </Path>
-                </Canvas>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
+        </Polyline>
+        <Path Stroke="{Binding CurrentSnake.SnakeColor}" StrokeThickness="8" Opacity=".5" Visibility="{Binding CurrentSnake.Points,Converter={StaticResource EllipseVisibility} }" IsHitTestVisible="False">
+            <Path.Data>
+                <EllipseGeometry 
+                    Center="{Binding CurrentSnake.Points[0]}" />
+            </Path.Data>
+        </Path>
+    </Canvas>
+           
 </UserControl>

@@ -5,7 +5,7 @@ namespace WordStrata
 {
     public abstract class MainWindowViewModelBase
     {
-        public abstract UserPaths Paths { get; set; }
+        public abstract TilePath ThePath { get; set; }
         public abstract Board GameBoard { get; }
     }
 }
