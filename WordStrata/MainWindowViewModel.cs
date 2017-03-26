@@ -2,10 +2,10 @@
 using Solve;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media;
 
 namespace WordStrata
 {
@@ -14,6 +14,7 @@ namespace WordStrata
         public MainWindowViewModel(GameModel theGameModel)
         {
             gameModel = theGameModel;
+            ThePath.CollectionChanged += OnCollectionChanged;
         }
 
         private GameModel gameModel;
@@ -23,16 +24,19 @@ namespace WordStrata
             get { return gameModel.GameBoard; }
         }
 
+        /// <summary> Number of rows on the gameboard. </summary>
         public int Rows
         {
             get { return gameModel.GameBoard.Rows; }
         }
 
+        /// <summary> Number of columns on the gameboard. </summary>
         public int Columns
         {
             get { return gameModel.GameBoard.Columns; }
         }
 
+        /// <summary> Determines a word's validity. </summary>
         public HashSet<String> Dictionary
         {
             get { return gameModel.Dictionary; }
@@ -76,18 +80,12 @@ namespace WordStrata
         public void AddTile(Tile theTile)
         {
             ThePath.Add(theTile);
-            UserWord = Solver.GetLetters(ThePath);
-            BuildSnake();
-            OnPropertyChanged("ThePath");
         }
 
         // User deselects a tile
         public void RemoveTile(Tile theTile)
         {
             ThePath.Remove(theTile);
-            UserWord = Solver.GetLetters(ThePath);
-            BuildSnake();
-            OnPropertyChanged("ThePath");
         }
 
         // Checks user-submitted word against the dictionary.
@@ -99,11 +97,7 @@ namespace WordStrata
         // Clears UserWord, thereby clearing the textblock and the gameboard.
         public void ClearWord()
         {
-            // TODO: Make TilePath observable collection to cut down on the repetition.
             ThePath.Clear();
-            UserWord = Solver.GetLetters(ThePath);
-            BuildSnake();
-            OnPropertyChanged("ThePath");
         }
 
         public void BuildSnake()
@@ -128,10 +122,10 @@ namespace WordStrata
         /// </summary>
         public void FinishTurn()
         {
-            GameBoard.ConvertTilesToHoles(ThePath);
+            GameBoard.ConvertTilesToHoles(ThePath.ToList());
             ClearWord();
         }
-          
+
         public bool WordsRemain()
         {
             return Solver.AnyWordExistsOnBoard(Dictionary, GameBoard);
@@ -151,6 +145,12 @@ namespace WordStrata
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            UserWord = Solver.GetLetters(ThePath.ToList());
+            BuildSnake();
+        }
     }
 }
 

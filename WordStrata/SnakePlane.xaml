@@ -10,14 +10,6 @@
     <UserControl.Resources>
         <local:EllipseVisibilityConverter x:Key="EllipseVisibility"/>
     </UserControl.Resources>
-    <!--<ItemsControl ItemsSource="{Binding CurrentSnake}">
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <Canvas Width="100" Height="100"/>
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>-->
     <Canvas Width="100" Height="100">
         <Polyline  Points="{Binding CurrentSnake.Points}" StrokeLineJoin="Round" Stroke="{Binding CurrentSnake.SnakeColor}" StrokeThickness="8" StrokeEndLineCap="Triangle" StrokeStartLineCap="Round"
                               Opacity=".5" IsHitTestVisible="False">
@@ -29,5 +21,4 @@
             </Path.Data>
         </Path>
     </Canvas>
-           
 </UserControl>

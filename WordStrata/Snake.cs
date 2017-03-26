@@ -15,5 +15,4 @@ namespace WordStrata
 
         public SolidColorBrush SnakeColor { get; set; } = Brushes.DarkSeaGreen; // TODO: Make this a trigger relating to word validity
     }
- 
 }

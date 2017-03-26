@@ -8,22 +8,15 @@ using System.ComponentModel;
 using System.Collections.Specialized;
 using System.Collections;
 using System.Windows;
+using Core;
 
-namespace Core
+namespace WordStrata
 {
     /// <summary>
     /// List of tiles the player has selected.
     /// </summary>
-    public class TilePath : List<Tile>
+    public class TilePath : ObservableCollection<Tile>
     {
-        public TilePath()
-        {
-        }
-
-        public TilePath(IEnumerable<Tile> collection) : base(collection)
-        {
-        }
-
         /// <summary> Last tile in the list. Used for determining which tiles on the board are clickable. </summary>
         public Tile CurrentTile
         {

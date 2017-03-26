@@ -25,7 +25,7 @@ namespace Solve
                 // Inner loop: for each starting tile
                 foreach (Tile tile in board.Tiles)
                 {
-                    FindWordFromStartingTileRecursive(board, tile, new TilePath(), checker, 0, i);
+                    FindWordFromStartingTileRecursive(board, tile, new List<Tile>(), checker, 0, i);
                     if (!checker.ShallContinue)
                         break;
                 }
@@ -47,7 +47,7 @@ namespace Solve
         /// <param name="currentDepth"> Size of the current tile path. </param>
         /// <param name="targetDepth"> Size of word being checked in the current iteration. </param>
         private static void FindWordFromStartingTileRecursive(Board board, Tile tile, 
-            TilePath tilePath, Checker checker, int currentDepth, int targetDepth)
+            List<Tile> tilePath, Checker checker, int currentDepth, int targetDepth)
         {
             tilePath.Add(tile);
 
@@ -56,7 +56,7 @@ namespace Solve
             // checked in a previous iteration.)
             if (currentDepth == targetDepth)
             {
-                var pathCopy = new TilePath(tilePath);
+                var pathCopy = new List<Tile>(tilePath);
                 checker.Check(pathCopy);
             }
             else //currentDepth < targetDepth
@@ -74,7 +74,6 @@ namespace Solve
 
         }
 
-
         /// <summary> Checks that a valid word remains on the board. </summary>
         /// <param name="dictionary">All valid words.</param>
         /// <param name="board">The gameboard.</param>
@@ -85,19 +84,8 @@ namespace Solve
             return checker.Result;
         }
 
-
-        /// <summary> Checks that a given string can be found on the board. Returns all matches. </summary>
-        /// <param name="theWord">The string to be searched for on the board.</param>
-        /// <param name="board">The gameboard. </param>
-        public static List<TilePath> SpecificWordExistsOnBoard(string theWord, Board board)
-        {
-            var checker = new StringChecker(theWord);
-            FindWordFromStartingTileKickoff(checker, board);
-            return checker.Result;
-        }
-
         /// <summary> Retrieves letters from a list of tiles. </summary>
-        public static string GetLetters(TilePath path)
+        public static string GetLetters(List<Tile> path)
         {
             string word = "";
             foreach (var tile in path)

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using Core;
+using System;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using Core;
 
 namespace WordStrata
 {
-    class IsClickableValueConverter : IMultiValueConverter
+    internal class IsClickableValueConverter : IMultiValueConverter
     {
-
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var path = values[0] as TilePath;
@@ -32,7 +27,6 @@ namespace WordStrata
         // 1. No tiles on the board are selected (ThePath is null or empty)
         // 2. It neighbors a current tile and is not already selected
         // 3. It is a current tile (user can click it to backtrack)
-        // 
         private bool TileIsClickable(Tile tile, Tile currentTile, TilePath path)
         {
             if (!path.Any() || path == null) return true;
@@ -45,7 +39,7 @@ namespace WordStrata
 
         private bool AreNeighbors(Tile tile1, Tile tile2)
         {
-            if(tile1 == null || tile2 == null)
+            if (tile1 == null || tile2 == null)
             {
                 return false;
             }
@@ -68,6 +62,5 @@ namespace WordStrata
             }
             else return false;
         }
-
     }
 }
