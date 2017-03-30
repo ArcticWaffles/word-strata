@@ -52,10 +52,10 @@
             </DoubleAnimationUsingKeyFrames>
             <ColorAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback"
                                           Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)">
-                <DiscreteColorKeyFrame Value="Red" KeyTime="00:00:00" />
+                <DiscreteColorKeyFrame Value="Green" KeyTime="00:00:00" />
             </ColorAnimationUsingKeyFrames>
             <StringAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback" Storyboard.TargetProperty="Text">
-                <DiscreteStringKeyFrame Value="No more words left!" KeyTime="00:00:00" />
+                <DiscreteStringKeyFrame Value="Congratulations, no more words left!" KeyTime="00:00:00" />
             </StringAnimationUsingKeyFrames>
         </Storyboard>
 
