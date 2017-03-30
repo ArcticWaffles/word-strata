@@ -42,19 +42,8 @@ namespace WordStrata
         // User submits a word
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            // If more than one path exists
-            if (viewModel.ThePath.Count > 1)
-            {
-                // Prompt user
-                (Resources["PickAPath"] as Storyboard).Begin();
-                // Freeze tile clicking (modify isClickable converter to disallow all when ___(snakesEnabled) OR UserPaths is empty so it works anyway?
-                // Enable snake clicking and click handler? Or color-based picker.
-                // Upon clicking a snake, clear all UserPaths but the one, enable tile clicking (auto), and call SubmitButton_Click again
-                // Return
-            }
-
             // If the word is valid
-            else if (viewModel.CheckWord())
+            if (viewModel.CheckWord())
             {
                 // WordFeedback.Foreground = Brushes.Green;
                 (Resources["AcceptWord"] as Storyboard).Begin();

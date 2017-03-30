@@ -14,10 +14,6 @@
         <local:ContentValueConverter x:Key="ContentValueConverter" />
 
         <Storyboard x:Key="AcceptWord">
-            <ColorAnimationUsingKeyFrames Duration="00:00:02" Storyboard.TargetProperty="(TextBox.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="Word">
-                <DiscreteColorKeyFrame Value="Green" KeyTime="00:00:00" />
-                <LinearColorKeyFrame Value="Gray" KeyTime="00:00:02" />
-            </ColorAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Duration="00:00:02" Storyboard.TargetName="WordFeedback"
                                            Storyboard.TargetProperty="Opacity">
                 <SplineDoubleKeyFrame Value="1" KeyTime="00:00:01" KeySpline="0,1 .75,1" />
@@ -34,22 +30,18 @@
         </Storyboard>
 
         <Storyboard x:Key="RejectWord">
-            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(TextBox.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="Word">
-                <DiscreteColorKeyFrame Value="Red" KeyTime="00:00:00" />
-                <LinearColorKeyFrame Value="Gray" KeyTime="00:00:02" />
-            </ColorAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="WordFeedback" Storyboard.TargetProperty="(UIElement.Opacity)">
                 <LinearDoubleKeyFrame Value="0" KeyTime="00:00:00" />
                 <LinearDoubleKeyFrame Value="1" KeyTime="00:00:01" />
                 <LinearDoubleKeyFrame Value="0" KeyTime="00:00:02" />
             </DoubleAnimationUsingKeyFrames>
-            <ColorAnimationUsingKeyFrames Duration="00:00:02" Storyboard.TargetName="WordFeedback"
+            <ColorAnimationUsingKeyFrames Duration="00:00:03" Storyboard.TargetName="WordFeedback"
                                           Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)">
                 <DiscreteColorKeyFrame Value="Red" KeyTime="00:00:00" />
             </ColorAnimationUsingKeyFrames>
-            <StringAnimationUsingKeyFrames Duration="00:00:02" Storyboard.TargetName="WordFeedback"
+            <StringAnimationUsingKeyFrames Duration="00:00:03" Storyboard.TargetName="WordFeedback"
                                            Storyboard.TargetProperty="Text">
-                <DiscreteStringKeyFrame Value="Not a word!" KeyTime="00:00:00" />
+                <DiscreteStringKeyFrame Value="Hmmm... Nope!" KeyTime="00:00:00" />
             </StringAnimationUsingKeyFrames>
         </Storyboard>
 
@@ -64,22 +56,6 @@
             </ColorAnimationUsingKeyFrames>
             <StringAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback" Storyboard.TargetProperty="Text">
                 <DiscreteStringKeyFrame Value="No more words left!" KeyTime="00:00:00" />
-            </StringAnimationUsingKeyFrames>
-        </Storyboard>
-
-        <Storyboard x:Key="PickAPath">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback"
-                                           Storyboard.TargetProperty="Opacity" Duration="00:00:05">
-                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:00" />
-                <LinearDoubleKeyFrame Value="1" KeyTime="00:00:01" />
-                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:04" />
-            </DoubleAnimationUsingKeyFrames>
-            <ColorAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback"
-                                          Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="00:00:05">
-                <DiscreteColorKeyFrame Value="Blue" KeyTime="00:00:00" />
-            </ColorAnimationUsingKeyFrames>
-            <StringAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback" Storyboard.TargetProperty="Text" Duration="00:00:05">
-                <DiscreteStringKeyFrame Value="Your word can be found in more than one combo of tiles! Pick which path you want to use." KeyTime="00:00:00" />
             </StringAnimationUsingKeyFrames>
         </Storyboard>
 
@@ -183,16 +159,23 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <!--Board-->
-            <RowDefinition Height="3*" />
-            <!--Textbox and word feedback messages-->
-            <RowDefinition Height="1*" />
-            <!--Submit button-->
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <DockPanel Margin="10">
+        <TextBlock DockPanel.Dock="Top" Text="Click tiles to form a word. You can move left, right, up, or down, but no diagonals!" FontSize="14" Padding="5"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"/>
+        <StackPanel DockPanel.Dock="Bottom">
+            <TextBlock x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord}" Margin="10" TextAlignment="Center" FontSize="26" 
+                     MinWidth="275" />
+            <StackPanel Grid.Row="3" Orientation="Horizontal" Height="40" HorizontalAlignment="Center" Margin="10">
+                <Button x:Name="SubmitButton" Content="Submit Word" Click="SubmitButton_Click"
+                FontSize="18" Padding="8,4" IsEnabled="{Binding EnableSubmit}" Margin="0,0,15,0" />
+                <Button x:Name="ClearButton" Content="Clear" Click="ClearButton_Click"  
+                    FontSize="18" Padding="8,4" />
+            </StackPanel>
+            <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10"
+                       FontSize="20" TextWrapping="Wrap" TextAlignment="Center" Opacity="0" />
+        </StackPanel>
+
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
             <ItemsControl x:Name="boardItemsControl"  ItemsSource="{Binding GameBoard.GridSquares}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -201,16 +184,13 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ToggleButton x:Name="TileToggleButton" Template="{StaticResource toggleButtonTemplate}"
+                        <ToggleButton x:Name="TileToggleButton"
                             Content ="{Binding Converter={StaticResource ContentValueConverter}}"
                             BorderBrush="LightSeaGreen" FontSize="18" FontFamily="Georgia" BorderThickness="2" Padding="15"
                             Checked="TileToggleButton_Checked" Unchecked="TileToggleButton_Unchecked">
-                            <!--<ToggleButton.IsChecked>
-                                <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}">
-                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.ThePath" />
-                                    <Binding Path="." />
-                                </MultiBinding>
-                            </ToggleButton.IsChecked>-->
+                            <ToggleButton.Template>
+                                <StaticResource ResourceKey="toggleButtonTemplate"/>
+                            </ToggleButton.Template>
                             <ToggleButton.IsEnabled>
                                 <MultiBinding Converter="{StaticResource IsClickableValueConverter}">
                                     <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.ThePath" />
@@ -225,26 +205,5 @@
                 <local:SnakePlane />
             </Viewbox>
         </Grid>
-
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top"
-                       FontSize="20" TextWrapping="Wrap" TextAlignment="Center" Opacity="0" />
-            <TextBox x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" HorizontalAlignment="Center" FontSize="26" BorderThickness="2" BorderBrush="Gray"
-                     MinWidth="275" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" CharacterCasing="Upper">
-            </TextBox>
-            <Button x:Name="ClearButton" Grid.Row="1" Grid.Column="2" Content="Clear" Click="ClearButton_Click"  HorizontalAlignment="Left" VerticalAlignment="Center"
-                    FontSize="16" Padding="8,4" />
-        </Grid>
-        <Button x:Name="SubmitButton" Grid.Row="2" Content="Submit Word" Click="SubmitButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center"
-                FontSize="18" Padding="8,4" IsEnabled="{Binding EnableSubmit}" />
-    </Grid>
+    </DockPanel>
 </Window>

@@ -13,6 +13,6 @@ namespace WordStrata
     {
         public PointCollection Points { get; set; } = new PointCollection();
 
-        public SolidColorBrush SnakeColor { get; set; } = Brushes.DarkSeaGreen; // TODO: Make this a trigger relating to word validity
+        public SolidColorBrush SnakeColor { get; set; } = Brushes.Green; // TODO: Make this a trigger relating to word validity
     }
 }
