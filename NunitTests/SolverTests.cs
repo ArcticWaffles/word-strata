@@ -68,6 +68,7 @@ namespace NUnitTests
 
 
         // AnyWordExistsOnBoard DictionaryChecker tests
+        // TODO: Use test case attribute to test multiple scenarios in one test (Condense the following tests into one.)
 
         [Test]
         public void FindWordDC_WordExists2x2DA_ResultIsTrue()
@@ -102,68 +103,6 @@ namespace NUnitTests
         {
             var result = Solver.AnyWordExistsOnBoard(dictionaryC, board3x3);
             Assert.That(result, Is.False);
-        }
-
-
-
-        // SpecificWordExistsOnBoard StringChecker tests
-
-        [Test]
-        [TestCase("a")]
-        [TestCase("ab")]
-        [TestCase("cab")]
-        [TestCase("dba")]
-        [TestCase("acdb")]
-        public void FindWordSC_SinglePathWordExists2x2_ResultIsWord(string word)
-        {
-            var result = Solver.SpecificWordExistsOnBoard(word, board2x2);
-            Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(Solver.GetLetters(result[0]), Is.EqualTo(word));
-        }
-
-        [Test]
-        [TestCase("k")]
-        [TestCase("xd")]
-        [TestCase("barex")]
-        [TestCase("dbarexk")]
-        [TestCase("dbarexkxx")]
-        public void FindWordSC_SinglePathWordExists3x3_ResultIsWord(string word)
-        {
-            var result = Solver.SpecificWordExistsOnBoard(word, board3x3);
-            Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(Solver.GetLetters(result[0]), Is.EqualTo(word));
-        }
-
-        [Test]
-        [TestCase("xk")]
-        [TestCase("bkx")]
-        [TestCase("kxx")]
-        public void FindWordSC_2PathWordExists3x3_ResultIsAll(string word)
-        {
-            var result = Solver.SpecificWordExistsOnBoard(word, board3x3);
-            Assert.That(result.Count, Is.EqualTo(2));
-            foreach (var list in result)
-            {
-                Assert.That(Solver.GetLetters(list), Is.EqualTo(word));
-            }
-        }
-
-        [Test]
-        public void FindWordSC_3PathWordExists3x3_ResultIsAll()
-        {
-            var result = Solver.SpecificWordExistsOnBoard("x", board3x3);
-            Assert.That(result.Count, Is.EqualTo(3));
-            foreach (var list in result)
-            {
-                Assert.That(Solver.GetLetters(list), Is.EqualTo("x"));
-            }
-        }
-
-        [Test]
-        public void FindWordSC_WordDoesNotExist2x2_ResultIsEmpty()
-        {
-            var result = Solver.SpecificWordExistsOnBoard("sheep", board2x2);
-            Assert.That(result, Is.Empty);
         }
     }
 }
