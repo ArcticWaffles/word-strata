@@ -150,7 +150,9 @@ namespace WordStrata
         {
             UserWord = Solver.GetLetters(ThePath.ToList());
             BuildSnake();
-        }
+            OnPropertyChanged("ThePath");
+        }
+
     }
 }
 
