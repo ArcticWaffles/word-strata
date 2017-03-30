@@ -24,19 +24,17 @@ namespace WordStrata
             get { return gameModel.GameBoard; }
         }
 
-        /// <summary> Number of rows on the gameboard. </summary>
         public int Rows
         {
             get { return gameModel.GameBoard.Rows; }
         }
 
-        /// <summary> Number of columns on the gameboard. </summary>
         public int Columns
         {
             get { return gameModel.GameBoard.Columns; }
         }
 
-        /// <summary> Determines a word's validity. </summary>
+        /// <summary> Used for determining a word's validity. </summary>
         public HashSet<String> Dictionary
         {
             get { return gameModel.Dictionary; }
@@ -105,7 +103,6 @@ namespace WordStrata
             if (ThePath.Any())
             {
                 var theSnake = new Snake();
-                // Add points
                 foreach (var tile in ThePath)
                 {
                     var endCoordsX = 100 * ((double)tile.Coords.Y / Columns + .5 / Columns);
@@ -114,7 +111,10 @@ namespace WordStrata
                 }
                 CurrentSnake = theSnake;
             }
-            else CurrentSnake = new Snake(); // ThePath is empty
+            else // ThePath is empty
+            {
+                CurrentSnake = new Snake();
+            }
         }
 
         /// <summary>
@@ -126,17 +126,26 @@ namespace WordStrata
             ClearWord();
         }
 
+        /// <summary>
+        /// Determines if any valid words remain on the board.
+        /// </summary>
+        /// <returns></returns>
         public bool WordsRemain()
         {
             return Solver.AnyWordExistsOnBoard(Dictionary, GameBoard);
         }
 
+        /// <summary>
+        /// Enables the submit button only if there is a valid word selected.
+        /// </summary>
+        private bool enableSubmit;
         public bool EnableSubmit
         {
             get
             {
-                return !ThePath.Any();
+                return (ThePath.Any() && CheckWord());
             }
+            set { if (enableSubmit == value) return; enableSubmit = value; OnPropertyChanged("EnableSubmit"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -151,6 +160,7 @@ namespace WordStrata
             UserWord = Solver.GetLetters(ThePath.ToList());
             BuildSnake();
             OnPropertyChanged("ThePath");
+            OnPropertyChanged("EnableSubmit");
         }
 
     }

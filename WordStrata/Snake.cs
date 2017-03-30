@@ -9,6 +9,9 @@ using System.Windows;
 
 namespace WordStrata
 {
+    /// <summary>
+    /// Colored line tracing the selected path of tiles in the user interface.
+    /// </summary>
     public class Snake
     {
         public PointCollection Points { get; set; } = new PointCollection();
