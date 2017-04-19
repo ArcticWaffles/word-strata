@@ -51,7 +51,6 @@
     <Compile Include="GameModelTests.cs" />
     <Compile Include="SnakeTests.cs" />
     <Compile Include="SolverTests.cs" />
-    <Compile Include="CheckerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
