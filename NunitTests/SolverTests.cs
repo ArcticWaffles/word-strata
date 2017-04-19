@@ -13,8 +13,8 @@ namespace NUnitTests
     [TestFixture]
     class SolverTests
     {
-        static HashSet<String> dictionaryA = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        { 
+        static HashSet<String> dictionaryA = new HashSet<string>
+        {
             "bark",
             "bare",
             "bar",

@@ -60,6 +60,7 @@
       <DependentUpon>SnakePlane.xaml</DependentUpon>
     </Compile>
     <Compile Include="TilePath.cs" />
+    <Compile Include="ValueConverters\SnakeColorConverter.cs" />
     <Compile Include="ValueConverters\ContentValueConverter.cs" />
     <Compile Include="DictionaryModel.cs" />
     <Compile Include="DesignTimeMainWindowViewModel.cs" />
