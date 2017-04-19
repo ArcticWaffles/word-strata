@@ -161,7 +161,7 @@
     </Window.Resources>
     <DockPanel Margin="10">
         <TextBlock DockPanel.Dock="Top" Text="Click tiles to form a word. You can move left, right, up, or down, but no diagonals!" FontSize="14" Padding="5"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"/>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap"/>
         <StackPanel DockPanel.Dock="Bottom">
             <TextBlock x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord}" Margin="10" TextAlignment="Center" FontSize="26" 
                      MinWidth="275" />
@@ -175,7 +175,8 @@
                        FontSize="20" TextWrapping="Wrap" TextAlignment="Center" Opacity="0" />
         </StackPanel>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+        <Grid x:Name="Board" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" MinWidth="{Binding Path=ActualWidth, ElementName=Board}"
+              MinHeight="{Binding Path=ActualHeight, ElementName=Board}">
             <ItemsControl x:Name="boardItemsControl"  ItemsSource="{Binding GameBoard.GridSquares}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
