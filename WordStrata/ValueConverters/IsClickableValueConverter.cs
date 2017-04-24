@@ -6,6 +6,9 @@ using System.Windows.Data;
 
 namespace WordStrata
 {
+    /// <summary>
+    /// Determines if a tile is clickable (enabled). 
+    /// </summary>
     internal class IsClickableValueConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -25,8 +28,8 @@ namespace WordStrata
 
         // A tile is clickable if any of the following are true:
         // 1. No tiles on the board are selected (ThePath is null or empty)
-        // 2. It neighbors a current tile and is not already selected
-        // 3. It is a current tile (user can click it to backtrack)
+        // 2. It neighbors the current tile and is not already selected
+        // 3. It is the current tile (user can click it to backtrack)
         private bool TileIsClickable(Tile tile, Tile currentTile, TilePath path)
         {
             if (!path.Any() || path == null) return true;
@@ -50,17 +53,11 @@ namespace WordStrata
             var x2 = tile2.Coords.X;
             var y2 = tile2.Coords.Y;
 
-            // Tiles are neighbors if the x coordinates are equal and the y
-            // coordinates differ by one, or vice-versa.
-            if (x1 == x2 && (Math.Abs(y1 - y2) == 1))
-            {
-                return true;
-            }
-            else if (y1 == y2 && (Math.Abs(x1 - x2) == 1))
-            {
-                return true;
-            }
-            else return false;
+            return
+                ((y1 == y2 && (Math.Abs(x1 - x2) == 1)) // Tiles are up-down neighbors
+                || (x1 == x2 && (Math.Abs(y1 - y2) == 1)) // Tiles are left-right neighbors
+                || Math.Abs(x1 - x2) == 1 && Math.Abs(y1 - y2) == 1); // Tiles are diagonal neighbors
+
         }
     }
 }

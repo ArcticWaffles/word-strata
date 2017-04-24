@@ -76,7 +76,7 @@ namespace Core
 
 
         /// <summary> Used for navigating the board.</summary>
-        public enum Direction { North, South, East, West };
+        public enum Direction { North, South, East, West, Northeast, Northwest, Southeast, Southwest };
 
 
         /// <summary> A list of all tiles on the board (no holes). </summary>
@@ -125,6 +125,23 @@ namespace Core
                     x++;
                     break;
                 case Direction.West:
+                    y--;
+                    break;
+                // Diagonals
+                case Direction.Northeast:
+                    x--;
+                    y++;
+                    break;
+                case Direction.Northwest:
+                    x--;
+                    y--;
+                    break;
+                case Direction.Southeast:
+                    x++;
+                    y++;
+                    break;
+                case Direction.Southwest:
+                    x++;
                     y--;
                     break;
             }

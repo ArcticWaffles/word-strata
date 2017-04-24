@@ -61,6 +61,7 @@ namespace NUnitTests
         {
             new object[] { dictionaryA, board2x2 },
             new object[] { dictionaryA, board3x3 },
+            new object[] { dictionaryB, board2x2 },
             new object[] { dictionaryB, board3x3 },
         };
 
@@ -73,7 +74,6 @@ namespace NUnitTests
 
         static object[] WordDoesNotExistCases =
         {
-            new object[] { dictionaryB, board2x2 },
             new object[] { dictionaryC, board2x2 },
             new object[] { dictionaryC, board3x3 },
         };

@@ -15,8 +15,6 @@ namespace Solve
         /// <summary>
         /// "Kick-off" method used to inititate a search using <see cref="FindWordFromStartingTileRecursive"/>. 
         /// </summary>
-        /// <param name="checker"> Checker used for the search. </param>
-        /// <param name="board"> The gameboard. </param>
         private static void FindWordFromStartingTileKickoff(Checker checker, Board board)
         {
             // Outer loop: for each targetDepth
@@ -26,6 +24,7 @@ namespace Solve
                 foreach (Tile tile in board.Tiles)
                 {
                     FindWordFromStartingTileRecursive(board, tile, new List<Tile>(), checker, 0, i);
+                    // TODO: ShallContinue check is unnecessary now that there is only one kind of checker
                     if (!checker.ShallContinue)
                         break;
                 }
@@ -75,8 +74,6 @@ namespace Solve
         }
 
         /// <summary> Checks that a valid word remains on the board. </summary>
-        /// <param name="dictionary">All valid words.</param>
-        /// <param name="board">The gameboard.</param>
         public static bool AnyWordExistsOnBoard(HashSet<string> dictionary, Board board)
         {
             var checker = new DictionaryChecker(dictionary);
