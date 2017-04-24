@@ -41,20 +41,15 @@ namespace WordStrata
         }
 
         /// <summary> Word the user is building. </summary>
-        private string userWord = "";
         public string UserWord
         {
-            get { return userWord; }
-
-            set
+            get
             {
-                if (value == userWord) return;
-                userWord = value;
-                OnPropertyChanged("UserWord");
+                return Solver.GetLetters(ThePath.ToList());
             }
         }
 
-        //Current path of clicked tiles
+        /// <summary> Current path of clicked tiles. </summary>
         private TilePath thePath = new TilePath();
         public override TilePath ThePath
         {
@@ -67,85 +62,68 @@ namespace WordStrata
             }
         }
 
-        private Snake currentSnake = new Snake();
+        /// <summary> Visually traces the current TilePath. </summary>
         public Snake CurrentSnake
         {
-            get { return currentSnake; }
-            set { if (currentSnake == value) return; currentSnake = value; OnPropertyChanged("CurrentSnake"); }
+            get
+            {
+                Snake currentSnake = new Snake();
+                if (ThePath.Any())
+                {
+                    // Translates built-in tile coordinates to GUI coordinates
+                    foreach (var tile in ThePath)
+                    {
+                        var guiCoordsX = 100 * ((double)tile.Coords.Y / Columns + .5 / Columns);
+                        var guiCoordsY = 100 * ((double)tile.Coords.X / Rows + .5 / Rows);
+                        currentSnake.Points.Add(new Point(guiCoordsX, guiCoordsY));
+                    }
+                }
+                return currentSnake;
+            }
         }
 
-        // User selects a tile
         public void AddTile(Tile theTile)
         {
             ThePath.Add(theTile);
         }
 
-        // User deselects a tile
         public void RemoveTile(Tile theTile)
         {
             ThePath.Remove(theTile);
         }
 
-        // Checks user-submitted word against the dictionary.
+        /// <summary> Checks user word against the dictionary. </summary>
         public bool CheckWord()
         {
             return Dictionary.Contains(UserWord);
         }
 
-        // Clears UserWord, thereby clearing the textblock and the gameboard.
+        /// <summary> Clears UserWord, thereby clearing the textblock and the gameboard. </summary>
         public void ClearWord()
         {
             ThePath.Clear();
         }
 
-        public void BuildSnake()
-        {
-            if (ThePath.Any())
-            {
-                var theSnake = new Snake();
-                foreach (var tile in ThePath)
-                {
-                    var endCoordsX = 100 * ((double)tile.Coords.Y / Columns + .5 / Columns);
-                    var endCoordsY = 100 * ((double)tile.Coords.X / Rows + .5 / Rows);
-                    theSnake.Points.Add(new Point(endCoordsX, endCoordsY));
-                }
-                CurrentSnake = theSnake;
-            }
-            else // ThePath is empty
-            {
-                CurrentSnake = new Snake();
-            }
-        }
-
-        /// <summary>
-        /// Turns used tiles to holes and clears word.
-        /// </summary>
+        /// <summary> Turns used tiles to holes and clears word. </summary>
         public void FinishTurn()
         {
             GameBoard.ConvertTilesToHoles(ThePath.ToList());
             ClearWord();
         }
 
-        /// <summary>
-        /// Determines if any valid words remain on the board.
-        /// </summary>
-        /// <returns></returns>
+        /// <summary> Determines if any valid words remain on the board. </summary>
         public bool WordsRemain()
         {
             return Solver.AnyWordExistsOnBoard(Dictionary, GameBoard);
         }
 
-        /// <summary>
-        /// Enables the submit button only if there is a valid word selected.
-        /// </summary>
-        private bool enableSubmit;
+        /// <summary> Is true only if a valid word is selected. </summary>
         public bool EnableSubmit
         {
             get
             {
                 return (ThePath.Any() && CheckWord());
             }
-            set { if (enableSubmit == value) return; enableSubmit = value; OnPropertyChanged("EnableSubmit"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -157,10 +135,8 @@ namespace WordStrata
 
         void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            UserWord = Solver.GetLetters(ThePath.ToList());
-            BuildSnake();
-            OnPropertyChanged("ThePath");
-            OnPropertyChanged("EnableSubmit");
+            //Updates all properties in the class.
+            OnPropertyChanged("");
         }
 
     }
