@@ -9,40 +9,28 @@ namespace NUnitTests
     [TestFixture]
     class BoardTests
     {
-        char[,] array3x3;
-        char[,] arrayEmpty;
-        char[,] array1x0;
-        char[,] array0x1;
-        char[,] array2x2;
-
-        Tile tileA;
-        Tile tileB;
-        Tile tileD;
-        Tile tileE;
-
-        [SetUp]
-        public void Init()
-        {
-            array3x3 = new char[,]
+        char[,] array3x3 = new char[,]
             {
                 { 'a', 'b', 'c' },
                 { 'd', 'e', 'f' },
                 { 'g', 'h', 'i' }
             };
-            array2x2 = new char[,]
+
+        char[,] array2x2 = new char[,]
             {
                 { 'a', 'b'},
                 { 'd', 'e'}
             };
-            arrayEmpty = new char[0, 0];
-            array1x0 = new char[1, 0];
-            array0x1 = new char[0, 1];
 
-            tileA = new Tile(new Coordinates(0, 0), 'a');
-            tileB = new Tile(new Coordinates(0, 1), 'b');
-            tileD = new Tile(new Coordinates(1, 0), 'd');
-            tileE = new Tile(new Coordinates(1, 1), 'e');
-        }
+        static Tile tileA = new Tile(new Coordinates(0, 0), 'a');
+        static Tile tileB = new Tile(new Coordinates(0, 1), 'b');
+        static Tile tileC = new Tile(new Coordinates(0, 2), 'c');
+        static Tile tileD = new Tile(new Coordinates(1, 0), 'd');
+        static Tile tileE = new Tile(new Coordinates(1, 1), 'e');
+        static Tile tileF = new Tile(new Coordinates(1, 2), 'f');
+        static Tile tileG = new Tile(new Coordinates(2, 0), 'g');
+        static Tile tileH = new Tile(new Coordinates(2, 1), 'h');
+        static Tile tileI = new Tile(new Coordinates(2, 2), 'i');
 
 
         //Tiles tests
@@ -102,82 +90,49 @@ namespace NUnitTests
 
 
         //GetNeighbor tests
-        // TODO: Tests that use diagonals.
-        // TODO: Use test cases to consolidate these tests.
 
-        [Test]
-        public void GetNeighbor_board2x2_NeighborIsCorrect_North()
+        [Test, TestCaseSource("GetNeighborCases")]
+        public void GetNeighbor_EachCompassDirection_NeighborIsCorrect(Board.Direction direction, Tile neighbor)
         {
-            var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileD, Board.Direction.North) as Tile;
-            Assert.AreEqual(neighbor.Letter, tileA.Letter);
-            Assert.AreEqual(neighbor.Coords.X, tileA.Coords.X);
-            Assert.AreEqual(neighbor.Coords.Y, tileA.Coords.Y);
+            var board = new Board(array3x3);
+            var result = board.GetNeighbor(tileE, direction) as Tile;
+            Assert.AreEqual(result.Letter, neighbor.Letter);
+            Assert.AreEqual(result.Coords.X, neighbor.Coords.X);
+            Assert.AreEqual(result.Coords.Y, neighbor.Coords.Y);
         }
 
-        [Test]
-        public void GetNeighbor_board2x2_NeighborIsCorrect_East()
+        static object[] GetNeighborCases =
         {
-            var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileD, Board.Direction.East) as Tile;
-            Assert.AreEqual(neighbor.Letter, tileE.Letter);
-            Assert.AreEqual(neighbor.Coords.X, tileE.Coords.X);
-            Assert.AreEqual(neighbor.Coords.Y, tileE.Coords.Y);
-        }
-
-        [Test]
-        public void GetNeighbor_board2x2_NeigborIsCorrect_South()
-        {
-            var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileB, Board.Direction.South) as Tile;
-            Assert.AreEqual(neighbor.Letter, tileE.Letter);
-            Assert.AreEqual(neighbor.Coords.X, tileE.Coords.X);
-            Assert.AreEqual(neighbor.Coords.Y, tileE.Coords.Y);
-        }
-
-        [Test]
-        public void GetNeighbor_board2x2_NeighborIsCorrect_West()
-        {
-            var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileB, Board.Direction.West) as Tile;
-            Assert.AreEqual(neighbor.Letter, tileA.Letter);
-            Assert.AreEqual(neighbor.Coords.X, tileA.Coords.X);
-            Assert.AreEqual(neighbor.Coords.Y, tileA.Coords.Y);
-        }
+            new object[] { Board.Direction.North, tileB },
+            new object[] { Board.Direction.Northeast, tileC },
+            new object[] { Board.Direction.East, tileF },
+            new object[] { Board.Direction.Southeast, tileI },
+            new object[] { Board.Direction.South, tileH },
+            new object[] { Board.Direction.Southwest, tileG },
+            new object[] { Board.Direction.West, tileD },
+            new object[] { Board.Direction.Northwest, tileA },
+        };
 
 
-        [Test]
-        public void GetNeighbor_goesBeyondGrid_North_returnsHole()
+        [Test, TestCaseSource("OffGridCases")]
+        public void GetNeighbor_GoesBeyondGrid_ReturnsHole(Board.Direction direction, Tile originTile)
         {
             var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileA, Board.Direction.North);
+            var neighbor = board.GetNeighbor(originTile, direction);
             Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
         }
 
-        [Test]
-        public void GetNeighbor_goesBeyondGrid_East_returnsHole()
-        {
-            var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileB, Board.Direction.East);
-            Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
-        }
-
-        [Test]
-        public void GetNeighbor_goesBeyondGrid_South_returnsHole()
-        {
-            var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileE, Board.Direction.South);
-            Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
-        }
-
-        [Test]
-        public void GetNeighbor_goesBeyondGrid_West_returnsHole()
-        {
-            var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(tileD, Board.Direction.West);
-            Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
-        }
-
+        static object[] OffGridCases =
+{
+            new object[] { Board.Direction.North, tileA },
+            new object[] { Board.Direction.Northeast, tileA },
+            new object[] { Board.Direction.East, tileE },
+            new object[] { Board.Direction.Southeast, tileE },
+            new object[] { Board.Direction.South, tileE },
+            new object[] { Board.Direction.Southwest, tileE },
+            new object[] { Board.Direction.West, tileA },
+            new object[] { Board.Direction.Northwest, tileA },
+        };
     }
 }
 
