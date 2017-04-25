@@ -125,10 +125,11 @@ namespace WordStrata
 
         void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //Updates all properties in the class.
-            OnPropertyChanged("");
+            OnPropertyChanged("ThePath");
+            OnPropertyChanged("UserWord");
+            OnPropertyChanged("CurrentSnake");
+            OnPropertyChanged("EnableSubmit");
         }
-
     }
 }
 
