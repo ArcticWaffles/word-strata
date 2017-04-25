@@ -28,7 +28,7 @@ namespace WordStrata
         {
             ToggleButton theSender = (ToggleButton)sender;
             Tile senderTile = (Tile)theSender.DataContext;
-            viewModel.AddTile(senderTile);
+            viewModel.ThePath.Add(senderTile);
         }
 
         // User deselects a tile
@@ -36,7 +36,7 @@ namespace WordStrata
         {
             ToggleButton theSender = (ToggleButton)sender;
             Tile senderTile = (Tile)theSender.DataContext;
-            viewModel.RemoveTile(senderTile);
+            viewModel.ThePath.Remove(senderTile);
         }
 
         // User submits a word

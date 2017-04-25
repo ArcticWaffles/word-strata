@@ -82,16 +82,6 @@ namespace WordStrata
             }
         }
 
-        public void AddTile(Tile theTile)
-        {
-            ThePath.Add(theTile);
-        }
-
-        public void RemoveTile(Tile theTile)
-        {
-            ThePath.Remove(theTile);
-        }
-
         /// <summary> Checks user word against the dictionary. </summary>
         public bool CheckWord()
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Core
 {
     /// <summary>
-    /// Cartesian coordinates
+    /// Cartesian coordinates.
     /// </summary>
     public class Coordinates
     {

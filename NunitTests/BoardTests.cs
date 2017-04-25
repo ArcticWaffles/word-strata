@@ -44,8 +44,6 @@ namespace NUnitTests
             tileE = new Tile(new Coordinates(1, 1), 'e');
         }
 
-    
-
 
         //Tiles tests
 
@@ -76,7 +74,6 @@ namespace NUnitTests
         }
 
 
-
         // ConvertTilesToHoles tests
 
         [Test]
@@ -104,42 +101,9 @@ namespace NUnitTests
         }
 
 
-
-        //TODO: Are these tests worth resurrecting in NUnit syntax?
-
-        //NewBoard tests
-
-        //[Test]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void NewBoard_arrayEmpty_ThrowsException()
-        //{
-        //    var board = new Board(arrayEmpty);
-        //}
-
-        //[Test]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void NewBoard_array1x0_ThrowsException()
-        //{
-        //    var board = new Board(array1x0);
-        //}
-
-        //[Test]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void NewBoard_array0x1_ThrowsException()
-        //{
-        //    var board = new Board(array0x1);
-        //}
-
-        //[Test]
-        //[ExpectedException(typeof(ArgumentNullException))]
-        //public void NewBoard_arraynull_ThrowsException()
-        //{
-        //    var board = new Board(null);
-        //}
-
-
-
         //GetNeighbor tests
+        // TODO: Tests that use diagonals.
+        // TODO: Use test cases to consolidate these tests.
 
         [Test]
         public void GetNeighbor_board2x2_NeighborIsCorrect_North()

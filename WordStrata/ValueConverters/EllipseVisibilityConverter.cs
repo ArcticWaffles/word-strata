@@ -9,7 +9,10 @@ using System.Windows.Media;
 
 namespace WordStrata
 {
-    class EllipseVisibilityConverter : IValueConverter
+    /// <summary>
+    /// Converts PointCollection to visibility. Ellipse is visible if there is only one point. 
+    /// </summary>
+    internal class EllipseVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

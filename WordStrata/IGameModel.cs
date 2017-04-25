@@ -12,6 +12,5 @@ namespace WordStrata
         Board GameBoard { get; }
 
         HashSet<String> Dictionary { get; }
-
     }
 }

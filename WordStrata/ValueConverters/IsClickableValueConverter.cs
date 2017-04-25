@@ -53,11 +53,11 @@ namespace WordStrata
             var x2 = tile2.Coords.X;
             var y2 = tile2.Coords.Y;
 
-            return
-                ((y1 == y2 && (Math.Abs(x1 - x2) == 1)) // Tiles are up-down neighbors
-                || (x1 == x2 && (Math.Abs(y1 - y2) == 1)) // Tiles are left-right neighbors
-                || Math.Abs(x1 - x2) == 1 && Math.Abs(y1 - y2) == 1); // Tiles are diagonal neighbors
+            var vertical = (y1 == y2 && (Math.Abs(x1 - x2) == 1));
+            var horizontal = (x1 == x2 && (Math.Abs(y1 - y2) == 1));
+            var diagonal = Math.Abs(x1 - x2) == 1 && Math.Abs(y1 - y2) == 1;
 
+            return vertical || horizontal || diagonal;
         }
     }
 }

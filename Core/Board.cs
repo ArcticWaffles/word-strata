@@ -101,8 +101,8 @@ namespace Core
         /// <summary>
         /// Returns a tile's neighboring tile or hole of a given compass direction.
         /// </summary>
-        /// <param name="originTile">Tile whose neighbor is returned.</param>
-        /// <param name="direction">Compass direction of the desired neighbor.</param>
+        /// <param name="originTile"> Tile whose neighbor is returned. </param>
+        /// <param name="direction"> Compass direction of the desired neighbor. </param>
         public GridSquare GetNeighbor(Tile originTile, Direction direction)
         {
             if (originTile == null)
@@ -127,7 +127,6 @@ namespace Core
                 case Direction.West:
                     y--;
                     break;
-                // Diagonals
                 case Direction.Northeast:
                     x--;
                     y++;
@@ -162,13 +161,11 @@ namespace Core
             foreach (var tile in tiles)
             {
                 gridSquares[tile.Coords.X, tile.Coords.Y] = new Hole(tile.Coords);
-                OnPropertyChanged(null);
+                OnPropertyChanged("");
             }
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
-
 
         private void OnPropertyChanged(string propertyName)
         {

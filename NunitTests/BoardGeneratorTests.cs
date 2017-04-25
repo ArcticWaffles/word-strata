@@ -23,7 +23,6 @@ namespace NUnitTests
         }
 
 
-
         //WeightedBoard tests
 
         [Test]
