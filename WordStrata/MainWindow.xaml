@@ -187,7 +187,7 @@
                     <DataTemplate>
                         <ToggleButton x:Name="TileToggleButton"
                             Content ="{Binding Converter={StaticResource ContentValueConverter}}"
-                            BorderBrush="LightSeaGreen" FontSize="18" FontFamily="Georgia" BorderThickness="2" Padding="15"
+                            BorderBrush="LightSeaGreen" FontSize="22" FontFamily="Georgia" BorderThickness="2" Padding="15"
                             Checked="TileToggleButton_Checked" Unchecked="TileToggleButton_Unchecked">
                             <ToggleButton.Template>
                                 <StaticResource ResourceKey="toggleButtonTemplate"/>

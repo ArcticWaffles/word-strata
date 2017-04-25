@@ -31,8 +31,6 @@ namespace WordStrata
                     return this.Last();
                 }
             }
-
         }
     }
-
 }

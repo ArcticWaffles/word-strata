@@ -30,4 +30,6 @@ namespace NUnitTests
 
 }
 // TODO: Tests on other public properties and methods
-// TODO: DictionaryModel tests?
+    // CurrentSnake
+    // EnableSubmit
+    // OnCollectionChanged error

@@ -112,7 +112,7 @@ namespace WordStrata
         {
             get
             {
-                return (ThePath.Any() && CheckWord());
+                return (CheckWord());
             }
         }
 
