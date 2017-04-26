@@ -9,22 +9,6 @@ namespace WordStrata
 {
     public static class BoardGenerator
     {
-
-        public static Board generateRandomBoard(int rows, int columns)
-        {
-            Random letterGenerator = new Random();
-            char[,] letterGrid = new char[rows, columns];
-            for (int x = 0; x < rows; x++)
-            {
-                for (int y = 0; y < columns; y++)
-                {
-                    letterGrid[x, y] = Convert.ToChar(letterGenerator.Next(65, 91));
-                }
-            }
-            Board newBoard = new Board(letterGrid);
-            return newBoard;
-        }
-
         public static Board generateWeightedBoard(int rows, int columns)
         {
             Random letterGenerator = new Random();
