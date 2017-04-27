@@ -9,28 +9,28 @@ namespace NUnitTests
     [TestFixture]
     class BoardTests
     {
-        char[,] array3x3 = new char[,]
+        char[,,] array3x3 = new char[,,]
             {
-                { 'a', 'b', 'c' },
-                { 'd', 'e', 'f' },
-                { 'g', 'h', 'i' }
+                { {'a' }, {'b' }, {'c' } },
+                { {'d' }, {'e' }, {'f' } },
+                { {'g' }, {'h' }, {'i' } }
             };
 
-        char[,] array2x2 = new char[,]
+        char[,,] array2x2 = new char[,,]
             {
-                { 'a', 'b'},
-                { 'd', 'e'}
+                { {'a' }, {'b' } },
+                { {'d' }, {'e' } }
             };
 
-        static Tile tileA = new Tile(new Coordinates(0, 0), 'a');
-        static Tile tileB = new Tile(new Coordinates(0, 1), 'b');
-        static Tile tileC = new Tile(new Coordinates(0, 2), 'c');
-        static Tile tileD = new Tile(new Coordinates(1, 0), 'd');
-        static Tile tileE = new Tile(new Coordinates(1, 1), 'e');
-        static Tile tileF = new Tile(new Coordinates(1, 2), 'f');
-        static Tile tileG = new Tile(new Coordinates(2, 0), 'g');
-        static Tile tileH = new Tile(new Coordinates(2, 1), 'h');
-        static Tile tileI = new Tile(new Coordinates(2, 2), 'i');
+        static Tile tileA = new Tile(new Coordinates(0, 0, 0), 'a');
+        static Tile tileB = new Tile(new Coordinates(0, 1, 0), 'b');
+        static Tile tileC = new Tile(new Coordinates(0, 2, 0), 'c');
+        static Tile tileD = new Tile(new Coordinates(1, 0, 0), 'd');
+        static Tile tileE = new Tile(new Coordinates(1, 1, 0), 'e');
+        static Tile tileF = new Tile(new Coordinates(1, 2, 0), 'f');
+        static Tile tileG = new Tile(new Coordinates(2, 0, 0), 'g');
+        static Tile tileH = new Tile(new Coordinates(2, 1, 0), 'h');
+        static Tile tileI = new Tile(new Coordinates(2, 2, 0), 'i');
 
 
         //Tiles tests
@@ -57,7 +57,7 @@ namespace NUnitTests
                     Assert.Fail("Tiles weren't unique");
                 }
                 previousCoords.Add(tile.Coords);
-                Assert.AreEqual(tile.Letter, array3x3[tile.Coords.X, tile.Coords.Y]);
+                Assert.AreEqual(tile.Letter, array3x3[tile.Coords.X, tile.Coords.Y, tile.Coords.Z]);
             }
         }
 
@@ -82,8 +82,8 @@ namespace NUnitTests
         {
             var board = new Board(array2x2);
             var tiles = new List<Tile>();
-            tiles.Add(tileA);
-            tiles.Add(tileB);
+            tiles.Add(board.GridSquares[0] as Tile);
+            tiles.Add(board.GridSquares[1] as Tile);
             board.ConvertTilesToHoles(tiles);
             Assert.That(board.Tiles.Count.Equals(2));
         }
@@ -123,7 +123,7 @@ namespace NUnitTests
         }
 
         static object[] OffGridCases =
-{
+        {
             new object[] { Board.Direction.North, tileA },
             new object[] { Board.Direction.Northeast, tileA },
             new object[] { Board.Direction.East, tileE },

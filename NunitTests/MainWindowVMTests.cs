@@ -15,7 +15,7 @@ namespace NUnitTests
     {
         HashSet<string> dictionary = new HashSet<string>() { "apple", "banana", "sailboat", "zebra" };
         MainWindowViewModel viewModel;
-        static Tile tileA = new Tile(new Coordinates(1, 2), 'a');
+        static Tile tileA = new Tile(new Coordinates(1, 2, 0), 'a');
 
         [SetUp]
         public void Init()

@@ -177,7 +177,7 @@
 
         <Grid x:Name="Board" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" MinWidth="{Binding Path=ActualWidth, ElementName=Board}"
               MinHeight="{Binding Path=ActualHeight, ElementName=Board}">
-            <ItemsControl x:Name="boardItemsControl"  ItemsSource="{Binding GameBoard.GridSquares}">
+            <ItemsControl x:Name="boardItemsControl"  ItemsSource="{Binding GameBoard.TopLayer}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid x:Name="board" Rows="{Binding Rows}" Columns="{Binding Columns}" />

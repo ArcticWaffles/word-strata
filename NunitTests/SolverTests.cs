@@ -34,17 +34,17 @@ namespace NUnitTests
         };
 
 
-        static Board board2x2 = new Board(new char[,]
+        static Board board2x2 = new Board(new char[,,]
         {
-            { 'a', 'b'},
-            { 'c', 'd'}
+            { {'a' }, {'b' } },
+            { {'c' }, {'d' } }
         });
 
-        static Board board3x3 = new Board(new char[,]
+        static Board board3x3 = new Board(new char[,,]
         {
-            { 'a', 'b', 'd' },
-            { 'r', 'k', 'x' },
-            { 'e', 'x', 'x' }
+            { {'a' }, {'b' }, {'d' } },
+            { {'r' }, {'k' }, {'x' } },
+            { {'e' }, {'x' }, {'x' } }
         });
 
 

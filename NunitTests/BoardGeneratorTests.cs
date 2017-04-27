@@ -13,22 +13,12 @@ namespace NUnitTests
     [TestFixture]
     class BoardGeneratorTests
     {
-        //RandomBoard tests
-
-        [Test]
-        public void RandomBoard_3x3_TileCountIsCorrect()
-        {
-            var board = BoardGenerator.generateRandomBoard(3, 3);
-            Assert.That(board.Tiles.Count.Equals(9));
-        }
-
-
         //WeightedBoard tests
 
         [Test]
         public void WeightedBoard_3x3_TileCountIsCorrect()
         {
-            var board = BoardGenerator.generateWeightedBoard(3, 3);
+            var board = BoardGenerator.generateWeightedBoard(3, 3, 1);
             Assert.That(board.Tiles.Count.Equals(9));
         }
 
@@ -37,7 +27,7 @@ namespace NUnitTests
         // ensure given numbers match up with the right letters
         public void WeightedBoard_LettersAreWeighted()
         {
-            var board = BoardGenerator.generateWeightedBoard(10, 10);
+            var board = BoardGenerator.generateWeightedBoard(10, 10, 1);
             var tiles = board.Tiles;
             var letters = new char[100];
             for (int i = 0; i < 100; i++)

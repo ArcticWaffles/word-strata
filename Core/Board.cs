@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoreLinq;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -9,88 +10,99 @@ using System.Threading.Tasks;
 namespace Core
 {
     /// <summary>
-    /// Gameboard containing a collection of gridsquares.
+    /// Gameboard containing a collection of layered gridsquares.
     /// </summary>
     public class Board : INotifyPropertyChanged
     {
         /// <summary> Constructor. Creates the board's gridsquares.</summary>
-        /// <param name="letterGrid"> A 2D array containing letters for tiles and spaces for holes. </param>
-        public Board(char[,] letterGrid)
+        /// <param name="letterGrid"> A 3D array containing letters for tiles and spaces for holes. </param>
+        public Board(char[,,] letterGrid)
         {
             if (letterGrid == null)
             {
                 throw new ArgumentNullException("letterGrid cannot be null");
             }
 
-            if (letterGrid.GetLength(0) == 0 || letterGrid.GetLength(1) == 0)
+            Rows = letterGrid.GetLength(0);
+            Columns = letterGrid.GetLength(1);
+            Layers = letterGrid.GetLength(2);
+
+            if(Rows <= 0 || Columns <= 0 || Layers <= 0)
             {
-                throw new ArgumentException("letterGrid dimensions cannot be zero");
+                throw new ArgumentException("letterGrid dimensions must be positive");
             }
 
-            gridSquares = new GridSquare[letterGrid.GetLength(0), letterGrid.GetLength(1)];
-            for (int x = 0; x < letterGrid.GetLength(0); x++)
+            for (int x = 0; x < Rows; x++)
             {
-                for (int y = 0; y < letterGrid.GetLength(1); y++)
+                for (int y = 0; y < Columns; y++)
                 {
-                    var currentLetter = letterGrid[x, y];
-                    if (currentLetter == ' ')
+                    for (int z = 0; z < Layers; z++)
                     {
-                        gridSquares[x, y] = new Hole(new Coordinates(x, y));
-                    }
-                    else
-                    {
-                        gridSquares[x, y] = new Tile(new Coordinates(x, y), currentLetter);
+                        var currentLetter = letterGrid[x, y, z];
+                        if (currentLetter == ' ')
+                        {
+                            GridSquares.Add(new Hole(new Coordinates(x, y, z)));
+                        }
+                        else
+                        {
+                            GridSquares.Add(new Tile(new Coordinates(x, y, z), currentLetter));
+                        }
                     }
                 }
             }
-            Rows = letterGrid.GetLength(0);
-            Columns = letterGrid.GetLength(1);
+
         }
 
-        public int Rows { get; set; }
+        public int Rows { get; }
 
-        public int Columns { get; set; }
+        public int Columns { get; }
 
-        /// <summary> A 2D array containing all gridsquares on the board. </summary>
-        private GridSquare[,] gridSquares;
+        public int Layers { get; }
 
 
         /// <summary> A list of all gridsquares on the board. </summary>
-        public List<GridSquare> GridSquares
-            // TODO: Make this a custom IEnumerable? Or create a private list field.
-            // A list is used for getting the board's gridsquares (rather than a 2D array) for data binding purposes.
-        {
-            get
-            {
-                var squares = new List<GridSquare>();
-                for (int x = 0; x < gridSquares.GetLength(0); x++)
-                {
-                    for (int y = 0; y < gridSquares.GetLength(1); y++)
-                    {
-                        squares.Add(gridSquares[x, y]);
-                    }
-                }
-                return squares;
-            }
-        }
-
+        public List<GridSquare> GridSquares { get; } = new List<GridSquare>();
+    
 
         /// <summary> Used for navigating the board.</summary>
         public enum Direction { North, South, East, West, Northeast, Northwest, Southeast, Southwest };
 
+        public List<GridSquare> TopLayer
+        {
+            get
+            {
+                var topLayer = new List<GridSquare>();
 
-        /// <summary> A list of all tiles on the board (no holes). </summary>
+                for (int x = 0; x < Rows; x++)
+                {
+                    for (int y = 0; y < Columns; y++)
+                    {
+                        var tileStack = GridSquares.FindAll(t => (t is Tile && t.Coords.X == x && t.Coords.Y == y));
+                        if (tileStack.Any())
+                        {
+                            var topTile = tileStack.MaxBy(t => t.Coords.Z);
+                            topLayer.Add(topTile);
+                        }
+                        else topLayer.Add(new Hole(new Coordinates(x, y, 0)));
+                    }
+                }
+                return topLayer;
+            }
+        }
+
+
+        /// <summary> A list of all tiles currently visible on the board (no holes). </summary>///
+        // TODO: Is this still necessary?
         public List<Tile> Tiles
         {
             get
             {
                 List<Tile> tiles = new List<Tile>();
-                for (int x = 0; x < gridSquares.GetLength(0); x++)
+                foreach (var square in TopLayer)
                 {
-                    for (int y = 0; y < gridSquares.GetLength(1); y++)
+                    if(square is Tile)
                     {
-                        if (gridSquares[x, y] is Tile)
-                            tiles.Add(gridSquares[x, y] as Tile);
+                        tiles.Add(square as Tile);
                     }
                 }
                 return tiles;
@@ -146,12 +158,12 @@ namespace Core
             }
 
             //If the neighbor is outside of the board dimensions, return a hole
-            if (x < 0 || x > gridSquares.GetLength(0) - 1 || y < 0 || y > gridSquares.GetLength(1) - 1)
+            if (x < 0 || x > Rows - 1 || y < 0 || y > Columns - 1)
             {
-                return new Hole(new Coordinates(x, y));
+                return new Hole(new Coordinates(x, y, 0));
             }
 
-            return gridSquares[x, y];
+            return TopLayer.Find(g => g.Coords.X == x && g.Coords.Y == y);
         }
 
 
@@ -160,7 +172,11 @@ namespace Core
         {
             foreach (var tile in tiles)
             {
-                gridSquares[tile.Coords.X, tile.Coords.Y] = new Hole(tile.Coords);
+                int match = GridSquares.FindIndex(g => g == tile);
+                if(match >= 0) // tile was found in the list
+                {
+                    GridSquares[match] = new Hole(tile.Coords);
+                }
                 OnPropertyChanged("");
             }
         }

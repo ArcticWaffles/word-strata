@@ -10,7 +10,7 @@ namespace WordStrata
 {
     class DesignTimeMainWindowViewModel : MainWindowViewModelBase
     {
-        public override Board GameBoard { get; } = BoardGenerator.generateWeightedBoard(5, 5);
+        public override Board GameBoard { get; } = BoardGenerator.generateWeightedBoard(5, 5, 1);
 
         public override TilePath ThePath { get; set; } = new TilePath();
 
