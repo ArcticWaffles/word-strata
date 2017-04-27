@@ -15,16 +15,18 @@ namespace NUnitTests
     {
         //WeightedBoard tests
 
-        [Test]
-        public void WeightedBoard_3x3_TileCountIsCorrect()
+        [TestCase(3, 3, 1)]
+        [TestCase(3, 3, 2)]
+        [TestCase(1, 4, 1)]
+        [TestCase(2, 4, 3)]
+        public void WeightedBoard_ByDefault_GridSquareCountIsCorrect(int rows, int columns, int layers)
         {
-            var board = BoardGenerator.generateWeightedBoard(3, 3, 1);
-            Assert.That(board.Tiles.Count.Equals(9));
+            var board = BoardGenerator.generateWeightedBoard(rows, columns, layers);
+            Assert.That(board.GridSquares.Count.Equals(rows * columns * layers));
         }
 
         [Test]
-        // TODO: Improve this test. Pass in a "fake" random number generator and
-        // ensure given numbers match up with the right letters
+        // TODO: Improve this test?
         public void WeightedBoard_LettersAreWeighted()
         {
             var board = BoardGenerator.generateWeightedBoard(10, 10, 1);
@@ -43,10 +45,8 @@ namespace NUnitTests
             {
                 j++;
             }
-            Assert.AreEqual(j, 12, 5);
+            Assert.AreEqual(j, 12, 6);
         }
     }
 }
-
-//Tile list size matches rows x columns  - more data values?
 
