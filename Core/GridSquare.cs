@@ -9,9 +9,9 @@ namespace Core
     /// <summary>
     /// A specific location on the board (instantiated either as a tile or a hole).
     /// </summary>
-    public abstract class GridSquare
+    public abstract class Gridsquare
     {
-        public GridSquare(Coordinates coordsIn)
+        public Gridsquare(Coordinates coordsIn)
         {
             Coords = coordsIn;
         }

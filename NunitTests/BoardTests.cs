@@ -9,130 +9,272 @@ namespace NUnitTests
     [TestFixture]
     class BoardTests
     {
-        char[,,] array3x3 = new char[,,]
-            {
-                { {'a' }, {'b' }, {'c' } },
-                { {'d' }, {'e' }, {'f' } },
-                { {'g' }, {'h' }, {'i' } }
-            };
-
-        char[,,] array2x2 = new char[,,]
-            {
-                { {'a' }, {'b' } },
-                { {'d' }, {'e' } }
-            };
-
-        static Tile tileA = new Tile(new Coordinates(0, 0, 0), 'a');
-        static Tile tileB = new Tile(new Coordinates(0, 1, 0), 'b');
-        static Tile tileC = new Tile(new Coordinates(0, 2, 0), 'c');
-        static Tile tileD = new Tile(new Coordinates(1, 0, 0), 'd');
-        static Tile tileE = new Tile(new Coordinates(1, 1, 0), 'e');
-        static Tile tileF = new Tile(new Coordinates(1, 2, 0), 'f');
-        static Tile tileG = new Tile(new Coordinates(2, 0, 0), 'g');
-        static Tile tileH = new Tile(new Coordinates(2, 1, 0), 'h');
-        static Tile tileI = new Tile(new Coordinates(2, 2, 0), 'i');
-
-
-        //Tiles tests
-
-        [Test]
-        public void Tiles_board3x3_CountIs9()
+        static char[,,] array3x3x1 = new char[,,]
         {
-            var board = new Board(array3x3);
-            var tiles = board.Tiles;
-            Assert.AreEqual(9, tiles.Count);
+            { {'a' }, {'b' }, {'c' } },
+            { {'d' }, {'e' }, {'f' } },
+            { {'g' }, {'h' }, {'i' } }
+        };
+
+        static char[,,] array2x2x1 = new char[,,]
+        {
+            { {'a' }, {'b' } },
+            { {'d' }, {'e' } }
+        };
+
+        static char[,,] array3x3x2 = new char[,,]
+        {
+            { {'s', ' ' }, {'k', ' ' }, {'c', 'l' } },
+            { {'d', 'm' }, {'e', 'n' }, {'f', 'o' } },
+            { {'g', 'p' }, {'h', 'q' }, {'r', ' ' } }
+        };
+
+        static char[,,] array2x2x3 = new char[,,]
+        {
+            { {'g', ' ', ' ' }, {' ', ' ', ' ' } },
+            { {'d', 'j', 'k' }, {'e', 'l', 'm' } }
+        };
+
+
+        //Constructor tests
+
+        [Test, TestCaseSource("RowColumnLayerCases")]
+        public void RowsColumnsAndLayers_CountIsCorrect(char[,,] letters, int expectedRows, int expectedColumns, int expectedLayers)
+        {
+            var board = new Board(letters);
+            Assert.AreEqual(board.Rows, expectedRows);
+            Assert.AreEqual(board.Columns, expectedColumns);
+            Assert.AreEqual(board.Layers, expectedLayers);
         }
 
-        [Test]
-        public void Tiles_board3x3_TileContentIsCorrect()
+        static object[] RowColumnLayerCases =
         {
-            var board = new Board(array3x3);
-            var tiles = board.Tiles;
-            var previousCoords = new List<Coordinates>();
-            foreach (var tile in tiles)
+            new object[] { array3x3x1, 3, 3, 1 },
+            new object[] { array2x2x1, 2, 2, 1 },
+            new object[] { array3x3x2, 3, 3, 2 },
+            new object[] { array2x2x3, 2, 2, 3 },
+        };
+
+
+        [Test, TestCaseSource("GridsquaresAndTilesCases")]
+        public void GridsquaresAndTiles_CountIsCorrect(char[,,] letters, int expectedGridsquareCount, int expectedTileCount)
+        {
+            var board = new Board(letters);
+            Assert.AreEqual(board.Gridsquares.Count, expectedGridsquareCount);
+            Assert.AreEqual(board.Tiles.Count, expectedTileCount);
+        }
+
+        static object[] GridsquaresAndTilesCases =
+        {
+            new object[] { array3x3x1, 9, 9 },
+            new object[] { array2x2x1, 4, 4 },
+            new object[] { array3x3x2, 18, 9 },
+            new object[] { array2x2x3, 12, 3 },
+        };
+
+
+        [Test, TestCaseSource("AllArrays")]
+        public void Gridsquares_ContentIsCorrect(char[,,] letters)
+        {
+            var board = new Board(letters);
+            var alreadyUsedCoords = new List<Coordinates>();
+            foreach (var square in board.Gridsquares)
             {
-                // TODO: Test case where next assertion fails
-                if (previousCoords.Any(coord => coord.X == tile.Coords.X && coord.Y == tile.Coords.Y))
+                if (alreadyUsedCoords.Any(coord => coord.X == square.Coords.X && coord.Y == square.Coords.Y && coord.Z == square.Coords.Z))
                 {
-                    Assert.Fail("Tiles weren't unique");
+                    Assert.Fail("Coordinates weren't unique");
                 }
-                previousCoords.Add(tile.Coords);
-                Assert.AreEqual(tile.Letter, array3x3[tile.Coords.X, tile.Coords.Y, tile.Coords.Z]);
+                alreadyUsedCoords.Add(square.Coords);
+                if (square is Tile)
+                {
+                    Assert.AreEqual((square as Tile).Letter, letters[square.Coords.X, square.Coords.Y, square.Coords.Z]);
+                }
             }
         }
+
+        static char[][,,] AllArrays =
+        {
+            array3x3x1,
+            array2x2x1,
+            array3x3x2,
+            array2x2x3,
+        };
 
 
         // ConvertTilesToHoles tests
 
-        [Test]
-        public void ConvertTiles_WholeBoard_AllSquaresAreHoles()
+        [Test, TestCaseSource("AllArrays")]
+        public void ConvertToHoles_WholeBoard_AllSquaresAreHoles(char[,,] letters)
         {
-            var board = new Board(array2x2);
-            var path = new List<Tile>(board.Tiles);
-            board.ConvertTilesToHoles(path);
-            foreach (var gridsquare in board.GridSquares)
+            var board = new Board(letters);
+            var tilePath = new List<Tile>();
+            foreach(var square in board.Gridsquares)
             {
-                Assert.That(gridsquare, Is.InstanceOf(typeof(Hole)));
+                if (square is Tile) tilePath.Add(square as Tile);
+            }
+            board.ConvertTilesToHoles(tilePath);
+            foreach (var square in board.Gridsquares)
+            {
+                Assert.That(square, Is.InstanceOf(typeof(Hole)));
             }
             Assert.That(board.Tiles, Is.Empty);
         }
 
-        [Test]
-        public void ConvertTiles_PartialBoard_RemainingTileCountIsCorrect()
+        [Test, TestCaseSource("TilesToHolesCases")]
+        public void ConvertToHoles_PartialBoard_RemainingTileCountIsCorrect(char[,,] letters, int remainingTiles)
         {
-            var board = new Board(array2x2);
+            var board = new Board(letters);
             var tiles = new List<Tile>();
-            tiles.Add(board.GridSquares[0] as Tile);
-            tiles.Add(board.GridSquares[1] as Tile);
+            tiles.Add(board[0, 0] as Tile);
+            tiles.Add(board[1, 1] as Tile);
             board.ConvertTilesToHoles(tiles);
-            Assert.That(board.Tiles.Count.Equals(2));
+            Assert.That(board.Tiles.Count.Equals(remainingTiles));
         }
+
+        [Test, TestCaseSource("AllArrays")]
+        public void ConvertToHoles_PartialBoard_GridsquaresRemainUnique(char[,,] letters)
+        {
+            var board = new Board(letters);
+            var tiles = new List<Tile>();
+            tiles.Add(board[0, 0] as Tile);
+            tiles.Add(board[1, 1] as Tile);
+            board.ConvertTilesToHoles(tiles);
+            Assert.That(board.Gridsquares, Is.Unique);
+        }
+
+        static object[] TilesToHolesCases =
+        {
+            new object[] { array3x3x1, 7 },
+            new object[] { array2x2x1, 2 },
+            new object[] { array3x3x2, 8 },
+            new object[] { array2x2x3, 2 },
+        };
 
 
         //GetNeighbor tests
 
-        [Test, TestCaseSource("GetNeighborCases")]
-        public void GetNeighbor_EachCompassDirection_NeighborIsCorrect(Board.Direction direction, Tile neighbor)
+        [Test, TestCaseSource("GetNeighbor2DCases")]
+        public void GetNeighbor_SingleLayerBoard_NeighborIsCorrect(Board.Direction direction, char expectedLetter,
+            int expectedCoordX, int expectedCoordY)
         {
-            var board = new Board(array3x3);
-            var result = board.GetNeighbor(tileE, direction) as Tile;
-            Assert.AreEqual(result.Letter, neighbor.Letter);
-            Assert.AreEqual(result.Coords.X, neighbor.Coords.X);
-            Assert.AreEqual(result.Coords.Y, neighbor.Coords.Y);
+            var board = new Board(array3x3x1);
+            Tile centralTile = board[1, 1] as Tile;
+            var result = board.GetNeighbor(centralTile, direction) as Tile;
+            Assert.AreEqual(result.Letter, expectedLetter);
+            Assert.AreEqual(result.Coords.X, expectedCoordX);
+            Assert.AreEqual(result.Coords.Y, expectedCoordY);
         }
 
-        static object[] GetNeighborCases =
+        static object[] GetNeighbor2DCases =
         {
-            new object[] { Board.Direction.North, tileB },
-            new object[] { Board.Direction.Northeast, tileC },
-            new object[] { Board.Direction.East, tileF },
-            new object[] { Board.Direction.Southeast, tileI },
-            new object[] { Board.Direction.South, tileH },
-            new object[] { Board.Direction.Southwest, tileG },
-            new object[] { Board.Direction.West, tileD },
-            new object[] { Board.Direction.Northwest, tileA },
+            new object[] { Board.Direction.North, 'b', 0, 1 },
+            new object[] { Board.Direction.Northeast, 'c', 0, 2 },
+            new object[] { Board.Direction.East, 'f', 1, 2 },
+            new object[] { Board.Direction.Southeast, 'i', 2, 2 },
+            new object[] { Board.Direction.South, 'h', 2 , 1 },
+            new object[] { Board.Direction.Southwest, 'g', 2, 0 },
+            new object[] { Board.Direction.West, 'd', 1, 0 },
+            new object[] { Board.Direction.Northwest, 'a', 0, 0 },
+        };
+
+        [Test, TestCaseSource("GetNeighbor3DCases")]
+        public void GetNeighbor_MultiLayerBoard_NeighborIsCorrect(Board.Direction direction, char expectedLetter,
+            int expectedCoordX, int expectedCoordY, int expectedCoordZ)
+        {
+            var board = new Board(array3x3x2);
+            Tile centralTile = board[1, 1] as Tile;
+            var result = board.GetNeighbor(centralTile, direction) as Tile;
+            Assert.AreEqual(result.Letter, expectedLetter);
+            Assert.AreEqual(result.Coords.X, expectedCoordX);
+            Assert.AreEqual(result.Coords.Y, expectedCoordY);
+            Assert.AreEqual(result.Coords.Z, expectedCoordZ);
+        }
+
+        static object[] GetNeighbor3DCases =
+        {
+            new object[] { Board.Direction.North, 'k', 0, 1, 0 },
+            new object[] { Board.Direction.Northeast, 'l', 0, 2, 1 },
+            new object[] { Board.Direction.East, 'o', 1, 2, 1 },
+            new object[] { Board.Direction.Southeast, 'r', 2, 2, 0 },
+            new object[] { Board.Direction.South, 'q', 2 , 1, 1 },
+            new object[] { Board.Direction.Southwest, 'p', 2, 0, 1 },
+            new object[] { Board.Direction.West, 'm', 1, 0, 1 },
+            new object[] { Board.Direction.Northwest, 's', 0, 0, 0 },
         };
 
 
         [Test, TestCaseSource("OffGridCases")]
-        public void GetNeighbor_GoesBeyondGrid_ReturnsHole(Board.Direction direction, Tile originTile)
+        public void GetNeighbor_GoesBeyondGrid_ReturnsHole(Board.Direction direction, int originCoordsX, 
+            int originCoordsY)
         {
-            var board = new Board(array2x2);
-            var neighbor = board.GetNeighbor(originTile, direction);
+            var board = new Board(array2x2x1);
+            var origin = board[originCoordsX, originCoordsY];
+            var neighbor = board.GetNeighbor(origin as Tile, direction);
             Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
         }
 
         static object[] OffGridCases =
         {
-            new object[] { Board.Direction.North, tileA },
-            new object[] { Board.Direction.Northeast, tileA },
-            new object[] { Board.Direction.East, tileE },
-            new object[] { Board.Direction.Southeast, tileE },
-            new object[] { Board.Direction.South, tileE },
-            new object[] { Board.Direction.Southwest, tileE },
-            new object[] { Board.Direction.West, tileA },
-            new object[] { Board.Direction.Northwest, tileA },
+            new object[] { Board.Direction.North, 0, 0},
+            new object[] { Board.Direction.Northeast, 0, 0 },
+            new object[] { Board.Direction.East, 1, 1 },
+            new object[] { Board.Direction.Southeast, 1, 1 },
+            new object[] { Board.Direction.South, 1, 1 },
+            new object[] { Board.Direction.Southwest, 1, 1 },
+            new object[] { Board.Direction.West, 0, 0 },
+            new object[] { Board.Direction.Northwest, 0, 0 },
+        };
+
+
+        // TopLayer tests
+
+        [Test, TestCaseSource("TopLayerCases")]
+        public void TopLayer_IsCorrect(char[,,] boardLetters, List<char> tileLetters, int expectedHoles)
+        {
+            var board = new Board(boardLetters);
+            var letters = new List<char>();
+            int holes = 0;
+            foreach(var square in board.TopLayer)
+            {
+                if (square is Tile) letters.Add((square as Tile).Letter);
+                else holes++;
+            }
+            Assert.That(letters, Is.EquivalentTo(tileLetters));
+            Assert.That(holes, Is.EqualTo(expectedHoles));
+        }
+
+        static object[] TopLayerCases =
+        {
+            new object[] { array3x3x2, new List<char> {'s','k', 'l', 'm', 'n', 'o', 'p', 'q', 'r' }, 0 },
+            new object[] { array2x2x3, new List<char> {'g','k', 'm' }, 1 },
+        };
+
+        [Test, TestCaseSource("TopLayerModifiedCases")]
+        public void TopLayer_AfterConvertingSomeTilesToHoles_IsCorrect(char[,,] boardLetters, List<char> tileLetters, int expectedHoles)
+        {
+            var board = new Board(boardLetters);
+            var letters = new List<char>();
+            int holes = 0;
+            var tileList = new List<Tile>();
+            tileList.Add(board[0, 0] as Tile);
+            tileList.Add(board[1, 0] as Tile);
+            board.ConvertTilesToHoles(tileList);
+            foreach (var square in board.TopLayer)
+            {
+                if (square is Tile) letters.Add((square as Tile).Letter);
+                else holes++;
+            }
+            Assert.That(letters, Is.EquivalentTo(tileLetters));
+            Assert.That(holes, Is.EqualTo(expectedHoles));
+        }
+
+        static object[] TopLayerModifiedCases =
+        {
+            new object[] { array3x3x2, new List<char> {'k', 'l', 'd', 'n', 'o', 'p', 'q', 'r' }, 1 },
+            new object[] { array2x2x3, new List<char> {'j', 'm' }, 2 },
         };
     }
 }
+
+// TODO: Tiles list tests
 

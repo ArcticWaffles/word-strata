@@ -9,7 +9,7 @@ namespace Core
     /// <summary>
     /// Building blocks of the gameboard.
     /// </summary>
-    public class Tile : GridSquare
+    public class Tile : Gridsquare
     {
         public Tile(Coordinates coordsIn, char letterIn) : base(coordsIn)
         {

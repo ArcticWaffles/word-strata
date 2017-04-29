@@ -41,11 +41,11 @@ namespace Core
                         var currentLetter = letterGrid[x, y, z];
                         if (currentLetter == ' ')
                         {
-                            GridSquares.Add(new Hole(new Coordinates(x, y, z)));
+                            Gridsquares.Add(new Hole(new Coordinates(x, y, z)));
                         }
                         else
                         {
-                            GridSquares.Add(new Tile(new Coordinates(x, y, z), currentLetter));
+                            Gridsquares.Add(new Tile(new Coordinates(x, y, z), currentLetter));
                         }
                     }
                 }
@@ -61,23 +61,38 @@ namespace Core
 
 
         /// <summary> A list of all gridsquares on the board. </summary>
-        public List<GridSquare> GridSquares { get; } = new List<GridSquare>();
-    
+        public List<Gridsquare> Gridsquares { get; } = new List<Gridsquare>();
+
+        /// <summary> Get a gridsquare by its xy coordinates. </summary>
+        public Gridsquare this[int x, int y]
+        {
+            get
+            {
+                return TopLayer.Find(g => g.Coords.X == x && g.Coords.Y == y);
+            }
+            set
+            {
+                var match = TopLayer.FindIndex(g => g.Coords.X == x && g.Coords.Y == y);
+                TopLayer[match] = value;
+            }
+        }
+
 
         /// <summary> Used for navigating the board.</summary>
         public enum Direction { North, South, East, West, Northeast, Northwest, Southeast, Southwest };
 
-        public List<GridSquare> TopLayer
+        /// <summary> A list of all gridsquares currently visible on the board. </summary>
+        public List<Gridsquare> TopLayer
         {
             get
             {
-                var topLayer = new List<GridSquare>();
+                var topLayer = new List<Gridsquare>();
 
                 for (int x = 0; x < Rows; x++)
                 {
                     for (int y = 0; y < Columns; y++)
                     {
-                        var tileStack = GridSquares.FindAll(t => (t is Tile && t.Coords.X == x && t.Coords.Y == y));
+                        var tileStack = Gridsquares.FindAll(t => (t is Tile && t.Coords.X == x && t.Coords.Y == y));
                         if (tileStack.Any())
                         {
                             var topTile = tileStack.MaxBy(t => t.Coords.Z);
@@ -92,7 +107,6 @@ namespace Core
 
 
         /// <summary> A list of all tiles currently visible on the board (no holes). </summary>///
-        // TODO: Is this still necessary?
         public List<Tile> Tiles
         {
             get
@@ -110,12 +124,8 @@ namespace Core
         }
 
 
-        /// <summary>
-        /// Returns a tile's neighboring tile or hole of a given compass direction.
-        /// </summary>
-        /// <param name="originTile"> Tile whose neighbor is returned. </param>
-        /// <param name="direction"> Compass direction of the desired neighbor. </param>
-        public GridSquare GetNeighbor(Tile originTile, Direction direction)
+        /// <summary> Returns a tile's neighboring tile or hole of a given compass direction. </summary>
+        public Gridsquare GetNeighbor(Tile originTile, Direction direction)
         {
             if (originTile == null)
             {
@@ -163,7 +173,7 @@ namespace Core
                 return new Hole(new Coordinates(x, y, 0));
             }
 
-            return TopLayer.Find(g => g.Coords.X == x && g.Coords.Y == y);
+            return this[x,y];
         }
 
 
@@ -172,10 +182,10 @@ namespace Core
         {
             foreach (var tile in tiles)
             {
-                int match = GridSquares.FindIndex(g => g == tile);
+                int match = Gridsquares.FindIndex(g => g == tile);
                 if(match >= 0) // tile was found in the list
                 {
-                    GridSquares[match] = new Hole(tile.Coords);
+                    Gridsquares[match] = new Hole(tile.Coords);
                 }
                 OnPropertyChanged("");
             }

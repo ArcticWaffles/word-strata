@@ -16,7 +16,7 @@ namespace WordStrata
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var gridsquare = value as GridSquare;
+            var gridsquare = value as Gridsquare;
             if (gridsquare is Tile)
                 return (gridsquare as Tile).Letter;
             else return " ";

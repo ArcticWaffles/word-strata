@@ -14,7 +14,7 @@ namespace WordStrata
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var path = values[0] as TilePath;
-            var gridsquare = values[1] as GridSquare;
+            var gridsquare = values[1] as Gridsquare;
             var currentTile = path.CurrentTile;
 
             if (gridsquare is Hole) return false;

@@ -19,10 +19,10 @@ namespace NUnitTests
         [TestCase(3, 3, 2)]
         [TestCase(1, 4, 1)]
         [TestCase(2, 4, 3)]
-        public void WeightedBoard_ByDefault_GridSquareCountIsCorrect(int rows, int columns, int layers)
+        public void WeightedBoard_ByDefault_GridsquareCountIsCorrect(int rows, int columns, int layers)
         {
             var board = BoardGenerator.generateWeightedBoard(rows, columns, layers);
-            Assert.That(board.GridSquares.Count.Equals(rows * columns * layers));
+            Assert.That(board.Gridsquares.Count.Equals(rows * columns * layers));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace NUnitTests
             var letters = new char[100];
             for (int i = 0; i < 100; i++)
             {
-                letters[i] = tiles.ElementAt(i).Letter;
+                letters[i] = tiles[i].Letter;
             }
             var query =
                 from letter in letters
@@ -45,7 +45,7 @@ namespace NUnitTests
             {
                 j++;
             }
-            Assert.AreEqual(j, 12, 6);
+            Assert.AreEqual(12, j, 6);
         }
     }
 }

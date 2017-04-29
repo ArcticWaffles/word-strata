@@ -9,7 +9,7 @@ namespace Core
     /// <summary>
     /// Location on the board that doesn't contain a tile. 
     /// </summary>
-    public class Hole : GridSquare
+    public class Hole : Gridsquare
     {
         public Hole(Coordinates coordsIn) : base(coordsIn)
         {}
