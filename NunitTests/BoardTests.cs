@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core;
 using WordStrata;
+using System;
 
 namespace NUnitTests
 {
@@ -37,6 +38,20 @@ namespace NUnitTests
 
 
         //Constructor tests
+
+        [Test, TestCaseSource("ArgumentExceptionCases")]
+        public void InvalidArgument_ThrowsException(char[,,] letterGrid)
+        {
+            Assert.That(() => new Board(letterGrid), Throws.ArgumentException);
+        }
+
+        static object[] ArgumentExceptionCases =
+        {
+            new object[] { new char[0, 1, 1] },
+            new object[] { new char[1, 0, 1] },
+            new object[] { new char[1, 1, 0] },
+        };
+
 
         [Test, TestCaseSource("RowColumnLayerCases")]
         public void RowsColumnsAndLayers_CountIsCorrect(char[,,] letters, int expectedRows, int expectedColumns, int expectedLayers)
@@ -131,6 +146,14 @@ namespace NUnitTests
             Assert.That(board.Tiles.Count.Equals(remainingTiles));
         }
 
+        static object[] TilesToHolesCases =
+        {
+            new object[] { array3x3x1, 7 },
+            new object[] { array2x2x1, 2 },
+            new object[] { array3x3x2, 8 },
+            new object[] { array2x2x3, 2 },
+        };
+
         [Test, TestCaseSource("AllArrays")]
         public void ConvertToHoles_PartialBoard_GridsquaresRemainUnique(char[,,] letters)
         {
@@ -142,18 +165,17 @@ namespace NUnitTests
             Assert.That(board.Gridsquares, Is.Unique);
         }
 
-        static object[] TilesToHolesCases =
-        {
-            new object[] { array3x3x1, 7 },
-            new object[] { array2x2x1, 2 },
-            new object[] { array3x3x2, 8 },
-            new object[] { array2x2x3, 2 },
-        };
-
 
         //GetNeighbor tests
 
-        [Test, TestCaseSource("GetNeighbor2DCases")]
+        [TestCase(Board.Direction.North, 'b', 0, 1)]
+        [TestCase(Board.Direction.Northeast, 'c', 0, 2)]
+        [TestCase(Board.Direction.East, 'f', 1, 2)]
+        [TestCase(Board.Direction.Southeast, 'i', 2, 2)]
+        [TestCase(Board.Direction.South, 'h', 2, 1)]
+        [TestCase(Board.Direction.Southwest, 'g', 2, 0)]
+        [TestCase(Board.Direction.West, 'd', 1, 0)]
+        [TestCase(Board.Direction.Northwest, 'a', 0, 0)]
         public void GetNeighbor_SingleLayerBoard_NeighborIsCorrect(Board.Direction direction, char expectedLetter,
             int expectedCoordX, int expectedCoordY)
         {
@@ -165,19 +187,15 @@ namespace NUnitTests
             Assert.AreEqual(result.Coords.Y, expectedCoordY);
         }
 
-        static object[] GetNeighbor2DCases =
-        {
-            new object[] { Board.Direction.North, 'b', 0, 1 },
-            new object[] { Board.Direction.Northeast, 'c', 0, 2 },
-            new object[] { Board.Direction.East, 'f', 1, 2 },
-            new object[] { Board.Direction.Southeast, 'i', 2, 2 },
-            new object[] { Board.Direction.South, 'h', 2 , 1 },
-            new object[] { Board.Direction.Southwest, 'g', 2, 0 },
-            new object[] { Board.Direction.West, 'd', 1, 0 },
-            new object[] { Board.Direction.Northwest, 'a', 0, 0 },
-        };
 
-        [Test, TestCaseSource("GetNeighbor3DCases")]
+        [TestCase(Board.Direction.North, 'k', 0, 1, 0)]
+        [TestCase(Board.Direction.Northeast, 'l', 0, 2, 1)]
+        [TestCase(Board.Direction.East, 'o', 1, 2, 1)]
+        [TestCase(Board.Direction.Southeast, 'r', 2, 2, 0)]
+        [TestCase(Board.Direction.South, 'q', 2, 1, 1)]
+        [TestCase(Board.Direction.Southwest, 'p', 2, 0, 1)]
+        [TestCase(Board.Direction.West, 'm', 1, 0, 1)]
+        [TestCase(Board.Direction.Northwest, 's', 0, 0, 0)]
         public void GetNeighbor_MultiLayerBoard_NeighborIsCorrect(Board.Direction direction, char expectedLetter,
             int expectedCoordX, int expectedCoordY, int expectedCoordZ)
         {
@@ -190,20 +208,15 @@ namespace NUnitTests
             Assert.AreEqual(result.Coords.Z, expectedCoordZ);
         }
 
-        static object[] GetNeighbor3DCases =
-        {
-            new object[] { Board.Direction.North, 'k', 0, 1, 0 },
-            new object[] { Board.Direction.Northeast, 'l', 0, 2, 1 },
-            new object[] { Board.Direction.East, 'o', 1, 2, 1 },
-            new object[] { Board.Direction.Southeast, 'r', 2, 2, 0 },
-            new object[] { Board.Direction.South, 'q', 2 , 1, 1 },
-            new object[] { Board.Direction.Southwest, 'p', 2, 0, 1 },
-            new object[] { Board.Direction.West, 'm', 1, 0, 1 },
-            new object[] { Board.Direction.Northwest, 's', 0, 0, 0 },
-        };
 
-
-        [Test, TestCaseSource("OffGridCases")]
+        [TestCase(Board.Direction.North, 0, 0)]
+        [TestCase(Board.Direction.Northeast, 0, 0)]
+        [TestCase(Board.Direction.East, 1, 1 )]
+        [TestCase(Board.Direction.Southeast, 1, 1)]
+        [TestCase(Board.Direction.South, 1, 1)]
+        [TestCase(Board.Direction.Southwest, 1, 1)]
+        [TestCase(Board.Direction.West, 0, 0)]
+        [TestCase(Board.Direction.Northwest, 0, 0)]
         public void GetNeighbor_GoesBeyondGrid_ReturnsHole(Board.Direction direction, int originCoordsX, 
             int originCoordsY)
         {
@@ -212,18 +225,6 @@ namespace NUnitTests
             var neighbor = board.GetNeighbor(origin as Tile, direction);
             Assert.That(neighbor, Is.InstanceOf(typeof(Hole)));
         }
-
-        static object[] OffGridCases =
-        {
-            new object[] { Board.Direction.North, 0, 0},
-            new object[] { Board.Direction.Northeast, 0, 0 },
-            new object[] { Board.Direction.East, 1, 1 },
-            new object[] { Board.Direction.Southeast, 1, 1 },
-            new object[] { Board.Direction.South, 1, 1 },
-            new object[] { Board.Direction.Southwest, 1, 1 },
-            new object[] { Board.Direction.West, 0, 0 },
-            new object[] { Board.Direction.Northwest, 0, 0 },
-        };
 
 
         // TopLayer tests
