@@ -11,7 +11,19 @@ namespace WordStrata
     {
         public GameModel(HashSet<string> dictionary)
         {
-            GameBoard = BoardGenerator.generateWeightedBoard(5, 5, 3);
+            // GameBoard = BoardGenerator.generateWeightedBoard(5, 5, 3);
+            var coords = new List<Coordinates>
+            {
+                new Coordinates(0,0,0),
+                new Coordinates(0,0,1),
+                new Coordinates(0,3,0),
+                new Coordinates(0,3,1),
+                new Coordinates(3,0,0),
+                new Coordinates(3,0,1),
+                new Coordinates(3,3,0),
+                new Coordinates(3,3,1),
+            };
+            GameBoard = BoardGenerator.generateShapedBoard(4, 4, 2, coords);
             Dictionary = dictionary;
         }
 

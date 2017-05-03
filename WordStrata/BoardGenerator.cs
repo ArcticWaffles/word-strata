@@ -7,9 +7,31 @@ using Core;
 
 namespace WordStrata
 {
+    /// <summary>
+    /// Creates a gameboard.
+    /// </summary>
     public static class BoardGenerator
     {
-        public static Board generateWeightedBoard(int rows, int columns, int layers)
+        /// <summary> Creates a board in which all gridsquares are tiles. </summary>
+        public static Board generateRectangularBoard(int rows, int columns, int layers)
+        {
+            return weightedBoard(rows, columns, layers);
+        }
+
+        /// <summary> Creates a board in which some gridsquares are holes. Used for creating irregular shapes. </summary>
+        // TODO: Make parameter a flat list of coordinates and then black out each layer beneath it, or keep fine-grained control?
+        public static Board generateShapedBoard(int rows, int columns, int layers, List<Coordinates> holes)
+        {
+            var startingBoard = weightedBoard(rows, columns, layers);
+            foreach(var coords in holes)
+            {
+                startingBoard[coords.X, coords.Y, coords.Z] = new Hole(coords);
+            }
+            return startingBoard;
+        }
+
+        /// <summary> Creates a board in which the letter selection is weighted according to frequency of use ("Scrabble style") rather than random. </summary>
+        private static Board weightedBoard(int rows, int columns, int layers)
         {
             Random letterGenerator = new Random();
             char[,,] letterGrid = new char[rows, columns, layers];
@@ -19,7 +41,7 @@ namespace WordStrata
                 {
                     for (int z = 0; z < layers; z++)
                     {
-                        letterGrid[x, y, z] = generateWeightedLetter(letterGenerator.Next(0, 100));
+                        letterGrid[x, y, z] = weightedLetter(letterGenerator.Next(0, 100));
                     }
                 }
             }
@@ -27,7 +49,7 @@ namespace WordStrata
             return newBoard;
         }
 
-        private static char generateWeightedLetter(int random)
+        private static char weightedLetter(int random)
         {
             var dictionary = new Dictionary<int, char>()
             {

@@ -21,7 +21,7 @@ namespace NUnitTests
         [TestCase(2, 4, 3)]
         public void WeightedBoard_ByDefault_GridsquareCountIsCorrect(int rows, int columns, int layers)
         {
-            var board = BoardGenerator.generateWeightedBoard(rows, columns, layers);
+            var board = BoardGenerator.generateRectangularBoard(rows, columns, layers);
             Assert.That(board.Gridsquares.Count.Equals(rows * columns * layers));
         }
 
@@ -29,7 +29,7 @@ namespace NUnitTests
         // TODO: Improve this test?
         public void WeightedBoard_LettersAreWeighted()
         {
-            var board = BoardGenerator.generateWeightedBoard(10, 10, 1);
+            var board = BoardGenerator.generateRectangularBoard(10, 10, 1);
             var tiles = board.Tiles;
             var letters = new char[100];
             for (int i = 0; i < 100; i++)

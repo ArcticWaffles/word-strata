@@ -63,7 +63,7 @@ namespace Core
         /// <summary> A list of all gridsquares on the board. </summary>
         public List<Gridsquare> Gridsquares { get; } = new List<Gridsquare>();
 
-        /// <summary> Get a gridsquare by its xy coordinates. </summary>
+        /// <summary> Find a gridsquare by its xy coordinates. </summary>
         public Gridsquare this[int x, int y]
         {
             get
@@ -74,6 +74,20 @@ namespace Core
             {
                 var match = TopLayer.FindIndex(g => g.Coords.X == x && g.Coords.Y == y);
                 TopLayer[match] = value;
+            }
+        }
+
+        /// <summary> Find a gridsquare by its xyz coordinates. </summary>
+        public Gridsquare this[int x, int y, int z]
+        {
+            get
+            {
+                return Gridsquares.Find(g => g.Coords.X == x && g.Coords.Y == y && g.Coords.Z == z);
+            }
+            set
+            {
+                var match = Gridsquares.FindIndex(g => g.Coords.X == x && g.Coords.Y == y && g.Coords.Z == z);
+                Gridsquares[match] = value;
             }
         }
 
