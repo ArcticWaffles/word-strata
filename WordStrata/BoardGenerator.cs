@@ -19,13 +19,23 @@ namespace WordStrata
         }
 
         /// <summary> Creates a board in which some gridsquares are holes. Used for creating irregular shapes. </summary>
-        // TODO: Make parameter a flat list of coordinates and then black out each layer beneath it, or keep fine-grained control?
-        public static Board generateShapedBoard(int rows, int columns, int layers, List<Coordinates> holes)
+        // TODO: Make parameter a 2D array (top layer) and then black out each layer beneath it, or keep fine-grained control?
+        public static Board generateShapedBoard(int rows, int columns, int layers, bool[,,] tileLocations)
         {
             var startingBoard = WeightedBoard(rows, columns, layers);
-            foreach(var coords in holes)
+            for (int x = 0; x < tileLocations.GetLength(0); x++)
             {
-                startingBoard[coords.X, coords.Y, coords.Z] = new Hole(coords);
+                for (int y = 0; y < tileLocations.GetLength(1); y++)
+                {
+                    for (int z = 0; z < tileLocations.GetLength(2); z++)
+                    {
+                        var currentBool = tileLocations[x, y, z];
+                        if (currentBool == false)
+                        {
+                            startingBoard[x, y, z] = new Hole(new Coordinates(x, y, z));
+                        }
+                    }
+                }
             }
             return startingBoard;
         }

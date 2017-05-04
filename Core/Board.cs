@@ -32,24 +32,24 @@ namespace Core
                 throw new ArgumentException("letterGrid dimensions must be positive");
             }
 
-            for (int x = 0; x < Rows; x++)
-            {
-                for (int y = 0; y < Columns; y++)
+                for (int x = 0; x < Rows; x++)
                 {
-                    for (int z = 0; z < Layers; z++)
+                    for (int y = 0; y < Columns; y++)
                     {
-                        var currentLetter = letterGrid[x, y, z];
-                        if (currentLetter == ' ')
+                        for (int z = 0; z < Layers; z++)
                         {
-                            Gridsquares.Add(new Hole(new Coordinates(x, y, z)));
-                        }
-                        else
-                        {
-                            Gridsquares.Add(new Tile(new Coordinates(x, y, z), currentLetter));
+                            var currentLetter = letterGrid[x, y, z];
+                            if (currentLetter == ' ')
+                            {
+                                Gridsquares.Add(new Hole(new Coordinates(x, y, z)));
+                            }
+                            else
+                            {
+                                Gridsquares.Add(new Tile(new Coordinates(x, y, z), currentLetter));
+                            }
                         }
                     }
                 }
-            }
         }
 
         public int Rows { get; }

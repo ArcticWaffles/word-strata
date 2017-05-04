@@ -12,18 +12,15 @@ namespace WordStrata
         public GameModel(HashSet<string> dictionary)
         {
             //GameBoard = BoardGenerator.generateRectangularBoard(5, 5, 0);
-            var coords = new List<Coordinates>
-            {
-                new Coordinates(0,0,0),
-                new Coordinates(0,0,1),
-                new Coordinates(0,3,0),
-                new Coordinates(0,3,1),
-                new Coordinates(3,0,0),
-                new Coordinates(3,0,1),
-                new Coordinates(3,3,0),
-                new Coordinates(3,3,1),
-            };
-            GameBoard = BoardGenerator.generateShapedBoard(4, 4, 2, coords);
+            var tilePlacement = new bool[,,]
+        {
+            { {true, false }, {true, true }, {true, true}, {false, false } },
+            { {true, true }, {true, true }, {true, true}, {true, true } },
+            { {true, true }, {true, true }, {true, true}, {true, true } },
+            { {true, true }, {true, true }, {true, true}, {true, true } },
+            { {true, true }, {true, true }, {true, true}, {true, true } },
+        };
+            GameBoard = BoardGenerator.generateShapedBoard(5, 4, 2, tilePlacement);
             Dictionary = dictionary;
         }
 
