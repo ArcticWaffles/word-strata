@@ -11,7 +11,7 @@ namespace Core
     /// </summary>
     public class Hole : Gridsquare
     {
-        public Hole(Coordinates coordsIn) : base(coordsIn)
+        public Hole(Coordinates coords) : base(coords)
         {}
     }
 }

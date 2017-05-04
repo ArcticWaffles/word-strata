@@ -45,7 +45,6 @@ namespace WordStrata
             // If the word is valid
             if (viewModel.CheckWord())
             {
-                // WordFeedback.Foreground = Brushes.Green;
                 (Resources["AcceptWord"] as Storyboard).Begin();
                 viewModel.FinishTurn();
 
@@ -58,7 +57,6 @@ namespace WordStrata
             }
             else // Word is not valid
             {
-                //WordFeedback.Foreground = Brushes.Red;
                 (Resources["RejectWord"] as Storyboard).Begin();
             }
         }

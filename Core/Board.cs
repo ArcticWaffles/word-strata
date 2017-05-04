@@ -50,7 +50,6 @@ namespace Core
                     }
                 }
             }
-
         }
 
         public int Rows { get; }

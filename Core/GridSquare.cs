@@ -11,9 +11,9 @@ namespace Core
     /// </summary>
     public abstract class Gridsquare
     {
-        public Gridsquare(Coordinates coordsIn)
+        public Gridsquare(Coordinates coords)
         {
-            Coords = coordsIn;
+            Coords = coords;
         }
 
         public Coordinates Coords { get; set; }
