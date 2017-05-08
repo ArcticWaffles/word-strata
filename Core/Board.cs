@@ -62,7 +62,7 @@ namespace Core
         /// <summary> A list of all gridsquares on the board. </summary>
         public List<Gridsquare> Gridsquares { get; } = new List<Gridsquare>();
 
-        /// <summary> Find a gridsquare by its xy coordinates. </summary>
+        /// <summary> Find a gridsquare by its xy coordinates, using only the top layer of the board. </summary>
         public Gridsquare this[int x, int y]
         {
             get
@@ -200,8 +200,8 @@ namespace Core
                 {
                     Gridsquares[match] = new Hole(tile.Coords);
                 }
-                OnPropertyChanged("");
             }
+            OnPropertyChanged("");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

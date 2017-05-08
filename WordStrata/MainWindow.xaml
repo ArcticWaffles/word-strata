@@ -11,6 +11,7 @@
 
     <Window.Resources>
         <local:IsClickableValueConverter x:Key="IsClickableValueConverter" />
+        <local:IsCheckedValueConverter x:Key="IsCheckedValueConverter" />
         <local:ContentValueConverter x:Key="ContentValueConverter" />
 
         <Storyboard x:Key="AcceptWord">
@@ -175,29 +176,35 @@
                        FontSize="20" TextWrapping="Wrap" TextAlignment="Center" Opacity="0" />
         </StackPanel>
 
-        <Grid x:Name="Board" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" MinWidth="{Binding Path=ActualWidth, ElementName=Board}"
-              MinHeight="{Binding Path=ActualHeight, ElementName=Board}">
-            <ItemsControl x:Name="boardItemsControl"  ItemsSource="{Binding GameBoard.TopLayer}">
+        <Grid x:Name="BoardArea" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" MinWidth="{Binding ActualWidth, ElementName=BoardArea, Mode=OneWay}" 
+              MinHeight="{Binding ActualHeight, ElementName=BoardArea}">
+            <ItemsControl x:Name="boardItemsControl" ItemsSource="{Binding GameBoard.TopLayer, diag:PresentationTraceSources.TraceLevel=High}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid x:Name="board" Rows="{Binding Rows}" Columns="{Binding Columns}" />
+                        <UniformGrid x:Name="board" Rows="{Binding Rows}" Columns="{Binding Columns}"  />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <ToggleButton x:Name="TileToggleButton"
                             Content ="{Binding Converter={StaticResource ContentValueConverter}}"
-                            BorderBrush="LightSeaGreen" FontSize="22" FontFamily="Georgia" BorderThickness="2" Padding="15"
+                            BorderBrush="LightSeaGreen" FontSize="22" FontFamily="Georgia" BorderThickness="2" Padding="20"
                             Checked="TileToggleButton_Checked" Unchecked="TileToggleButton_Unchecked">
                             <ToggleButton.Template>
                                 <StaticResource ResourceKey="toggleButtonTemplate"/>
                             </ToggleButton.Template>
                             <ToggleButton.IsEnabled>
-                                <MultiBinding Converter="{StaticResource IsClickableValueConverter}">
+                                <MultiBinding Converter="{StaticResource IsClickableValueConverter}" Mode="OneWay">
                                     <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.ThePath" />
                                     <Binding Path="." />
                                 </MultiBinding>
                             </ToggleButton.IsEnabled>
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter ="{StaticResource IsCheckedValueConverter}" Mode="OneWay">
+                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.ThePath" />
+                                    <Binding Path="." />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                         </ToggleButton>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

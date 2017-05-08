@@ -11,33 +11,30 @@ namespace WordStrata
     /// </summary>
     internal class IsClickableValueConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            var path = values[0] as TilePath;
-            var gridsquare = values[1] as Gridsquare;
-            var currentTile = path.CurrentTile;
-
-            if (gridsquare is Hole) return false;
-            else return (TileIsClickable(gridsquare as Tile, currentTile, path));
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
-
         // A tile is clickable if any of the following are true:
         // 1. No tiles on the board are selected (ThePath is null or empty)
         // 2. It neighbors the current tile and is not already selected
         // 3. It is the current tile (user can click it to backtrack)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var path = values[0] as TilePath;
+            var gridsquare = values[1] as Gridsquare;
+            if (gridsquare is Hole) return false;
+            if (!path.Any() || path == null) return true;
+
+            var currentTile = path.CurrentTile;
+            return (TileIsClickable(gridsquare as Tile, currentTile, path));
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
         private bool TileIsClickable(Tile tile, Tile currentTile, TilePath path)
         {
-            if (!path.Any() || path == null) return true;
-            else
-            {
-                return (AreNeighbors(currentTile, tile) && (path.Contains(tile) == false) ||
-                tile == currentTile);
-            }
+            return (AreNeighbors(currentTile, tile) && (path.Contains(tile) == false) 
+                || tile == currentTile);
         }
 
         private bool AreNeighbors(Tile tile1, Tile tile2)

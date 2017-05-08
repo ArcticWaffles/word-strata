@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
 using Core;
+using System.Windows.Data;
 
 namespace WordStrata
 {
@@ -27,6 +28,7 @@ namespace WordStrata
         private void TileToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             ToggleButton theSender = (ToggleButton)sender;
+            if (theSender.DataContext == BindingOperations.DisconnectedSource) return;
             Tile senderTile = (Tile)theSender.DataContext;
             viewModel.ThePath.Add(senderTile);
         }
@@ -35,6 +37,7 @@ namespace WordStrata
         private void TileToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             ToggleButton theSender = (ToggleButton)sender;
+            if (theSender.DataContext == BindingOperations.DisconnectedSource) return;
             Tile senderTile = (Tile)theSender.DataContext;
             viewModel.ThePath.Remove(senderTile);
         }
@@ -52,9 +55,10 @@ namespace WordStrata
                 if(!viewModel.WordsRemain())
                 {
                     (Resources["NoMoreWords"] as Storyboard).Begin();
+                    // TODO: Disable all tiles
                 }
-
             }
+            // TODO - remove RejectWord animation. Scenario shouldn't be possible since word must be valid in order to submit.
             else // Word is not valid
             {
                 (Resources["RejectWord"] as Storyboard).Begin();

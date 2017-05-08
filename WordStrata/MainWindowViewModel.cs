@@ -82,6 +82,15 @@ namespace WordStrata
             }
         }
 
+        /// <summary> Is true only if a valid word is selected. </summary>
+        public bool EnableSubmit
+        {
+            get
+            {
+                return (CheckWord());
+            }
+        }
+
         /// <summary> Checks user word against the dictionary. </summary>
         public bool CheckWord()
         {
@@ -98,6 +107,7 @@ namespace WordStrata
         public void FinishTurn()
         {
             GameBoard.ConvertTilesToHoles(ThePath.ToList());
+            OnPropertyChanged("GameBoard");
             ClearWord();
         }
 
@@ -105,15 +115,6 @@ namespace WordStrata
         public bool WordsRemain()
         {
             return Solver.AnyWordExistsOnBoard(Dictionary, GameBoard);
-        }
-
-        /// <summary> Is true only if a valid word is selected. </summary>
-        public bool EnableSubmit
-        {
-            get
-            {
-                return (CheckWord());
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -129,6 +130,7 @@ namespace WordStrata
             OnPropertyChanged("UserWord");
             OnPropertyChanged("CurrentSnake");
             OnPropertyChanged("EnableSubmit");
+            //OnPropertyChanged("");
         }
     }
 }
