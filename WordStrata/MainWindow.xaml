@@ -30,22 +30,6 @@
             </StringAnimationUsingKeyFrames>
         </Storyboard>
 
-        <Storyboard x:Key="RejectWord">
-            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="WordFeedback" Storyboard.TargetProperty="(UIElement.Opacity)">
-                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:00" />
-                <LinearDoubleKeyFrame Value="1" KeyTime="00:00:01" />
-                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:02" />
-            </DoubleAnimationUsingKeyFrames>
-            <ColorAnimationUsingKeyFrames Duration="00:00:03" Storyboard.TargetName="WordFeedback"
-                                          Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)">
-                <DiscreteColorKeyFrame Value="Red" KeyTime="00:00:00" />
-            </ColorAnimationUsingKeyFrames>
-            <StringAnimationUsingKeyFrames Duration="00:00:03" Storyboard.TargetName="WordFeedback"
-                                           Storyboard.TargetProperty="Text">
-                <DiscreteStringKeyFrame Value="Hmmm... Nope!" KeyTime="00:00:00" />
-            </StringAnimationUsingKeyFrames>
-        </Storyboard>
-
         <Storyboard x:Key="NoMoreWords">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="WordFeedback"
                                            Storyboard.TargetProperty="Opacity">

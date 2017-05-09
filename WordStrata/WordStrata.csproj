@@ -69,10 +69,10 @@
     <Compile Include="DictionaryModel.cs" />
     <Compile Include="DesignTimeMainWindowViewModel.cs" />
     <Compile Include="GameModel.cs" />
-    <Compile Include="IGameModel.cs" />
+    <Compile Include="Interfaces\IGameModel.cs" />
     <Compile Include="ValueConverters\EllipseVisibilityConverter.cs" />
     <Compile Include="ValueConverters\IsClickableValueConverter.cs" />
-    <Compile Include="MainWindowViewModelBase.cs" />
+    <Compile Include="Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="BoardGenerator.cs" />
     <Page Include="MainWindow.xaml">

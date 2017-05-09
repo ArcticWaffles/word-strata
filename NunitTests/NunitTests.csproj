@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="BoardGeneratorTests.cs" />
     <Compile Include="BoardTests.cs" />
+    <Compile Include="FakeMainWindowVM.cs" />
     <Compile Include="MainWindowVMTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameModelTests.cs" />

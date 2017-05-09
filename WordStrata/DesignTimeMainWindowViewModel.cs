@@ -8,12 +8,14 @@ using Solve;
 
 namespace WordStrata
 {
-    class DesignTimeMainWindowViewModel : MainWindowViewModelBase
+    class DesignTimeMainWindowViewModel : IMainWindowViewModel
     {
-        public override Board GameBoard { get; } = BoardGenerator.generateRectangularBoard(5, 5, 1);
+        public Board GameBoard { get; } = BoardGenerator.generateRectangularBoard(5, 5, 1);
 
-        public override TilePath ThePath { get; set; } = new TilePath();
+        public TilePath ThePath { get; set; } = new TilePath();
 
-        //public string UserWord { get; set; } = "ABIOGENETICALLY";
+        public string UserWord { get; } = "ABIOGENETICALLY";
+
+        public HashSet<String> Dictionary { get; }
     }
 }

@@ -9,17 +9,17 @@ using System.Windows;
 
 namespace WordStrata
 {
-    public class MainWindowViewModel : MainWindowViewModelBase, INotifyPropertyChanged
+    public class MainWindowViewModel : IMainWindowViewModel, INotifyPropertyChanged
     {
-        public MainWindowViewModel(GameModel theGameModel)
+        public MainWindowViewModel(GameModel gameModel)
         {
-            gameModel = theGameModel;
+            this.gameModel = gameModel;
             ThePath.CollectionChanged += OnCollectionChanged;
         }
 
         private GameModel gameModel;
 
-        public override Board GameBoard
+        public Board GameBoard
         {
             get { return gameModel.GameBoard; }
         }
@@ -51,7 +51,7 @@ namespace WordStrata
 
         /// <summary> Current path of clicked tiles. </summary>
         private TilePath thePath = new TilePath();
-        public override TilePath ThePath
+        public TilePath ThePath
         {
             get { return thePath; }
             set
@@ -87,14 +87,8 @@ namespace WordStrata
         {
             get
             {
-                return (CheckWord());
+                return Dictionary.Contains(UserWord, StringComparer.OrdinalIgnoreCase);
             }
-        }
-
-        /// <summary> Checks user word against the dictionary. </summary>
-        public bool CheckWord()
-        {
-            return Dictionary.Contains(UserWord);
         }
 
         /// <summary> Clears UserWord, thereby clearing the textblock and the gameboard. </summary>
@@ -107,7 +101,6 @@ namespace WordStrata
         public void FinishTurn()
         {
             GameBoard.ConvertTilesToHoles(ThePath.ToList());
-            OnPropertyChanged("GameBoard");
             ClearWord();
         }
 
@@ -130,7 +123,6 @@ namespace WordStrata
             OnPropertyChanged("UserWord");
             OnPropertyChanged("CurrentSnake");
             OnPropertyChanged("EnableSubmit");
-            //OnPropertyChanged("");
         }
     }
 }
