@@ -67,18 +67,7 @@ namespace WordStrata
         {
             get
             {
-                Snake currentSnake = new Snake();
-                if (ThePath.Any())
-                {
-                    // Translates built-in tile coordinates to GUI coordinates
-                    foreach (var tile in ThePath)
-                    {
-                        var guiCoordsX = 100 * ((double)tile.Coords.Y / Columns + .5 / Columns);
-                        var guiCoordsY = 100 * ((double)tile.Coords.X / Rows + .5 / Rows);
-                        currentSnake.Points.Add(new Point(guiCoordsX, guiCoordsY));
-                    }
-                }
-                return currentSnake;
+                return new Snake(ThePath, GameBoard);
             }
         }
 
@@ -91,7 +80,7 @@ namespace WordStrata
             }
         }
 
-        /// <summary> Clears UserWord, thereby clearing the textblock and the gameboard. </summary>
+        /// <summary> Clears ThePath, thereby clearing the textblock and the gameboard. </summary>
         public void ClearWord()
         {
             ThePath.Clear();

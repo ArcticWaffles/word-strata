@@ -30,16 +30,6 @@ namespace NUnitTests
         }
 
         [Test]
-        public void CurrentSnake_ByDefault_ProducesCorrectGuiCoords()
-        {
-            viewModel.ThePath.Add(tileA);
-            var snake = viewModel.CurrentSnake;
-            Assert.That(snake.Points.Count.Equals(1));
-            Assert.That(snake.Points[0].X, Is.EqualTo(50).Within(0.01));
-            Assert.That(snake.Points[0].Y, Is.EqualTo(30).Within(0.01));
-        }
-
-        [Test]
         public void EnableSubmit_EmptyBoard_IsFalse()
         {
             Assert.That(viewModel.EnableSubmit.Equals(false));

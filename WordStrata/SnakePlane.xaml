@@ -11,17 +11,19 @@
         <local:EllipseVisibilityConverter x:Key="EllipseVisibility"/>
         <local:SnakeColorConverter x:Key="SnakeColor"/>
     </UserControl.Resources>
-    <Canvas Width="100" Height="100">
-        <Polyline  Points="{Binding CurrentSnake.Points}" StrokeLineJoin="Round" Stroke="{Binding Converter={StaticResource SnakeColor},Path=EnableSubmit}" StrokeThickness="8" StrokeEndLineCap="Triangle" StrokeStartLineCap="Round"
+    <Viewbox>
+        <Canvas Width="{Binding CurrentSnake.HorizontalStretch}" Height="{Binding CurrentSnake.VerticalStretch}">
+            <Polyline  Points="{Binding CurrentSnake.Points}" StrokeLineJoin="Round" Stroke="{Binding EnableSubmit, Converter={StaticResource SnakeColor}}" StrokeThickness="8" StrokeEndLineCap="Triangle" StrokeStartLineCap="Round"
                               Opacity=".4" IsHitTestVisible="False">
-        </Polyline>
-        <Path Stroke="{Binding Converter={StaticResource SnakeColor},Path=EnableSubmit}" StrokeThickness="8" Opacity=".4" Visibility="{Binding CurrentSnake.Points,Converter={StaticResource EllipseVisibility} }" IsHitTestVisible="False">
-            <Path.Data>
-                <EllipseGeometry 
+            </Polyline>
+            <Path Stroke="{Binding Converter={StaticResource SnakeColor},Path=EnableSubmit}" StrokeThickness="8" Opacity=".4" Visibility="{Binding CurrentSnake.Points,Converter={StaticResource EllipseVisibility} }" IsHitTestVisible="False">
+                <Path.Data>
+                    <EllipseGeometry 
                     Center="{Binding CurrentSnake.Points[0]}" />
-            </Path.Data>
-        </Path>
-    </Canvas>
+                </Path.Data>
+            </Path>
+        </Canvas>
+    </Viewbox>
 </UserControl>
 
 
