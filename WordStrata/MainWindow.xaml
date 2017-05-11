@@ -13,6 +13,7 @@
         <local:GridsquareIsEnabledConverter x:Key="IsEnabledConverter" />
         <local:GridsquareIsCheckedConverter x:Key="IsCheckedConverter" />
         <local:GridsquareContentConverter x:Key="ContentConverter" />
+        <local:SnakeColorConverter x:Key="SnakeColorConverter" />
 
         <Storyboard x:Key="AcceptWord">
             <DoubleAnimationUsingKeyFrames Duration="00:00:02" Storyboard.TargetName="WordFeedback"
@@ -146,13 +147,13 @@
     </Window.Resources>
     <DockPanel Margin="10">
         <TextBlock x:Name="Instructions" DockPanel.Dock="Top" Text="Click tiles to form a word. You can move left, right, up, down, or diagonal!" FontSize="14" Padding="5"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap"/>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap" />
         <StackPanel DockPanel.Dock="Bottom">
-            <TextBlock x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord}" Margin="10" TextAlignment="Center" FontSize="26" 
-                     MinWidth="275" />
+            <TextBlock x:Name="Word" Grid.Row="1" Grid.Column="1" Text="{Binding UserWord}" Margin="10" TextAlignment="Center" FontSize="32"
+                       FontFamily="Georgia" Foreground="{Binding EnableSubmit, Converter={StaticResource SnakeColorConverter}}" MinWidth="275" />
             <StackPanel Grid.Row="3" Orientation="Horizontal" Height="40" HorizontalAlignment="Center" Margin="10">
                 <Button x:Name="SubmitButton" Content="Submit Word" IsEnabled="{Binding EnableSubmit}" Click="SubmitButton_Click"
-                FontSize="18" Padding="8,4" Margin="0,0,15,0" >
+                FontSize="18" Padding="8,4" Margin="0,0,15,0">
                     <!--<Button.IsEnabled>
                         <MultiBinding Converter="{StaticResource SubmitIsEnabledConverter}" Mode="OneWay">
                             <Binding Path="ThePath" />
@@ -160,7 +161,7 @@
                         </MultiBinding>
                     </Button.IsEnabled>-->
                 </Button>
-                <Button x:Name="ClearButton" Content="Clear" Click="ClearButton_Click"  
+                <Button x:Name="ClearButton" Content="Clear" Click="ClearButton_Click"
                     FontSize="18" Padding="8,4" />
             </StackPanel>
             <TextBlock x:Name="WordFeedback" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="" Margin="10"
@@ -168,10 +169,10 @@
         </StackPanel>
         <Viewbox>
             <Grid x:Name="BoardArea" Background="Blue" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <ItemsControl x:Name="boardItemsControl" ItemsSource="{Binding GameBoard.TopLayer, diag:PresentationTraceSources.TraceLevel=High}" >
+                <ItemsControl x:Name="boardItemsControl" ItemsSource="{Binding GameBoard.TopLayer, diag:PresentationTraceSources.TraceLevel=High}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid x:Name="board" Rows="{Binding Rows}" Columns="{Binding Columns}"  />
+                            <UniformGrid x:Name="board" Rows="{Binding Rows}" Columns="{Binding Columns}" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
@@ -181,7 +182,7 @@
                                 BorderBrush="LightSeaGreen" FontSize="32" FontFamily="Georgia" BorderThickness="2" Padding="20"
                                 Checked="TileToggleButton_Checked" Unchecked="TileToggleButton_Unchecked">
                                 <ToggleButton.Template>
-                                    <StaticResource ResourceKey="toggleButtonTemplate"/>
+                                    <StaticResource ResourceKey="toggleButtonTemplate" />
                                 </ToggleButton.Template>
                                 <ToggleButton.IsEnabled>
                                     <MultiBinding Converter="{StaticResource IsEnabledConverter}" Mode="OneWay">
