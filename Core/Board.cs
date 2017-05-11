@@ -27,29 +27,29 @@ namespace Core
             Columns = letterGrid.GetLength(1);
             Layers = letterGrid.GetLength(2);
 
-            if(Rows <= 0 || Columns <= 0 || Layers <= 0)
+            if (Rows <= 0 || Columns <= 0 || Layers <= 0)
             {
                 throw new ArgumentException("letterGrid dimensions must be positive");
             }
 
-                for (int x = 0; x < Rows; x++)
+            for (int x = 0; x < Rows; x++)
+            {
+                for (int y = 0; y < Columns; y++)
                 {
-                    for (int y = 0; y < Columns; y++)
+                    for (int z = 0; z < Layers; z++)
                     {
-                        for (int z = 0; z < Layers; z++)
+                        var currentLetter = letterGrid[x, y, z];
+                        if (currentLetter == ' ')
                         {
-                            var currentLetter = letterGrid[x, y, z];
-                            if (currentLetter == ' ')
-                            {
-                                Gridsquares.Add(new Hole(new Coordinates(x, y, z)));
-                            }
-                            else
-                            {
-                                Gridsquares.Add(new Tile(new Coordinates(x, y, z), currentLetter));
-                            }
+                            Gridsquares.Add(new Hole(new Coordinates(x, y, z)));
+                        }
+                        else
+                        {
+                            Gridsquares.Add(new Tile(new Coordinates(x, y, z), currentLetter));
                         }
                     }
                 }
+            }
         }
 
         public int Rows { get; }
@@ -57,7 +57,6 @@ namespace Core
         public int Columns { get; }
 
         public int Layers { get; }
-
 
         /// <summary> A list of all gridsquares on the board. </summary>
         public List<Gridsquare> Gridsquares { get; } = new List<Gridsquare>();
@@ -90,7 +89,6 @@ namespace Core
             }
         }
 
-
         /// <summary> Used for navigating the board.</summary>
         public enum Direction { North, South, East, West, Northeast, Northwest, Southeast, Southwest };
 
@@ -118,7 +116,6 @@ namespace Core
             }
         }
 
-
         /// <summary> A list of all tiles currently visible on the board (no holes). </summary>///
         public List<Tile> Tiles
         {
@@ -127,7 +124,7 @@ namespace Core
                 List<Tile> tiles = new List<Tile>();
                 foreach (var square in TopLayer)
                 {
-                    if(square is Tile)
+                    if (square is Tile)
                     {
                         tiles.Add(square as Tile);
                     }
@@ -135,7 +132,6 @@ namespace Core
                 return tiles;
             }
         }
-
 
         /// <summary> Returns a tile's neighboring tile or hole of a given compass direction. </summary>
         public Gridsquare GetNeighbor(Tile originTile, Direction direction)
@@ -153,27 +149,34 @@ namespace Core
                 case Direction.North:
                     x--;
                     break;
+
                 case Direction.East:
                     y++;
                     break;
+
                 case Direction.South:
                     x++;
                     break;
+
                 case Direction.West:
                     y--;
                     break;
+
                 case Direction.Northeast:
                     x--;
                     y++;
                     break;
+
                 case Direction.Northwest:
                     x--;
                     y--;
                     break;
+
                 case Direction.Southeast:
                     x++;
                     y++;
                     break;
+
                 case Direction.Southwest:
                     x++;
                     y--;
@@ -186,9 +189,8 @@ namespace Core
                 return new Hole(new Coordinates(x, y, 0));
             }
 
-            return this[x,y];
+            return this[x, y];
         }
-
 
         /// <summary> Converts a list of tiles to holes. </summary>
         public void ConvertTilesToHoles(List<Tile> tiles)
@@ -196,7 +198,7 @@ namespace Core
             foreach (var tile in tiles)
             {
                 int match = Gridsquares.FindIndex(g => g == tile);
-                if(match >= 0) // tile was found in the list
+                if (match >= 0) // tile was found in the list
                 {
                     Gridsquares[match] = new Hole(tile.Coords);
                 }

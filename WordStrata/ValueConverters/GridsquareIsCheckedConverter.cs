@@ -11,11 +11,11 @@ using Core;
 
 namespace WordStrata
 {
-    class IsCheckedValueConverter : IMultiValueConverter
+    class GridsquareIsCheckedConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var paths = values[0] as TilePath;
+            var paths = values[0] as ObservableCollection<Tile>;
             var gridsquare = values[1] as Gridsquare;
             if (gridsquare is Tile)
                 return paths.Contains(gridsquare as Tile);

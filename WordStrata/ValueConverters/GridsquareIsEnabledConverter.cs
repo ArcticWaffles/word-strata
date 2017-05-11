@@ -9,7 +9,7 @@ namespace WordStrata
     /// <summary>
     /// Determines if a tile is clickable (enabled). 
     /// </summary>
-    internal class IsClickableValueConverter : IMultiValueConverter
+    internal class GridsquareIsEnabledConverter : IMultiValueConverter
     {
         // A tile is clickable if any of the following are true:
         // 1. No tiles on the board are selected (ThePath is null or empty)

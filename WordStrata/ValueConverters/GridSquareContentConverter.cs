@@ -12,7 +12,7 @@ namespace WordStrata
     /// <summary>
     /// Converts a gridsquare to a char.
     /// </summary>
-    internal class ContentValueConverter : IValueConverter
+    internal class GridsquareContentConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
