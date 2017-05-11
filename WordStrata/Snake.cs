@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using Core;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace WordStrata
 {
@@ -14,7 +15,7 @@ namespace WordStrata
     /// </summary>
     public class Snake
     {
-        public Snake(TilePath tiles, Board gameboard)
+        public Snake(ObservableCollection<Tile> tiles, Board gameboard)
         {
             var rows = gameboard.Rows;
             var columns = gameboard.Columns;

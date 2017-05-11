@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using Core;
 using System;
+using System.Collections.ObjectModel;
 
 namespace WordStrata
 {
     public interface IMainWindowViewModel
     {
-        TilePath ThePath { get; set; }
+        ObservableCollection<Tile> ThePath { get; set; }
 
         Board GameBoard { get; }
 

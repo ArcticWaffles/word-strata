@@ -41,11 +41,10 @@ namespace NUnitTests
         [TestCase("tba", false)]
         public void EnableSubmit_IsTrueOnlyIfWordIsValid(string word, bool isInDictionary)
         {
-            var viewModel = new FakeMainWindowVM(dictionary);
-            viewModel.UserWord = word;
+            viewModel.ThePath = new FakeTilePath(word);
             Assert.AreEqual(viewModel.EnableSubmit, isInDictionary);
         }
     }
 }
 // TODO: Tests on other public properties and methods
-    // OnCollectionChanged error
+    // Test for OnCollectionChanged error

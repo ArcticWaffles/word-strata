@@ -2,6 +2,7 @@
 using Solve;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -50,8 +51,8 @@ namespace WordStrata
         }
 
         /// <summary> Current path of clicked tiles. </summary>
-        private TilePath thePath = new TilePath();
-        public TilePath ThePath
+        private ObservableCollection<Tile> thePath = new TilePath();
+        public ObservableCollection<Tile> ThePath
         {
             get { return thePath; }
             set
