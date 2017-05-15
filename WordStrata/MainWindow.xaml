@@ -12,8 +12,10 @@
     <Window.Resources>
         <local:GridsquareIsEnabledConverter x:Key="IsEnabledConverter" />
         <local:GridsquareIsCheckedConverter x:Key="IsCheckedConverter" />
-        <local:GridsquareContentConverter x:Key="ContentConverter" />
+        <local:GridsquareContentConverter x:Key="GridsquareContentConverter" />
         <local:SnakeColorConverter x:Key="SnakeColorConverter" />
+        <local:GridsquareColorConverter x:Key="GridsquareColorConverter" />
+
 
         <Storyboard x:Key="AcceptWord">
             <DoubleAnimationUsingKeyFrames Duration="00:00:02" Storyboard.TargetName="WordFeedback"
@@ -111,7 +113,7 @@
                         <s:Boolean>True</s:Boolean>
                     </Trigger.Value>
                 </Trigger>-->
-                <Trigger Property="UIElement.IsEnabled">
+                <!--<Trigger Property="UIElement.IsEnabled">
                     <Setter Property="Panel.Background" TargetName="border">
                         <Setter.Value>
                             <SolidColorBrush>#FFF4F4F4</SolidColorBrush>
@@ -130,7 +132,7 @@
                     <Trigger.Value>
                         <s:Boolean>False</s:Boolean>
                     </Trigger.Value>
-                </Trigger>
+                </Trigger>-->
                 <!--<MultiTrigger>
                     <MultiTrigger.Conditions>
                         <Condition Property="IsEnabled" Value="False" />
@@ -153,14 +155,7 @@
                        FontFamily="Georgia" Foreground="{Binding EnableSubmit, Converter={StaticResource SnakeColorConverter}}" MinWidth="275" />
             <StackPanel Grid.Row="3" Orientation="Horizontal" Height="40" HorizontalAlignment="Center" Margin="10">
                 <Button x:Name="SubmitButton" Content="Submit Word" IsEnabled="{Binding EnableSubmit}" Click="SubmitButton_Click"
-                FontSize="18" Padding="8,4" Margin="0,0,15,0">
-                    <!--<Button.IsEnabled>
-                        <MultiBinding Converter="{StaticResource SubmitIsEnabledConverter}" Mode="OneWay">
-                            <Binding Path="ThePath" />
-                            <Binding Path="Dictionary" />
-                        </MultiBinding>
-                    </Button.IsEnabled>-->
-                </Button>
+                FontSize="18" Padding="8,4" Margin="0,0,15,0" />
                 <Button x:Name="ClearButton" Content="Clear" Click="ClearButton_Click"
                     FontSize="18" Padding="8,4" />
             </StackPanel>
@@ -168,7 +163,7 @@
                        FontSize="20" TextWrapping="Wrap" TextAlignment="Center" Opacity="0" />
         </StackPanel>
         <Viewbox>
-            <Grid x:Name="BoardArea" Background="Blue" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+            <Grid x:Name="BoardArea" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                 <ItemsControl x:Name="boardItemsControl" ItemsSource="{Binding GameBoard.TopLayer, diag:PresentationTraceSources.TraceLevel=High}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -177,9 +172,9 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ToggleButton x:Name="TileToggleButton" Width="100" Height="100"
-                                Content ="{Binding Converter={StaticResource ContentConverter}}"
-                                BorderBrush="LightSeaGreen" FontSize="32" FontFamily="Georgia" BorderThickness="2" Padding="20"
+                            <ToggleButton x:Name="TileToggleButton" Width="100" Height="100" Background="{Binding Converter={StaticResource GridsquareColorConverter}, diag:PresentationTraceSources.TraceLevel=High}"
+                                Content ="{Binding Converter={StaticResource GridsquareContentConverter}}" BorderBrush="Black"
+                                FontSize="30" FontFamily="Georgia" BorderThickness="2" Padding="20"
                                 Checked="TileToggleButton_Checked" Unchecked="TileToggleButton_Unchecked">
                                 <ToggleButton.Template>
                                     <StaticResource ResourceKey="toggleButtonTemplate" />
@@ -201,6 +196,10 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <local:SnakePlane />
+                <StackPanel>
+                    <TextBlock x:Name="MessageCenter" Visibility="Collapsed" />
+                    <Button x:Name="MessageCenterButton" Visibility="Collapsed"/>
+                </StackPanel>
             </Grid>
         </Viewbox>
     </DockPanel>

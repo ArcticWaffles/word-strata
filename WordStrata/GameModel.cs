@@ -13,7 +13,9 @@ namespace WordStrata
         {
             // GameBoard = BoardGenerator.generateRectangularBoard(5, 5, 3);
             // GameBoard = BoardGenerator.generateShapedBoard(5, 4, 2, TestBoardA);
-            GameBoard = BoardGenerator.generateShapedBoard(4, 6, 2, TestBoardB);
+            // GameBoard = BoardGenerator.generateShapedBoard(4, 6, 2, TestBoardB);
+            GameBoard = BoardGenerator.generateShapedBoard(4, 6, 3, TestBoardC);
+
             Dictionary = dictionary;
         }
 
@@ -37,6 +39,14 @@ namespace WordStrata
             { {false, false }, {true, true }, {true, true }, {true, true}, {true, true }, {true, true } },
             { {true, true }, {true, true }, {true, true}, {true, true }, {true, true }, {true, true } },
         };
+
+        private bool[,,] TestBoardC { get; } = new bool[,,]
+{
+            { {true, false, false }, {true, true, true }, {true, true, true}, {false, false, false }, {true, true, true }, {true, true, false } },
+            { {true, true, true }, {true, true, true }, {true, true, true}, {true, true, true }, {true, true, false }, {true, true, true } },
+            { {false, false, true }, {true, true, true }, {true, true, true }, {true, true, true}, {true, true, true }, {true, true, true } },
+            { {true, true, true }, {true, true, true }, {true, true, true}, {true, true, true }, {true, true, true }, {true, true, true } },
+};
     }
 }
 

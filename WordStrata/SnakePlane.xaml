@@ -13,11 +13,11 @@
     </UserControl.Resources>
     <Viewbox>
         <Canvas Width="{Binding CurrentSnake.HorizontalStretch}" Height="{Binding CurrentSnake.VerticalStretch}">
-            <Polyline  Points="{Binding CurrentSnake.Points}" StrokeLineJoin="Round" Stroke="{Binding EnableSubmit, Converter={StaticResource SnakeColor}}" StrokeThickness="15" StrokeEndLineCap="Triangle" StrokeStartLineCap="Round"
+            <Polyline  Points="{Binding CurrentSnake.Points}" StrokeLineJoin="Round" Stroke="{Binding EnableSubmit, Converter={StaticResource SnakeColor}}" StrokeThickness="20" StrokeEndLineCap="Triangle" StrokeStartLineCap="Round"
                               Opacity=".4" IsHitTestVisible="False">
             </Polyline>
             <!--Path is used when only one tile is selected, because the polyline is only visible with two or more points. -->
-            <Path Stroke="{Binding EnableSubmit, Converter={StaticResource SnakeColor}}" StrokeThickness="15" Opacity=".4" Visibility="{Binding CurrentSnake.Points,Converter={StaticResource EllipseVisibility} }" IsHitTestVisible="False">
+            <Path Stroke="{Binding EnableSubmit, Converter={StaticResource SnakeColor}}" StrokeThickness="20" Opacity=".4" Visibility="{Binding CurrentSnake.Points,Converter={StaticResource EllipseVisibility} }" IsHitTestVisible="False">
                 <Path.Data>
                     <EllipseGeometry
                     Center="{Binding CurrentSnake.Points[0]}" />

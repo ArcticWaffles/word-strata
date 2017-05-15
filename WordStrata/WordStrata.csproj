@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ValueConverters\GridsquareColorConverter.cs" />
     <Compile Include="Snake.cs" />
     <Compile Include="SnakePlane.xaml.cs">
       <DependentUpon>SnakePlane.xaml</DependentUpon>
