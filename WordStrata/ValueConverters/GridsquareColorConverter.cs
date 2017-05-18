@@ -10,18 +10,20 @@ using System.Windows.Media;
 
 namespace WordStrata
 {
-    class GridsquareColorConverter : IValueConverter
+    internal class GridsquareColorConverter : IMultiValueConverter
     {
         // Makes "deeper" tiles darker so user can tell layers apart. Accommodates up to 5 layers.
         // Temporary solution until some kind of 3D visual layering effect can be implemented.
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var gridsquare = value as Gridsquare;
-            Color holeColor = (Color)ColorConverter.ConvertFromString("#FF45779e");
-            if (gridsquare is Hole) return holeColor.ToString();
+            var levelNumber = (int)values[0];
+            Level level = Levels.GameLevels[levelNumber - 1];
+            var gridsquare = values[1] as Gridsquare;
+            Brush holeColor = new SolidColorBrush(level.HoleColor);
+            if (gridsquare is Hole) return holeColor;
             else
             {
-                Color baseColor = (Color)ColorConverter.ConvertFromString("#FF5a9cce");
                 double opacityLevel = 0;
                 switch (gridsquare.Coords.Z)
                 {
@@ -49,13 +51,20 @@ namespace WordStrata
                         opacityLevel = 0;
                         break;
                 }
-                baseColor.A = (byte)(opacityLevel * 255);
-                return baseColor.ToString();
+                Brush tileColor = new SolidColorBrush(level.BaseColor)
+                {
+                    Opacity = opacityLevel
+                };
+                return tileColor;
             }
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

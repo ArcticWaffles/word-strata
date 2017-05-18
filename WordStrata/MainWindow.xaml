@@ -172,10 +172,16 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ToggleButton x:Name="TileToggleButton" Width="100" Height="100" Background="{Binding Converter={StaticResource GridsquareColorConverter}, diag:PresentationTraceSources.TraceLevel=High}"
-                                Content ="{Binding Converter={StaticResource GridsquareContentConverter}}" BorderBrush="Black"
+                            <ToggleButton x:Name="TileToggleButton" Width="100" Height="100"
+                                Content ="{Binding Converter={StaticResource GridsquareContentConverter}}" BorderBrush="DimGray"
                                 FontSize="30" FontFamily="Georgia" BorderThickness="2" Padding="20"
                                 Checked="TileToggleButton_Checked" Unchecked="TileToggleButton_Unchecked">
+                                <ToggleButton.Background>
+                                    <MultiBinding Converter="{StaticResource GridsquareColorConverter}" Mode="OneWay">
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" Path="DataContext.LevelNumber" />
+                                        <Binding Path="." />
+                                    </MultiBinding>
+                                </ToggleButton.Background>
                                 <ToggleButton.Template>
                                     <StaticResource ResourceKey="toggleButtonTemplate" />
                                 </ToggleButton.Template>

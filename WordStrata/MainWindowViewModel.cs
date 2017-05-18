@@ -35,6 +35,11 @@ namespace WordStrata
             get { return gameModel.GameBoard.Columns; }
         }
 
+        public int LevelNumber
+        {
+            get { return gameModel.LevelNumber; }
+        }
+
         /// <summary> Used for determining a word's validity. </summary>
         public HashSet<String> Dictionary
         {
